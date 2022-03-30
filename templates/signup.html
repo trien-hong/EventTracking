@@ -23,7 +23,7 @@
     </head>
     <body>
         <div class=border>
-            <h2><u>LOGIN</u></h2>
+            <h2><u>SIGNUP</u></h2>
             <ul id="flashes" class=flashes>
                 {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -33,15 +33,16 @@
                 {% endif %}
                 {% endwith %}
             </ul>
-            <form method="POST" action="/login">
-                <input type="text" name="username" placeholder="Enter username" maxlength="100"/>
+            <form method="POST" action="/signup">
+                <input type="text" name="email" placeholder="Enter email" maxlength="100"/>
+                <input type="text" name="password" placeholder="Enter password"/>
                 <input type="submit" value="SUBMIT"/>
             </form>
             <p>Max length of 100 characters. Anything above 100 won't be entered.<p>
             <hr>
-            <p>If you have not already signed up, please click the button blow to signup.</p>
-            <form method="GET" action="/signup">
-                <input type="submit" value="SIGNUP HERE"/>
+            <p>If you have already signed up, please click the button below to login.</p>
+            <form method="GET" action="/login">
+                <input type="submit" value="LOGIN HERE"/>
             </form>
         </div>
     </body>
