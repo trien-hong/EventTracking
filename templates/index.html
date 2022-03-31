@@ -1,1 +1,12 @@
-<
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        {% for event in events %}
+            <p>{{event[0]}}</p>
+            <img src="{{event[1]}}" alt="Event Picture" style="width:250px;height:140px;">
+            <p>{{event[2]}}</p>
+        {% endfor %}
+    </body>
+</html>

@@ -1,5 +1,6 @@
 import os
 import flask
+import ticketmaster_api
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
 from flask_login import (
@@ -10,7 +11,7 @@ from flask_login import (
     login_manager, 
     current_user
 )
-from werkzeug.utils import redirect 
+#from werkzeug.utils import redirect 
 from werkzeug.security import generate_password_hash, check_password_hash
 
 load_dotenv(find_dotenv())
@@ -40,14 +41,15 @@ def signup():
     if flask.request.method == "GET":
         return flask.render_template("signup.html")
     if flask.request.method == "POST":
-        emailData = flask.request.form["email"] 
-        passwordData = flask.request.form["password"] 
+        emailData = flask.request.form["email"]
+        passwordData = flask.request.form["password"]
+        zipData = flask.request.form["zip"]
         passwordHash = generate_password_hash(passwordData, method="sha256")
         #only querying to check if email already exists in the DB
         contains_data = Users.query.filter_by(email=emailData).first()
         if contains_data is None: 
             db.session.begin()
-            insert_data = Users(emailData, passwordHash)
+            insert_data = Users(emailData, passwordHash, zipData)
             db.session.add(insert_data)
             db.session.commit()
             return flask.redirect(flask.url_for("login"))
@@ -73,13 +75,14 @@ def login():
 @app.route("/main", methods=["GET", "POST"])
 @login_required
 def main():
-    return flask.render_template("index.html")
+    events = ticketmaster_api.getEvents(current_user.zip)
+    return flask.render_template("index.html", events=events)
 
 @app.route("/logout")
 @login_required
 def logout():
     logout_user()
-    return flask.redirect(flask.url_for("index"))
+    return flask.redirect(flask.url_for("signup"))
 
 
 if __name__ == "__main__":
