@@ -34,11 +34,7 @@ login_manager.login_view= "login"
 def load_user(user_id):
     return Users.query.get(int(user_id))
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    return flask.render_template("signup.html")
-
-
+@app.route("/")
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if flask.request.method == "GET":
@@ -53,21 +49,31 @@ def signup():
             db.session.begin()
             insert_data = Users(emailData, passwordHash)
             db.session.add(insert_data)
-            db.session.commit()    
+            db.session.commit()
             return flask.redirect(flask.url_for("login"))
-        flask.flash("Email already exists/is incorrect. Please login instead.")    
+        flask.flash("Email already exists or is incorrect. Please login instead.")    
     return flask.render_template("signup.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    if flask.request.method == "GET":
+        return flask.render_template("login.html")
+    if flask.request.method == "POST":
+        emailData = flask.request.form["email"]
+        emailQuery = Users.query.filter_by(email=emailData).first()
+        passwordData = flask.request.form["password"]
+        if emailQuery is None or not check_password_hash(emailQuery.password, passwordData):
+            flask.flash("Email or password is incorrect. Please try again.")
+        else:
+            login_user(emailQuery)
+            return flask.redirect(flask.url_for("main"))
     return flask.render_template("login.html")
 
 
 @app.route("/main", methods=["GET", "POST"])
 @login_required
 def main():
-    return
-
+    return flask.render_template("index.html")
 
 @app.route("/logout")
 @login_required

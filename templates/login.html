@@ -34,7 +34,8 @@
                 {% endwith %}
             </ul>
             <form method="POST" action="/login">
-                <input type="text" name="username" placeholder="Enter username" maxlength="100"/>
+                <input type="text" name="email" placeholder="Enter email" maxlength="100"/>
+                <input type="text" name="password" placeholder="Enter password"/>
                 <input type="submit" value="SUBMIT"/>
             </form>
             <p>Max length of 100 characters. Anything above 100 won't be entered.<p>
