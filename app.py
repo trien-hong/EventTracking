@@ -91,9 +91,8 @@ def add():
 def event_details():
     if flask.request.method == "POST":
         eventId = flask.request.form["eventId"]
-        print(eventId)
-        return flask.render_template("event_details.html")
-    return flask.render_template("event_details.html")
+        eventDetails = ticketmaster_api.getEventDetails(eventId)
+        return flask.render_template("event_details.html", name=eventDetails["name"], eventImageURL=eventDetails["eventImageURL"], startDate=eventDetails["startDate"], genre=eventDetails["genre"], minPrice=eventDetails["minPrice"], maxPrice=eventDetails["maxPrice"], venue=eventDetails["venue"], address=eventDetails["address"])
 
 @app.route("/logout")
 @login_required
