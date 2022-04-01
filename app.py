@@ -11,7 +11,6 @@ from flask_login import (
     login_manager, 
     current_user
 )
-#from werkzeug.utils import redirect 
 from werkzeug.security import generate_password_hash, check_password_hash
 
 load_dotenv(find_dotenv())
@@ -77,6 +76,14 @@ def login():
 def main():
     events = ticketmaster_api.getEvents(current_user.zip)
     return flask.render_template("index.html", events=events)
+
+@app.route("/add", methods=["POST"])
+def add():
+    if flask.request.method == "POST":
+        eventTitle = flask.request.form["eventTitle"]
+        print(eventTitle)
+        return flask.redirect(flask.url_for("main"))
+    return flask.redirect(flask.url_for("main"))
 
 @app.route("/logout")
 @login_required
