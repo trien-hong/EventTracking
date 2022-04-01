@@ -6,14 +6,14 @@
     </head>
     <body>
         {% for event in events %}
-            <form method="POST" action="/add">
-                <p><input type="text" name="eventTitle" value="{{event[0]}}" size="{{event[0]|length-2}}" readonly="readonly"></p>
-                <img src="{{event[1]}}" alt="Event Picture" style="width:250px;height:140px;">
-                <br>
-                <input type="submit" value="ADD EVENT"/>
-                <br>
-                <br>
+            <p>{{event[1]}}</p>
+            <form id="form1" method="POST" action="/add"></form>
+            <input type="hidden" name="eventTitle" value="{{event[1]}}" readonly="readonly" form="form1">
+            <form method="POST" action="/event_details">
+                <input type="hidden" name="eventId" value="{{event[0]}}" readonly="readonly">
+                <input type="image" src="{{event[2]}}" alt="Event Picture" style="width:250px;height:140px;">
             </form>
+            <input type="submit" value="ADD EVENT" form="form1"/>
         {% endfor %}
     </body>
 </html>

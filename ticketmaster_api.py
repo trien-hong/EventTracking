@@ -13,12 +13,15 @@ def getEvents(zipcode: str):
 
     ticketmaster_response_json = ticketmaster_request.json()
 
+    idList = []
     nameList = []
     imageList = []
-    addressList = []
+    #addressList = []
 
     for x in ticketmaster_response_json["_embedded"]["events"]:
+        idList.append(x["id"])
         nameList.append(x["name"])
         imageList.append(x["images"][3]["url"])
-        addressList.append(x["_embedded"]["venues"][0]["name"] + " " + x["_embedded"]["venues"][0]["address"]["line1"] + ", " + x["_embedded"]["venues"][0]["city"]["name"] + ", " + x["_embedded"]["venues"][0]["state"]["name"] + " " + x["_embedded"]["venues"][0]["postalCode"])
-    return zip(nameList, imageList, addressList)
+        #addressList.append(x["_embedded"]["venues"][0]["name"] + " " + x["_embedded"]["venues"][0]["address"]["line1"] + ", " + x["_embedded"]["venues"][0]["city"]["name"] + ", " + x["_embedded"]["venues"][0]["state"]["name"] + " " + x["_embedded"]["venues"][0]["postalCode"])
+    
+    return zip(idList, nameList, imageList)

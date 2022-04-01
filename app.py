@@ -78,12 +78,22 @@ def main():
     return flask.render_template("index.html", events=events)
 
 @app.route("/add", methods=["POST"])
+@login_required
 def add():
     if flask.request.method == "POST":
         eventTitle = flask.request.form["eventTitle"]
         print(eventTitle)
         return flask.redirect(flask.url_for("main"))
     return flask.redirect(flask.url_for("main"))
+
+@app.route("/event_details", methods=["POST"])
+@login_required
+def event_details():
+    if flask.request.method == "POST":
+        eventId = flask.request.form["eventId"]
+        print(eventId)
+        return flask.render_template("event_details.html")
+    return flask.render_template("event_details.html")
 
 @app.route("/logout")
 @login_required
