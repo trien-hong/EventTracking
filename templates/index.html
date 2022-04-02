@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+        </style>
     </head>
     <body>
         {% for event in events %}
-            <p>{{event[0]}}</p>
-            <img src="{{event[1]}}" alt="Event Picture" style="width:250px;height:140px;">
-            <p>{{event[2]}}</p>
+            <p>{{event[1]}}</p>
+            <form id="form1" method="POST" action="/add"></form>
+            <input type="hidden" name="eventTitle" value="{{event[1]}}" readonly="readonly" form="form1">
+            <form method="POST" action="/event_details">
+                <input type="hidden" name="eventId" value="{{event[0]}}" readonly="readonly">
+                <input type="image" src="{{event[2]}}" alt="Event Picture" style="width:250px;height:140px;">
+            </form>
+            <input type="submit" value="ADD EVENT" form="form1"/>
         {% endfor %}
     </body>
 </html>
