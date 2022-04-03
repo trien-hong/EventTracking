@@ -31,17 +31,19 @@ def getEventDetails(eventId: str):
 
     ticketmaster_request = requests.get(url=url)
 
-    ticketmaster_response_json = ticketmaster_request.json()
+    ticketmaster_response_json = ticketmaster_request.json()    
 
     eventDetails = {
         "name": ticketmaster_response_json["name"],
         "eventImageURL": ticketmaster_response_json["images"][0]["url"],
         "startDate": ticketmaster_response_json["dates"]["start"]["localDate"],
-        "genre": ticketmaster_response_json["classifications"][0]["genre"]["name"],
+        "genre": ticketmaster_response_json["classifications"][0]["genre"]["name"],\
         "minPrice": ticketmaster_response_json["priceRanges"][0]["min"],
         "maxPrice": ticketmaster_response_json["priceRanges"][0]["max"],
         "venue": ticketmaster_response_json["_embedded"]["venues"][0]["name"],
-        "address": ticketmaster_response_json["_embedded"]["venues"][0]["address"]["line1"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["city"]["name"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["state"]["name"] + " " + ticketmaster_response_json["_embedded"]["venues"][0]["postalCode"]
+        "address": ticketmaster_response_json["_embedded"]["venues"][0]["address"]["line1"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["city"]["name"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["state"]["name"] + " " + ticketmaster_response_json["_embedded"]["venues"][0]["postalCode"],
+        "longitude": ticketmaster_response_json["_embedded"]["venues"][0]["location"]["longitude"],
+        "latitude": ticketmaster_response_json["_embedded"]["venues"][0]["location"]["latitude"]
     }
 
     return eventDetails

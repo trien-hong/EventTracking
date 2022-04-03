@@ -92,7 +92,7 @@ def event_details():
     if flask.request.method == "POST":
         eventId = flask.request.form["eventId"]
         eventDetails = ticketmaster_api.getEventDetails(eventId)
-        return flask.render_template("event_details.html", name=eventDetails["name"], eventImageURL=eventDetails["eventImageURL"], startDate=eventDetails["startDate"], genre=eventDetails["genre"], minPrice=eventDetails["minPrice"], maxPrice=eventDetails["maxPrice"], venue=eventDetails["venue"], address=eventDetails["address"])
+        return flask.render_template("event_details.html", name=eventDetails["name"], eventImageURL=eventDetails["eventImageURL"], startDate=eventDetails["startDate"], genre=eventDetails["genre"], minPrice=eventDetails["minPrice"], maxPrice=eventDetails["maxPrice"], venue=eventDetails["venue"], address=eventDetails["address"], longitude=eventDetails["longitude"], latitude=eventDetails["latitude"], GOOGLEMAP_API_KEY=os.getenv("GOOGLEMAP_API_KEY"))
 
 @app.route("/logout")
 @login_required
