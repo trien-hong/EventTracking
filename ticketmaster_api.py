@@ -37,7 +37,7 @@ def getEventDetails(eventId: str):
         "name": ticketmaster_response_json["name"],
         "eventImageURL": ticketmaster_response_json["images"][0]["url"],
         "startDate": ticketmaster_response_json["dates"]["start"]["localDate"],
-        "genre": ticketmaster_response_json["classifications"][0]["genre"]["name"],\
+        "genre": ticketmaster_response_json["classifications"][0]["genre"]["name"],
         "minPrice": ticketmaster_response_json["priceRanges"][0]["min"],
         "maxPrice": ticketmaster_response_json["priceRanges"][0]["max"],
         "venue": ticketmaster_response_json["_embedded"]["venues"][0]["name"],
@@ -47,3 +47,27 @@ def getEventDetails(eventId: str):
     }
 
     return eventDetails
+
+def search(userInput: str):
+    TICKERTMASTER_API_KEY = os.getenv("TICKETMASTER_API_KEY")
+    
+    if len(userInput) == 5 and userInput.isnumeric():
+        url = "https://app.ticketmaster.com/discovery/v2/events?apikey=" + TICKERTMASTER_API_KEY + "&postalCode=" + userInput + "&locale=*"
+    else:
+        url = "https://app.ticketmaster.com/discovery/v2/events?apikey=" + TICKERTMASTER_API_KEY + "&keyword=" + userInput + "&locale=*"
+
+    ticketmaster_request = requests.get(url=url)
+
+    ticketmaster_response_json = ticketmaster_request.json()
+    
+    idList = []
+    nameList = []
+    imageList = []
+
+    for x in ticketmaster_response_json["_embedded"]["events"]:
+        idList.append(x["id"])
+        nameList.append(x["name"])
+        imageList.append(x["images"][0]["url"])
+    
+    return zip(idList, nameList, imageList)
+

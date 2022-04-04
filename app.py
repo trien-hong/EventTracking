@@ -77,6 +77,14 @@ def main():
     events = ticketmaster_api.getEvents(current_user.zip)
     return flask.render_template("index.html", events=events)
 
+
+@app.route("/search", methods=["POST"])
+@login_required
+def search():
+    user_input = flask.request.form["user_input"]
+    events = ticketmaster_api.search(user_input)
+    return flask.render_template("search.html", events=events)
+
 @app.route("/add", methods=["POST"])
 @login_required
 def add():
