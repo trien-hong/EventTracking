@@ -46,7 +46,7 @@ def signup():
         passwordHash = generate_password_hash(passwordData, method="sha256")
         #only querying to check if email already exists in the DB
         contains_data = Users.query.filter_by(email=emailData).first()
-        if contains_data is None: 
+        if contains_data is None:
             db.session.begin()
             insert_data = Users(emailData, passwordHash, zipData)
             db.session.add(insert_data)
@@ -77,6 +77,13 @@ def main():
     events = ticketmaster_api.getEvents(current_user.zip)
     return flask.render_template("index.html", events=events)
 
+@app.route("/profile", methods=["GET", "POST"])
+@login_required
+def profile():
+    if flask.request.method == "GET":
+        return flask.render_template("profile.html", user=current_user.email)
+    if flask.request.method == "POST":
+        pass
 
 @app.route("/search", methods=["POST"])
 @login_required
