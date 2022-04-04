@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
-        </style>
+        <link rel="stylesheet" type="text/css" href="/static/style.css"/>
+        <script type="text/javascript" src="/static/script.js"></script>
     </head>
     <body>
         <p>{{name}}</p>
         <p>{{eventImageURL}}</p>
         <p>{{startDate}}</p>
         <p>{{genre}}</p>
-        <p>${{minPrice}}</p>
-        <p>${{maxPrice}}</p>
+        <p>{{minPrice}}</p>
+        <p>{{maxPrice}}</p>
         <p>{{venue}}</p>
         <p>{{address}}</p>
+        <div id="map"></div>
+        <input type="hidden" name="longitude" id="longitude" value="{{longitude}}" readonly="readonly">
+        <input type="hidden" name="latitude" id="latitude" value="{{latitude}}" readonly="readonly">
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAP_API_KEY}}&callback=initMap&v=weekly"
+            async
+        ></script>
     </body>
 </html>
