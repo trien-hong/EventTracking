@@ -83,7 +83,11 @@ def main():
 def search():
     user_input = flask.request.form["user_input"]
     events = ticketmaster_api.search(user_input)
-    return flask.render_template("search.html", events=events)
+    if events == False:
+        flask.flash("Search came up empty. Please try again.")
+        return flask.render_template("search.html")
+    else:
+        return flask.render_template("search.html", events=events, allow="True")
 
 @app.route("/add", methods=["POST"])
 @login_required

@@ -59,15 +59,17 @@ def search(userInput: str):
     ticketmaster_request = requests.get(url=url)
 
     ticketmaster_response_json = ticketmaster_request.json()
-    
-    idList = []
-    nameList = []
-    imageList = []
 
-    for x in ticketmaster_response_json["_embedded"]["events"]:
-        idList.append(x["id"])
-        nameList.append(x["name"])
-        imageList.append(x["images"][0]["url"])
-    
-    return zip(idList, nameList, imageList)
+    if ticketmaster_response_json["page"]["totalElements"] == 0:
+        return False
+    else:
+        idList = []
+        nameList = []
+        imageList = []
 
+        for x in ticketmaster_response_json["_embedded"]["events"]:
+            idList.append(x["id"])
+            nameList.append(x["name"])
+            imageList.append(x["images"][0]["url"])
+        
+        return zip(idList, nameList, imageList)
