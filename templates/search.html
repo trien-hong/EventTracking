@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <form method="POST" action="/search">
+            <input type="text" name="user_input" placeholder="Search..." size="50">
+            <input type="submit" value="Submit"/>
+        </form>
+
+        {% if allow == 'True' %}
+            {% for event in events %}
+                <p>{{event[1]}}</p>
+                <form id="form1" method="POST" action="/add"></form>
+                <input type="hidden" name="eventTitle" value="{{event[1]}}" readonly="readonly" form="form1">
+                <form method="POST" action="/event_details">
+                    <input type="hidden" name="eventId" value="{{event[0]}}" readonly="readonly">
+                    <input type="image" src="{{event[2]}}" alt="Event Picture" style="width:250px;height:140px;">
+                </form>
+                <input type="submit" value="ADD EVENT" form="form1"/>
+            {% endfor %}
+        {% else %}
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{message}}</p>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+        {% endif %}
+    </body>
+</html>

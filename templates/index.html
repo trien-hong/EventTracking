@@ -5,6 +5,12 @@
         </style>
     </head>
     <body>
+        <form method="POST" action="/search">
+            <input type="text" name="user_input" placeholder="Search..." size="50">
+            <input type="submit" value="Submit"/>
+        </form>
+
+
         {% for event in events %}
             <p>{{event[1]}}</p>
             <form id="form1" method="POST" action="/add"></form>
