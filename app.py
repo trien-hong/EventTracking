@@ -4,11 +4,11 @@ import ticketmaster_api
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
 from flask_login import (
-    login_required, 
-    login_user, 
-    logout_user, 
-    LoginManager, 
-    login_manager, 
+    login_required,
+    login_user,
+    logout_user,
+    LoginManager,
+    login_manager,
     current_user
 )
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -52,7 +52,7 @@ def signup():
             db.session.add(insert_data)
             db.session.commit()
             return flask.redirect(flask.url_for("login"))
-        flask.flash("Email already exists or is incorrect. Please login instead.")    
+        flask.flash("Email already exists or is incorrect. Please login instead.")
     return flask.render_template("signup.html")
 
 @app.route("/login", methods=["GET", "POST"])
