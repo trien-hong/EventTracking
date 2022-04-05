@@ -4,11 +4,11 @@ import ticketmaster_api
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
 from flask_login import (
-    login_required, 
-    login_user, 
-    logout_user, 
-    LoginManager, 
-    login_manager, 
+    login_required,
+    login_user,
+    logout_user,
+    LoginManager,
+    login_manager,
     current_user
 )
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -46,13 +46,13 @@ def signup():
         passwordHash = generate_password_hash(passwordData, method="sha256")
         #only querying to check if email already exists in the DB
         contains_data = Users.query.filter_by(email=emailData).first()
-        if contains_data is None: 
+        if contains_data is None:
             db.session.begin()
             insert_data = Users(emailData, passwordHash, zipData)
             db.session.add(insert_data)
             db.session.commit()
             return flask.redirect(flask.url_for("login"))
-        flask.flash("Email already exists or is incorrect. Please login instead.")    
+        flask.flash("Email already exists or is incorrect. Please login instead.")
     return flask.render_template("signup.html")
 
 @app.route("/login", methods=["GET", "POST"])
