@@ -77,6 +77,13 @@ def main():
     events = ticketmaster_api.getEvents(current_user.zip)
     return flask.render_template("index.html", events=events)
 
+@app.route("/profile", methods=["GET", "POST"])
+@login_required
+def profile():
+    if flask.request.method == "GET":
+        return flask.render_template("profile.html", user=current_user.email)
+    if flask.request.method == "POST":
+        pass
 
 @app.route("/search", methods=["POST"])
 @login_required
