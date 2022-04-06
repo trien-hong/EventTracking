@@ -70,7 +70,6 @@ def login():
             return flask.redirect(flask.url_for("main"))
     return flask.render_template("login.html")
 
-
 @app.route("/main", methods=["GET", "POST"])
 @login_required
 def main():
@@ -106,14 +105,27 @@ def search(input):
         else:
             return flask.render_template("search.html", input=input, events=events, allow="True")
 
-@app.route("/add", methods=["POST"])
+@app.route("/add", methods=["GET","POST"])
 @login_required
 def add():
     if flask.request.method == "POST":
-        eventTitle = flask.request.form["eventTitle"]
-        print(eventTitle)
-        return flask.redirect(flask.url_for("main"))
-    return flask.redirect(flask.url_for("main"))
+        eventId = flask.request.form["eventId"]
+        currentPage = flask.request.form["currentPage"]
+        contains_data = UserEvents.query.filter_by(eventId=eventId).first()
+        if contains_data is None:
+            db.session.begin()
+            insert_data = UserEvents(current_user.email, eventId)
+            db.session.add(insert_data)
+            db.session.commit()
+            if currentPage == "index":
+                return flask.redirect(flask.url_for("main"))
+            elif currentPage == "search":
+                url = flask.request.referrer
+                split = url.split("/")
+                last_search = split[-1]
+                return flask.redirect(flask.url_for("search", input=last_search), code=307)
+            else:
+                return flask.redirect(flask.url_for("event_details"))
 
 @app.route("/event_details", methods=["GET", "POST"])
 @login_required
