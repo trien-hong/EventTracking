@@ -81,20 +81,30 @@ def main():
 @login_required
 def profile():
     if flask.request.method == "GET":
-        return flask.render_template("profile.html", user=current_user.email)
+        events = ticketmaster_api.getEvents(current_user.zip)
+        return flask.render_template("profile.html", user=current_user.email, events=events)
     if flask.request.method == "POST":
         pass
 
-@app.route("/search", methods=["POST"])
+@app.route("/reroute", methods=["POST"])
 @login_required
-def search():
-    user_input = flask.request.form["user_input"]
-    events = ticketmaster_api.search(user_input)
-    if events == False:
-        flask.flash("Search came up empty. Please try again.")
+def reroute():
+    if flask.request.method == "POST":
+        result = flask.request.form["user_input"]
+        return flask.redirect(flask.url_for("search", input=result), code=307)
+
+@app.route("/search/<input>", methods=["GET", "POST"])
+@login_required
+def search(input):
+    if flask.request.method == "GET":
         return flask.render_template("search.html")
-    else:
-        return flask.render_template("search.html", events=events, allow="True")
+    if flask.request.method == "POST":
+        events = ticketmaster_api.search(input)
+        if events == False:
+            flask.flash("Search came up empty. Please try again.")
+            return flask.render_template("search.html", input=input)
+        else:
+            return flask.render_template("search.html", input=input, events=events, allow="True")
 
 @app.route("/add", methods=["POST"])
 @login_required
@@ -105,9 +115,11 @@ def add():
         return flask.redirect(flask.url_for("main"))
     return flask.redirect(flask.url_for("main"))
 
-@app.route("/event_details", methods=["POST"])
+@app.route("/event_details", methods=["GET", "POST"])
 @login_required
 def event_details():
+    if flask.request.method == "GET":
+        return flask.render_template("event_details.html")
     if flask.request.method == "POST":
         eventId = flask.request.form["eventId"]
         eventDetails = ticketmaster_api.getEventDetails(eventId)
@@ -122,7 +134,7 @@ def logout():
 
 if __name__ == "__main__":
     db.create_all()
-    from models import Users
+    from models import Users, UserEvents
 
     app.run(
         host=os.getenv("IP", "0.0.0.0"),

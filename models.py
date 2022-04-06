@@ -12,3 +12,12 @@ class Users(db.Model, UserMixin):
         self.email = email
         self.password = password
         self.zip = zip
+
+class UserEvents(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String, nullable= False)
+    eventId = db.Column(db.String, nullable=False)
+
+    def __init__(self, eventId, email):
+        self.email = email
+        self.eventId = eventId
