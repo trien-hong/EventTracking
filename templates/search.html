@@ -14,6 +14,7 @@
                 <p>{{event[1]}}</p>
                 <form id="form1" method="POST" action="/add"></form>
                 <input type="hidden" name="eventId" value="{{event[0]}}" readonly="readonly" form="form1">
+                <input type="hidden" name="currentPage" value="search" readonly="readonly" form="form1">
                 <form method="POST" action="/event_details">
                     <input type="hidden" name="eventId" value="{{event[0]}}" readonly="readonly">
                     <input type="image" src="{{event[2]}}" alt="Event Picture" style="width:250px;height:140px;">

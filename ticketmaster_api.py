@@ -53,6 +53,8 @@ def search(userInput: str):
     
     if len(userInput) == 5 and userInput.isnumeric():
         url = "https://app.ticketmaster.com/discovery/v2/events?apikey=" + TICKERTMASTER_API_KEY + "&postalCode=" + userInput + "&locale=*"
+    elif userInput.isspace():
+        return False
     else:
         url = "https://app.ticketmaster.com/discovery/v2/events?apikey=" + TICKERTMASTER_API_KEY + "&keyword=" + userInput + "&locale=*"
 
