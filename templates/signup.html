@@ -11,7 +11,7 @@
             }
             .border {
                 border-style: solid;
-                background-color: aquamarine;
+                background-color: #FFC135;
                 display: inline-block;
                 padding-left: 20px;
                 padding-right: 20px;
@@ -33,13 +33,11 @@
                 {% endwith %}
             </ul>
             <form method="POST" action="/signup">
-                <input type="text" name="email" placeholder="Enter email" minlength="1" maxlength="100" required/>
-                <input type="text" name="password" placeholder="Enter password" minlength="1" required/>
+                <input type="email" name="email" placeholder="Enter email" minlength="1" maxlength="100" required/>
+                <input type="password" name="password" placeholder="Enter password" minlength="1" required/>
                 <input type="text" name="zip" placeholder="Enter zip code" minlength="5" maxlength="5" required/>
                 <input type="submit" value="SUBMIT"/>
             </form>
-            <p>Max length of 100 characters. Anything above 100 won't be entered.<p>
-            <hr>
             <p>If you have already signed up, please click the button below to login.</p>
             <form method="GET" action="/login">
                 <input type="submit" value="LOGIN HERE"/>
