@@ -41,17 +41,25 @@ def signup():
         return flask.render_template("signup.html")
     if flask.request.method == "POST":
         emailData = flask.request.form["email"]
-        passwordData = flask.request.form["password"]
-        zipData = flask.request.form["zip"]
-        passwordHash = generate_password_hash(passwordData, method="sha256")
-        #only querying to check if email already exists in the DB
-        contains_data = Users.query.filter_by(email=emailData).first()
-        if contains_data is None:
-            db.session.begin()
-            insert_data = Users(emailData, passwordHash, zipData)
-            db.session.add(insert_data)
-            db.session.commit()
-            return flask.redirect(flask.url_for("login"))
+        if emailData.endswith(".com"):
+            passwordData = flask.request.form["password"]
+            zipData = flask.request.form["zip"]
+            if zipData.isnumeric() and len(zipData)==5:
+                passwordHash = generate_password_hash(passwordData, method="sha256")
+                #only querying to check if email already exists in the DB
+                contains_data = Users.query.filter_by(email=emailData).first()
+                if contains_data is None:
+                    db.session.begin()
+                    insert_data = Users(emailData, passwordHash, zipData)
+                    db.session.add(insert_data)
+                    db.session.commit()
+                    return flask.redirect(flask.url_for("login"))
+            else:
+                flask.flash("Zipcode should be 5 numbers. Please try again.")
+                return flask.render_template("signup.html")    
+        else:
+            flask.flash("Email needs to end in '.com'. Please try again.")
+            return flask.render_template("signup.html")
         flask.flash("Email already exists or is incorrect. Please login instead.")
     return flask.render_template("signup.html")
 
