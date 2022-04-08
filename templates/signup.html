@@ -1,28 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style> 
-            body {
-                padding-top: 20px;
-                text-align: center;
-            }
-            hr {
-                width: 50%;
-            }
-            .border {
-                border-style: solid;
-                background-color: #FFC135;
-                display: inline-block;
-                padding-left: 20px;
-                padding-right: 20px;
-                padding-bottom: 20px;
-            }
-        </style>
+        <link rel="stylesheet" href= "../static/signup-login-style.css">
         <link rel="shortcut icon" href="#">
     </head>
     <body>
-        <div class=border>
-            <h2><u>SIGNUP</u></h2>
+        <div class="border">
+            <h2>SIGNUP</h2>
             <ul id="flashes" class=flashes>
                 {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -32,15 +16,22 @@
                 {% endif %}
                 {% endwith %}
             </ul>
-            <form method="POST" action="/signup">
-                <input type="email" name="email" placeholder="Enter email" minlength="1" maxlength="100" required/>
-                <input type="password" name="password" placeholder="Enter password" minlength="1" required/>
-                <input type="text" name="zip" placeholder="Enter zip code" minlength="5" maxlength="5" required/>
-                <input type="submit" value="SUBMIT"/>
-            </form>
+           <div class = "txt_field">
+                <form method="POST" action="/signup">
+                    <input class = "input" type="email" name="email" placeholder="Enter email" minlength="1" maxlength="100" required/>
+                    <input class = "input" type="password" name="password" placeholder="Enter password" minlength="1" required/>
+                    <input class = "input" type="text" name="zip" placeholder="Enter zip code" minlength="5" maxlength="5" required/>
+                    <br>
+                    <br>
+                    <input class = "s_button" type="submit" value="SUBMIT"/>
+                </form>
+                <br>
+                <hr>
+            </div>
             <p>If you have already signed up, please click the button below to login.</p>
             <form method="GET" action="/login">
-                <input type="submit" value="LOGIN HERE"/>
+                <input class = "s_button" type="submit" value="LOGIN HERE"/>
+                <br>
             </form>
         </div>
     </body>
