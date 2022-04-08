@@ -142,7 +142,16 @@ def add():
 @app.route("/delete", methods=["POST"])
 @login_required
 def delete():
-    pass
+    if flask.request.method == "POST":
+        eventId = flask.request.form["eventId"]
+        contains_data = UserEvents.query.filter_by(email=current_user.email, eventId=eventId).first()
+        if contains_data is not None:
+            db.session.begin()
+            UserEvents.query.filter_by(email=current_user.email, eventId=eventId).delete()
+            db.session.commit()
+            return flask.redirect(flask.url_for("profile"))
+        else:
+            return flask.redirect(flask.url_for("profile"))
 
 @app.route("/event_details", methods=["GET", "POST"])
 @login_required
