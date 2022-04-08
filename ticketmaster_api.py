@@ -4,11 +4,18 @@ from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv())
 
+
 def getEvents(parameter: str):
     TICKERTMASTER_API_KEY = os.getenv("TICKETMASTER_API_KEY")
 
     if len(parameter) == 5 and parameter.isnumeric():
-        url = "https://app.ticketmaster.com/discovery/v2/events?apikey=" + TICKERTMASTER_API_KEY + "&postalCode=" + parameter + "&locale=*"
+        url = (
+            "https://app.ticketmaster.com/discovery/v2/events?apikey="
+            + TICKERTMASTER_API_KEY
+            + "&postalCode="
+            + parameter
+            + "&locale=*"
+        )
 
         ticketmaster_request = requests.get(url=url)
 
@@ -22,27 +29,40 @@ def getEvents(parameter: str):
             idList.append(x["id"])
             nameList.append(x["name"])
             imageList.append(x["images"][0]["url"])
-        
+
         return zip(idList, nameList, imageList)
     else:
-        url = "https://app.ticketmaster.com/discovery/v2/events/" + parameter + "?apikey=" + TICKERTMASTER_API_KEY + "&locale=*"
+        url = (
+            "https://app.ticketmaster.com/discovery/v2/events/"
+            + parameter
+            + "?apikey="
+            + TICKERTMASTER_API_KEY
+            + "&locale=*"
+        )
 
         ticketmaster_request = requests.get(url=url)
 
-        ticketmaster_response_json = ticketmaster_request.json()    
+        ticketmaster_response_json = ticketmaster_request.json()
 
         event = {
             "id": ticketmaster_response_json["id"],
             "name": ticketmaster_response_json["name"],
-            "eventImageURL": ticketmaster_response_json["images"][0]["url"]
+            "eventImageURL": ticketmaster_response_json["images"][0]["url"],
         }
 
         return event
 
+
 def getEventDetails(eventId: str):
     TICKERTMASTER_API_KEY = os.getenv("TICKETMASTER_API_KEY")
 
-    url = "https://app.ticketmaster.com/discovery/v2/events/" + eventId + "?apikey=" + TICKERTMASTER_API_KEY + "&locale=*"
+    url = (
+        "https://app.ticketmaster.com/discovery/v2/events/"
+        + eventId
+        + "?apikey="
+        + TICKERTMASTER_API_KEY
+        + "&locale=*"
+    )
 
     ticketmaster_request = requests.get(url=url)
 
@@ -57,9 +77,21 @@ def getEventDetails(eventId: str):
             "minPrice": "$" + str(ticketmaster_response_json["priceRanges"][0]["min"]),
             "maxPrice": "$" + str(ticketmaster_response_json["priceRanges"][0]["max"]),
             "venue": ticketmaster_response_json["_embedded"]["venues"][0]["name"],
-            "address": ticketmaster_response_json["_embedded"]["venues"][0]["address"]["line1"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["city"]["name"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["state"]["name"] + " " + ticketmaster_response_json["_embedded"]["venues"][0]["postalCode"],
-            "longitude": ticketmaster_response_json["_embedded"]["venues"][0]["location"]["longitude"],
-            "latitude": ticketmaster_response_json["_embedded"]["venues"][0]["location"]["latitude"]
+            "address": ticketmaster_response_json["_embedded"]["venues"][0]["address"][
+                "line1"
+            ]
+            + ", "
+            + ticketmaster_response_json["_embedded"]["venues"][0]["city"]["name"]
+            + ", "
+            + ticketmaster_response_json["_embedded"]["venues"][0]["state"]["name"]
+            + " "
+            + ticketmaster_response_json["_embedded"]["venues"][0]["postalCode"],
+            "longitude": ticketmaster_response_json["_embedded"]["venues"][0][
+                "location"
+            ]["longitude"],
+            "latitude": ticketmaster_response_json["_embedded"]["venues"][0][
+                "location"
+            ]["latitude"],
         }
     else:
         eventDetails = {
@@ -70,22 +102,47 @@ def getEventDetails(eventId: str):
             "minPrice": "TBD",
             "maxPrice": "TBD",
             "venue": ticketmaster_response_json["_embedded"]["venues"][0]["name"],
-            "address": ticketmaster_response_json["_embedded"]["venues"][0]["address"]["line1"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["city"]["name"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["state"]["name"] + " " + ticketmaster_response_json["_embedded"]["venues"][0]["postalCode"],
-            "longitude": ticketmaster_response_json["_embedded"]["venues"][0]["location"]["longitude"],
-            "latitude": ticketmaster_response_json["_embedded"]["venues"][0]["location"]["latitude"]
+            "address": ticketmaster_response_json["_embedded"]["venues"][0]["address"][
+                "line1"
+            ]
+            + ", "
+            + ticketmaster_response_json["_embedded"]["venues"][0]["city"]["name"]
+            + ", "
+            + ticketmaster_response_json["_embedded"]["venues"][0]["state"]["name"]
+            + " "
+            + ticketmaster_response_json["_embedded"]["venues"][0]["postalCode"],
+            "longitude": ticketmaster_response_json["_embedded"]["venues"][0][
+                "location"
+            ]["longitude"],
+            "latitude": ticketmaster_response_json["_embedded"]["venues"][0][
+                "location"
+            ]["latitude"],
         }
 
     return eventDetails
 
+
 def search(userInput: str):
     TICKERTMASTER_API_KEY = os.getenv("TICKETMASTER_API_KEY")
-    
+
     if len(userInput) == 5 and userInput.isnumeric():
-        url = "https://app.ticketmaster.com/discovery/v2/events?apikey=" + TICKERTMASTER_API_KEY + "&postalCode=" + userInput + "&locale=*"
+        url = (
+            "https://app.ticketmaster.com/discovery/v2/events?apikey="
+            + TICKERTMASTER_API_KEY
+            + "&postalCode="
+            + userInput
+            + "&locale=*"
+        )
     elif userInput.isspace():
         return False
     else:
-        url = "https://app.ticketmaster.com/discovery/v2/events?apikey=" + TICKERTMASTER_API_KEY + "&keyword=" + userInput + "&locale=*"
+        url = (
+            "https://app.ticketmaster.com/discovery/v2/events?apikey="
+            + TICKERTMASTER_API_KEY
+            + "&keyword="
+            + userInput
+            + "&locale=*"
+        )
 
     ticketmaster_request = requests.get(url=url)
 
@@ -102,5 +159,5 @@ def search(userInput: str):
             idList.append(x["id"])
             nameList.append(x["name"])
             imageList.append(x["images"][0]["url"])
-        
+
         return zip(idList, nameList, imageList)
