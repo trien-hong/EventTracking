@@ -1,10 +1,23 @@
+# pylint: disable=C0301, C0103
+
+"""
+SWE Final Project | Event Tracking
+"""
+
 import unittest
 from unittest.mock import MagicMock, patch
 from ticketmaster_api import getEvents, getEventDetails, search
 
 
 class TicketmasterMockedTest(unittest.TestCase):
+    """
+    This class is for mocked testing
+    """
+
     def test_getEvents1(self):
+        """
+        Test getEvents() method within ticketmaster_api.py with zipcode as parameter
+        """
         mock_response = MagicMock()
         mock_response.json.return_value = {
             "_embedded": {
@@ -37,6 +50,9 @@ class TicketmasterMockedTest(unittest.TestCase):
             )
 
     def test_getEvents2(self):
+        """
+        Test getEvents() method within ticketmaster_api.py with event_id as parameter
+        """
         mock_response = MagicMock()
         mock_response.json.return_value = {
             "name": "BILLIE EILISH",
@@ -61,6 +77,9 @@ class TicketmasterMockedTest(unittest.TestCase):
             )
 
     def test_getEventDetails(self):
+        """
+        Test getEventDetails() method within ticketmaster_api.py with event_id as parameter
+        """
         mock_response = MagicMock()
         mock_response.json.return_value = {
             "name": "BTS PERMISSION TO DANCE ON STAGE - LIVE PLAY in Las Vegas",
@@ -124,6 +143,9 @@ class TicketmasterMockedTest(unittest.TestCase):
             )
 
     def test_search(self):
+        """
+        Test search() method within ticketmaster_api.py with zipcode as parameter
+        """
         mock_response = MagicMock()
         mock_response.json.return_value = {"page": {"totalElements": 0}}
 
@@ -133,11 +155,18 @@ class TicketmasterMockedTest(unittest.TestCase):
             self.assertEqual(search("12345"), False)
 
 
-# depending on when you test this, you might get different results.
-# that's due to the fact that new events are added and old events are removed
-# from the ticketmaster's system.
+# depending on when you test this, you might get different results
+# that's due to the fact that new events are added and old events
+# are removed/updated from the ticketmaster's system.
 class TicketmasterUnmockedTest(unittest.TestCase):
+    """
+    This class is for unmocked testing
+    """
+
     def test_getEventDetails(self):
+        """
+        Test getEventDetails() method within ticketmaster_api.py with event_id as parameter
+        """
         test = "Z7r9jZ1AdCp1A"
         expected_output = {
             "id": "Z7r9jZ1AdCp1A",
@@ -148,6 +177,9 @@ class TicketmasterUnmockedTest(unittest.TestCase):
         self.assertEqual(expected_output, actual_output)
 
     def test_search(self):
+        """
+        Test search() method within ticketmaster_api.py with a random string of characters as parameter
+        """
         test = "igbu33af4aef7ef666uaaa3"
         expected_output = False
         actual_output = search(test)
