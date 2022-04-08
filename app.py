@@ -1,8 +1,9 @@
 # pylint: disable=E1101, W1508
 
 """
-SWE Final Project
+SWE Final Project | Event Tracking
 """
+
 import os
 import flask
 from flask_sqlalchemy import SQLAlchemy

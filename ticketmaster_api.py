@@ -1,3 +1,9 @@
+# pylint: disable=C0103
+
+"""
+SWE Final Project | Event Tracking
+"""
+
 import os
 import requests
 from dotenv import find_dotenv, load_dotenv
@@ -6,6 +12,9 @@ load_dotenv(find_dotenv())
 
 
 def getEvents(parameter: str):
+    """
+    This function was used to get the events
+    """
     TICKERTMASTER_API_KEY = os.getenv("TICKETMASTER_API_KEY")
 
     if len(parameter) == 5 and parameter.isnumeric():
@@ -31,29 +40,31 @@ def getEvents(parameter: str):
             imageList.append(x["images"][0]["url"])
 
         return zip(idList, nameList, imageList)
-    else:
-        url = (
-            "https://app.ticketmaster.com/discovery/v2/events/"
-            + parameter
-            + "?apikey="
-            + TICKERTMASTER_API_KEY
-            + "&locale=*"
-        )
+    url = (
+        "https://app.ticketmaster.com/discovery/v2/events/"
+        + parameter
+        + "?apikey="
+        + TICKERTMASTER_API_KEY
+        + "&locale=*"
+    )
 
-        ticketmaster_request = requests.get(url=url)
+    ticketmaster_request = requests.get(url=url)
 
-        ticketmaster_response_json = ticketmaster_request.json()
+    ticketmaster_response_json = ticketmaster_request.json()
 
-        event = {
-            "id": ticketmaster_response_json["id"],
-            "name": ticketmaster_response_json["name"],
-            "eventImageURL": ticketmaster_response_json["images"][0]["url"],
-        }
+    event = {
+        "id": ticketmaster_response_json["id"],
+        "name": ticketmaster_response_json["name"],
+        "eventImageURL": ticketmaster_response_json["images"][0]["url"],
+    }
 
-        return event
+    return event
 
 
 def getEventDetails(eventId: str):
+    """
+    This function was used to get the specific event details for said event.
+    """
     TICKERTMASTER_API_KEY = os.getenv("TICKETMASTER_API_KEY")
 
     url = (
@@ -123,6 +134,9 @@ def getEventDetails(eventId: str):
 
 
 def search(userInput: str):
+    """
+    This function was used to get events based on the user input.
+    """
     TICKERTMASTER_API_KEY = os.getenv("TICKETMASTER_API_KEY")
 
     if len(userInput) == 5 and userInput.isnumeric():
@@ -150,14 +164,13 @@ def search(userInput: str):
 
     if ticketmaster_response_json["page"]["totalElements"] == 0:
         return False
-    else:
-        idList = []
-        nameList = []
-        imageList = []
+    idList = []
+    nameList = []
+    imageList = []
 
-        for x in ticketmaster_response_json["_embedded"]["events"]:
-            idList.append(x["id"])
-            nameList.append(x["name"])
-            imageList.append(x["images"][0]["url"])
+    for x in ticketmaster_response_json["_embedded"]["events"]:
+        idList.append(x["id"])
+        nameList.append(x["name"])
+        imageList.append(x["images"][0]["url"])
 
-        return zip(idList, nameList, imageList)
+    return zip(idList, nameList, imageList)
