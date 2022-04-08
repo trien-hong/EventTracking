@@ -169,6 +169,9 @@ def logout():
     logout_user()
     return flask.redirect(flask.url_for("signup"))
 
+@app.errorhandler(500)
+def internal_error(error):
+    return flask.redirect(flask.url_for("profile"))
 
 if __name__ == "__main__":
     db.create_all()
