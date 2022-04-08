@@ -1,4 +1,4 @@
-# pylint: disable=E1101, R0903
+# pylint: disable=E1101, R0903, W0622
 
 """
 SWE Final Project | Event Tracking
@@ -18,10 +18,10 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(100), nullable=False)
     zip = db.Column(db.String(5), nullable=False)
 
-    def __init__(self, email, password, zipcode):
+    def __init__(self, email, password, zip):
         self.email = email
         self.password = password
-        self.zipcode = zipcode
+        self.zip = zip
 
 
 class UserEvents(db.Model):
@@ -33,6 +33,6 @@ class UserEvents(db.Model):
     email = db.Column(db.String(100), nullable=False)
     event_id = db.Column(db.String(100), nullable=False)
 
-    def __init__(self, email, event_id):
+    def __init__(self, email, eventid):
         self.email = email
-        self.event_id = event_id
+        self.eventid = eventid
