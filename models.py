@@ -15,9 +15,9 @@ class Users(db.Model, UserMixin):
 
 class UserEvents(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String, nullable= False)
-    eventId = db.Column(db.String, nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    eventId = db.Column(db.String(100), nullable=False)
 
-    def __init__(self, eventId, email):
+    def __init__(self, email, eventId):
         self.email = email
         self.eventId = eventId

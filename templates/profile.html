@@ -2,8 +2,21 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="/static/style.css"/>
+        <link rel="shortcut icon" href="#">
     </head>
     <body>
         <h1>Welcome, {{user}}</h1>
+        <h2>Your Events</h2>
+        {% for event in events %}
+            <p>{{event.name}}</p>
+            <form id="{{event.id}}" method="POST" action="/delete"></form>
+            <input type="hidden" name="eventId" value="{{event.id}}" readonly="readonly" form="{{event.id}}">
+            <input type="hidden" name="currentPage" value="index" readonly="readonly" form="{{event.id}}">
+            <form method="POST" action="/event_details">
+                <input type="hidden" name="eventId" value="{{event.id}}" readonly="readonly">
+                <input type="image" src="{{event.eventImageURL}}" alt="Event Picture" style="width:250px;height:140px;">
+            </form>
+            <input type="submit" value="DELETE EVENT" form="{{event.id}}"/>
+        {% endfor %}
     </body>
 </html>

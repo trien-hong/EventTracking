@@ -56,7 +56,7 @@ def signup():
                     return flask.redirect(flask.url_for("login"))
             else:
                 flask.flash("Zipcode should be 5 numbers. Please try again.")
-                return flask.render_template("signup.html")    
+                return flask.render_template("signup.html")
         else:
             flask.flash("Email needs to end in '.com'. Please try again.")
             return flask.render_template("signup.html")
@@ -88,10 +88,11 @@ def main():
 @login_required
 def profile():
     if flask.request.method == "GET":
-        events = ticketmaster_api.getEvents(current_user.zip)
-        return flask.render_template("profile.html", user=current_user.email, events=events)
-    if flask.request.method == "POST":
-        pass
+        myList = []
+        events = UserEvents.query.filter_by(email=current_user.email).all()
+        for event in events:
+            myList.append(ticketmaster_api.getEvents(event.eventId))
+        return flask.render_template("profile.html", user=current_user.email, events=myList)
 
 @app.route("/reroute", methods=["POST"])
 @login_required
@@ -113,13 +114,13 @@ def search(input):
         else:
             return flask.render_template("search.html", input=input, events=events, allow="True")
 
-@app.route("/add", methods=["GET","POST"])
+@app.route("/add", methods=["POST"])
 @login_required
 def add():
     if flask.request.method == "POST":
         eventId = flask.request.form["eventId"]
         currentPage = flask.request.form["currentPage"]
-        contains_data = UserEvents.query.filter_by(eventId=eventId).first()
+        contains_data = UserEvents.query.filter_by(email=current_user.email, eventId=eventId).first()
         if contains_data is None:
             db.session.begin()
             insert_data = UserEvents(current_user.email, eventId)
@@ -134,6 +135,23 @@ def add():
                 return flask.redirect(flask.url_for("search", input=last_search), code=307)
             else:
                 return flask.redirect(flask.url_for("event_details"))
+        else:
+            flask.flash("Event has already been added to your list. Please choose another event.")
+            return flask.redirect(flask.url_for("main"), code=307)
+
+@app.route("/delete", methods=["POST"])
+@login_required
+def delete():
+    if flask.request.method == "POST":
+        eventId = flask.request.form["eventId"]
+        contains_data = UserEvents.query.filter_by(email=current_user.email, eventId=eventId).first()
+        if contains_data is not None:
+            db.session.begin()
+            UserEvents.query.filter_by(email=current_user.email, eventId=eventId).delete()
+            db.session.commit()
+            return flask.redirect(flask.url_for("profile"))
+        else:
+            return flask.redirect(flask.url_for("profile"))
 
 @app.route("/event_details", methods=["GET", "POST"])
 @login_required
