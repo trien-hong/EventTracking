@@ -60,9 +60,11 @@ def signup():
             zip_data = flask.request.form["zip"]
             if zip_data.isnumeric() and len(zip_data) == 5:
                 password_hash = generate_password_hash(password_data, method="sha256")
-                # only querying to check if email already exists in the DB
+                # generate a hash using sha256
                 contains_data = Users.query.filter_by(email=email_data).first()
+                # only querying to check if email already exists in the DB
                 if contains_data is None:
+                    # if the email was not found in the database it'll be added here
                     db.session.begin()
                     insert_data = Users(email_data, password_hash, zip_data)
                     db.session.add(insert_data)
@@ -89,11 +91,13 @@ def login():
         email_data = flask.request.form["email"]
         email_query = Users.query.filter_by(email=email_data).first()
         password_data = flask.request.form["password"]
+        # the email & hash + salt will be checked here
         if email_query is None or not check_password_hash(
             email_query.password, password_data
         ):
             flask.flash("Email or password is incorrect. Please try again.")
         else:
+            # if the email & hash + salt is found it'll log the user in
             login_user(email_query)
             return flask.redirect(flask.url_for("main"))
     return flask.render_template("login.html")
@@ -118,6 +122,7 @@ def profile():
     """
     if flask.request.method == "GET":
         my_list = []
+        # query the database for all the events of the current user and display
         events = UserEvents.query.filter_by(email=current_user.email).all()
         for event in events:
             my_list.append(ticketmaster_api.getEvents(event.eventId))
@@ -131,10 +136,11 @@ def profile():
 @login_required
 def reroute():
     """
-    The reroute route was used to keep track of the search term.
+    The reroute route is used to keep track of the search term.
     """
     if flask.request.method == "POST":
         result = flask.request.form["user_input"]
+        # the reason for this was to generate dynamic URLs
         return flask.redirect(flask.url_for("search", user_input=result), code=307)
     return ""
 
@@ -143,7 +149,7 @@ def reroute():
 @login_required
 def search(user_input):
     """
-    The search route was used to display the events of the search term.
+    The search route is used to display the events of the search term.
     """
     if flask.request.method == "GET":
         return flask.render_template("search.html")
@@ -151,6 +157,8 @@ def search(user_input):
         events = ticketmaster_api.search(user_input)
         if events is False:
             flask.flash("Search came up empty. Please try again.")
+            # user_input will act at the new URL of the user's input
+            # ex: /search/<user_input> -> /search/baseball
             return flask.render_template("search.html", user_input=user_input)
         return flask.render_template(
             "search.html", user_input=user_input, events=events, allow="True"
@@ -162,7 +170,7 @@ def search(user_input):
 @login_required
 def add():
     """
-    The add route was used to allow the user to add events to their events list.
+    The add route is used to allow the user to add events to their events list.
     """
     if flask.request.method == "POST":
         event_id = flask.request.form["eventId"]
@@ -170,6 +178,7 @@ def add():
         contains_data = UserEvents.query.filter_by(
             email=current_user.email, eventId=event_id
         ).first()
+        # if the added event is not in the database it'll be added
         if contains_data is None:
             db.session.begin()
             insert_data = UserEvents(current_user.email, event_id)
@@ -194,13 +203,14 @@ def add():
 @login_required
 def delete():
     """
-    The delete route was used to allow users to delete events from their events list.
+    The delete route is used to allow users to delete events from their events list.
     """
     if flask.request.method == "POST":
         event_id = flask.request.form["eventId"]
         contains_data = UserEvents.query.filter_by(
             email=current_user.email, eventId=event_id
         ).first()
+        # if deleted event is found in the database it'll be deleated
         if contains_data is not None:
             db.session.begin()
             UserEvents.query.filter_by(
@@ -222,6 +232,8 @@ def event_details():
         return flask.render_template("event_details.html")
     if flask.request.method == "POST":
         event_id = flask.request.form["eventId"]
+        # will call the function getEventDetails with event_id as the parameter
+        # and return a dictionary of said event with the most notable information
         event_detail = ticketmaster_api.getEventDetails(event_id)
         return flask.render_template(
             "event_details.html",
