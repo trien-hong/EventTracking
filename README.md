@@ -73,6 +73,7 @@ These secret keys must be put into your .env file to keep the information privat
 * R0903 - We don't need public functions in file, just the class for database
 * C0103 - Sometimes you're just so use to camel case and forget pylint likes snake cases more.
 * C0301 - Some of the dictionaries within testing are very long
+* W0622 - I know that zip is a function and it is telling us to rename but though if we did, we would have to rename every zip word throughout app.py
 
 References: 
 We used [this link](https://developers.google.com/maps/documentation/javascript/adding-a-google-map#maps_add_map-javascript) for Google Maps.
