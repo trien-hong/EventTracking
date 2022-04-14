@@ -18,6 +18,7 @@ from flask_login import (
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 import ticketmaster_api
+import openweathermap_api
 
 load_dotenv(find_dotenv())
 
@@ -235,6 +236,7 @@ def event_details():
         # will call the function getEventDetails with event_id as the parameter
         # and return a dictionary of said event with the most notable information
         event_detail = ticketmaster_api.getEventDetails(event_id)
+        weather_detail = openweathermap_api.getWeather(event_detail["latitude"], event_detail["longitude"])
         return flask.render_template(
             "event_details.html",
             name=event_detail["name"],
@@ -247,6 +249,13 @@ def event_details():
             address=event_detail["address"],
             longitude=event_detail["longitude"],
             latitude=event_detail["latitude"],
+            temperature_f=weather_detail["temperature_f"],
+            temperature_c=weather_detail["temperature_c"],
+            temperature_min_f=weather_detail["temperature_min_f"],
+            temperature_min_c=weather_detail["temperature_min_c"],
+            temperature_max_f=weather_detail["temperature_max_f"],
+            temperature_max_c=weather_detail["temperature_max_c"],
+            weather_icon=weather_detail["weather_icon"],
             GOOGLEMAP_API_KEY=os.getenv("GOOGLEMAP_API_KEY"),
         )
     return ""

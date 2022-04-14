@@ -14,6 +14,10 @@
         <p>{{maxPrice}}</p>
         <p>{{venue}}</p>
         <p>{{address}}</p>
+        <img src="http://openweathermap.org/img/wn/{{weather_icon}}@2x.png", alt="weather icon">
+        <p>Temperature: {{temperature_f}}°F/{{temperature_c}}°C</p>
+        <p>Low: {{temperature_min_f}}°F/{{temperature_min_c}}°C</p>
+        <p>High: {{temperature_max_f}}°F/{{temperature_max_c}}°C</p>
         <div id="map"></div>
         <input type="hidden" name="longitude" id="longitude" value="{{longitude}}" readonly="readonly">
         <input type="hidden" name="latitude" id="latitude" value="{{latitude}}" readonly="readonly">
