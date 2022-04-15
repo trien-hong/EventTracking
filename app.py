@@ -110,8 +110,9 @@ def main():
     """
     This route will display the events based on the current user's zipcode.
     """
-    events = ticketmaster_api.getEvents(current_user.zip)
-    return flask.render_template("index.html", events=events)
+    idList, nameList, imageList, dateList, cityList, stateList, minPriceList, maxPriceList = ticketmaster_api.getEvents(current_user.zip)
+    
+    return flask.render_template("index.html", events=zip(idList, nameList, imageList, dateList, cityList, stateList, minPriceList, maxPriceList))
 
 
 @app.route("/profile", methods=["GET", "POST"])

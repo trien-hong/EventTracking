@@ -33,13 +33,28 @@ def getEvents(parameter: str):
         idList = []
         nameList = []
         imageList = []
+        dateList = []
+        cityList = []
+        stateList = []
+        minPriceList = []
+        maxPriceList = []
 
+        index = 0
         for x in ticketmaster_response_json["_embedded"]["events"]:
             idList.append(x["id"])
             nameList.append(x["name"])
             imageList.append(x["images"][0]["url"])
-
-        return zip(idList, nameList, imageList)
+            dateList.append(x["dates"]["start"]["localDate"])
+            cityList.append(x["_embedded"]["venues"][0]["city"]["name"])
+            stateList.append(x["_embedded"]["venues"][0]["state"]["stateCode"])
+            if "priceRanges" in ticketmaster_response_json["_embedded"]["events"][index]:
+                minPriceList.append("$" + str(x["priceRanges"][0]["min"]))
+                maxPriceList.append("$" + str(x["priceRanges"][0]["max"]))
+            else:
+                minPriceList.append("TBD")
+                maxPriceList.append("TBD")
+            index = index + 1
+        return idList, nameList, imageList, dateList, cityList, stateList, minPriceList, maxPriceList
     url = (
         "https://app.ticketmaster.com/discovery/v2/events/"
         + parameter
@@ -78,7 +93,7 @@ def getEventDetails(eventId: str):
     ticketmaster_request = requests.get(url=url)
 
     ticketmaster_response_json = ticketmaster_request.json()
-
+    
     if "priceRanges" in ticketmaster_response_json:
         eventDetails = {
             "name": ticketmaster_response_json["name"],

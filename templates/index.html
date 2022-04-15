@@ -18,16 +18,31 @@
             {% endif %}
         {% endwith %}
 
-        {% for event in events %}
-            <p>{{event[1]}}</p>
-            <form id="{{event[0]}}" method="POST" action="/add"></form>
-            <input type="hidden" name="eventId" value="{{event[0]}}" readonly="readonly" form="{{event[0]}}">
-            <input type="hidden" name="currentPage" value="index" readonly="readonly" form="{{event[0]}}">
-            <form method="POST" action="/event_details">
-                <input type="hidden" name="eventId" value="{{event[0]}}" readonly="readonly">
-                <input type="image" src="{{event[2]}}" alt="Event Picture" style="width:250px;height:140px;">
-            </form>
-            <input type="submit" value="ADD EVENT" form="{{event[0]}}"/>
-        {% endfor %}
+        <div id="container">
+            {% for event_row in events|batch(1) %}
+                <div class="row">
+                    {% for event in event_row %}
+                        <div class="item">
+                            <center>
+                                <p>{{event[1]}}</p>
+                                <p>{{event[3]}} | {{event[4]}}, {{event[5]}}</p>
+                                <form id="{{event[0]}}" method="POST" action="/add"></form>
+                                <input type="hidden" name="eventId" value="{{event[0]}}" readonly="readonly" form="{{event[0]}}">
+                                <input type="hidden" name="currentPage" value="index" readonly="readonly" form="{{event[0]}}">
+                                <form method="POST" action="/event_details">
+                                    <input type="hidden" name="eventId" value="{{event[0]}}" readonly="readonly">
+                                    <input type="image" src="{{event[2]}}" alt="Event Picture" style="width:250px;height:140px;">
+                                </form>
+                                <br>
+                                <p>{{event[6]}} - {{event[7]}}</p>
+                                <input type="submit" value="ADD EVENT" form="{{event[0]}}"/>
+                                <br>
+                                <br>
+                            </center>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
     </body>
 </html>
