@@ -31,3 +31,12 @@ def getWeather(lat: str, lon: str):
     }
     
     return weather_details
+
+def openWeatherMapTest1(lat: str, lon: str):
+    return [float(lat), float(lon)]
+
+def openWeatherMapTest2(kelvin: int):
+    return round((kelvin - 273.15) * 9/5 + 32, 2)
+
+def openWeatherMapTest3(kelvin:int):
+    return round(kelvin - 273.15, 2)

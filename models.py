@@ -32,7 +32,11 @@ class UserEvents(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), nullable=False)
     eventId = db.Column(db.String(100), nullable=False)
+    eventName = db.Column(db.String(250), nullable=False)
+    eventImageURL = db.Column(db.String(300), nullable=False)
 
-    def __init__(self, email, eventId):
+    def __init__(self, email, eventId, eventName, eventImageURL):
         self.email = email
         self.eventId = eventId
+        self.eventName = eventName
+        self.eventImageURL = eventImageURL
