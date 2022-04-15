@@ -30,6 +30,9 @@ def getEvents(parameter: str):
 
         ticketmaster_response_json = ticketmaster_request.json()
 
+        if ticketmaster_response_json["page"]["totalElements"] == 0:
+            return False
+
         idList = []
         nameList = []
         imageList = []
@@ -55,25 +58,7 @@ def getEvents(parameter: str):
                 maxPriceList.append("TBD")
             index = index + 1
         return idList, nameList, imageList, dateList, cityList, stateList, minPriceList, maxPriceList
-    url = (
-        "https://app.ticketmaster.com/discovery/v2/events/"
-        + parameter
-        + "?apikey="
-        + TICKERTMASTER_API_KEY
-        + "&locale=*"
-    )
-
-    ticketmaster_request = requests.get(url=url)
-
-    ticketmaster_response_json = ticketmaster_request.json()
-
-    event = {
-        "id": ticketmaster_response_json["id"],
-        "name": ticketmaster_response_json["name"],
-        "eventImageURL": ticketmaster_response_json["images"][0]["url"],
-    }
-
-    return event
+    return ""
 
 
 def getEventDetails(eventId: str):

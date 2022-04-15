@@ -4,9 +4,11 @@
 SWE Final Project | Event Tracking
 """
 
+from cgi import test
 import unittest
 from unittest.mock import MagicMock, patch
 from ticketmaster_api import getEvents, getEventDetails, search
+from openweathermap_api import openWeatherMapTest1, openWeatherMapTest2, openWeatherMapTest3
 
 
 class TicketmasterMockedTest(unittest.TestCase):
@@ -30,8 +32,26 @@ class TicketmasterMockedTest(unittest.TestCase):
                                 "url": "https://s1.ticketm.net/dam/c/060/c5c08e7a-9912-456c-a060-2758be94e060_105881_CUSTOM.jpg"
                             }
                         ],
+                        "dates": {
+                            "start": {
+                                "localDate": "2022-10-10"
+                            }
+                        },
+                        "_embedded": {
+                            "venues": [{
+                                "city": {
+                                    "name": "Hollywood"
+                                },
+                                "state": {
+                                    "stateCode": "CA"
+                                },
+                            }]
+                        },
                     }
-                ]
+                ],
+            },
+            "page": {
+                "totalElements": 800,
             }
         }
 
@@ -45,35 +65,8 @@ class TicketmasterMockedTest(unittest.TestCase):
                     ["Yeat"],
                     [
                         "https://s1.ticketm.net/dam/c/060/c5c08e7a-9912-456c-a060-2758be94e060_105881_CUSTOM.jpg"
-                    ],
+                    ], ["2022-10-10"], ["Hollywood"], ["CA"], ["TBD"], ["TBD"]
                 ),
-            )
-
-    def test_getEvents2(self):
-        """
-        Test getEvents() method within ticketmaster_api.py with event_id as parameter
-        """
-        mock_response = MagicMock()
-        mock_response.json.return_value = {
-            "name": "BILLIE EILISH",
-            "id": "rZ7SnyZ1Ad1fJ8",
-            "images": [
-                {
-                    "url": "https://s1.ticketm.net/dam/a/16b/54be164f-49f9-4fc2-b0a9-5e7d3833f16b_1439751_ARTIST_PAGE_3_2.jpg"
-                }
-            ],
-        }
-
-        with patch("ticketmaster_api.requests.get") as mock_requests_get:
-            mock_requests_get.return_value = mock_response
-
-            self.assertEqual(
-                getEvents("rZ7SnyZ1Ad1fJ8"),
-                {
-                    "id": "rZ7SnyZ1Ad1fJ8",
-                    "name": "BILLIE EILISH",
-                    "eventImageURL": "https://s1.ticketm.net/dam/a/16b/54be164f-49f9-4fc2-b0a9-5e7d3833f16b_1439751_ARTIST_PAGE_3_2.jpg",
-                },
             )
 
     def test_getEventDetails(self):
@@ -154,37 +147,29 @@ class TicketmasterMockedTest(unittest.TestCase):
 
             self.assertEqual(search("12345"), False)
 
-
-# depending on when you test this, you might get different results
-# that's due to the fact that new events are added and old events
-# are removed/updated from the ticketmaster's system.
-class TicketmasterUnmockedTest(unittest.TestCase):
+class OpenWeatherMapUnmockedTest(unittest.TestCase):
     """
     This class is for unmocked testing
     """
 
-    def test_getEventDetails(self):
-        """
-        Test getEventDetails() method within ticketmaster_api.py with event_id as parameter
-        """
-        test = "Z7r9jZ1AdCp1A"
-        expected_output = {
-            "id": "Z7r9jZ1AdCp1A",
-            "name": "Taylor Swift Night",
-            "eventImageURL": "https://s1.ticketm.net/dam/c/060/c5c08e7a-9912-456c-a060-2758be94e060_105881_CUSTOM.jpg",
-        }
-        actual_output = getEvents(test)
+    def test_openWeatherMapTest1(self):
+        test1 = "123.4"
+        test2 = "-35.8"
+        expected_output = [123.4, -35.8]
+        actual_output = openWeatherMapTest1(test1, test2)
         self.assertEqual(expected_output, actual_output)
 
-    def test_search(self):
-        """
-        Test search() method within ticketmaster_api.py with a random string of characters as parameter
-        """
-        test = "igbu33af4aef7ef666uaaa3"
-        expected_output = False
-        actual_output = search(test)
-        self.assertEqual(expected_output, actual_output)
+    def test_openWeatherMapTest2(self):
+        test = 300
+        expected_output = -0.67
+        actual_output = openWeatherMapTest2(test)
+        self.assertLess(expected_output, actual_output)
 
+    def test_openWeatherMapTest3(self):
+        test = 250
+        expected_output = 0
+        actual_output = openWeatherMapTest3(test)
+        self.assertGreater(expected_output, actual_output)
 
 if __name__ == "__main__":
     unittest.main()

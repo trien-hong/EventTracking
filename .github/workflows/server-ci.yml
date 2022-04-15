@@ -43,5 +43,12 @@ jobs:
       - name: Lint files
         run: find . -name '*.py' -exec pylint {} \;
         
-      - name: Run tests
-        run: python -m unittest
+      - name: Get key
+        run: | 
+          echo ${{ secrets.TICKETMASTER_API_KEY }}
+        
+      - name: Run test
+        env: 
+          TICKETMASTER_API_KEY: ${{ secrets.TICKETMASTER_API_KEY }}
+        run: |
+          python3 -m unit_test

@@ -4,6 +4,7 @@
 SWE Final Project | Event Tracking
 """
 
+import email
 import os
 import flask
 from flask_sqlalchemy import SQLAlchemy
@@ -110,12 +111,14 @@ def main():
     """
     This route will display the events based on the current user's zipcode.
     """
+    if ticketmaster_api.getEvents(current_user.zip) == False:
+        flask.flash("Your zipcode doesn't contain any events. Try searching for an event instead.")
+        return flask.render_template("index.html", allow="False")
     idList, nameList, imageList, dateList, cityList, stateList, minPriceList, maxPriceList = ticketmaster_api.getEvents(current_user.zip)
-    
-    return flask.render_template("index.html", events=zip(idList, nameList, imageList, dateList, cityList, stateList, minPriceList, maxPriceList))
+    return flask.render_template("index.html", events=zip(idList, nameList, imageList, dateList, cityList, stateList, minPriceList, maxPriceList), allow="True")
 
 
-@app.route("/profile", methods=["GET", "POST"])
+@app.route("/profile", methods=["GET"])
 @login_required
 def profile():
     """
@@ -123,14 +126,8 @@ def profile():
     the current user assuming they have added event(s).
     """
     if flask.request.method == "GET":
-        my_list = []
-        # query the database for all the events of the current user and display
-        events = UserEvents.query.filter_by(email=current_user.email).all()
-        for event in events:
-            my_list.append(ticketmaster_api.getEvents(event.eventId))
-        return flask.render_template(
-            "profile.html", user=current_user.email, events=my_list
-        )
+        user = current_user.email.split("@")
+        return flask.render_template("profile.html", user=user[0], events=UserEvents.query.filter_by(email=current_user.email).all())
     return ""
 
 
@@ -159,7 +156,7 @@ def search(user_input):
         events = ticketmaster_api.search(user_input)
         if events is False:
             flask.flash("Search came up empty. Please try again.")
-            # user_input will act at the new URL of the user's input
+            # user_input will act as the new URL of the user's input
             # ex: /search/<user_input> -> /search/baseball
             return flask.render_template("search.html", user_input=user_input)
         return flask.render_template(
@@ -175,15 +172,17 @@ def add():
     The add route is used to allow the user to add events to their events list.
     """
     if flask.request.method == "POST":
-        event_id = flask.request.form["eventId"]
         current_page = flask.request.form["currentPage"]
+        event_id = flask.request.form["eventId"]
+        event_name = flask.request.form["eventName"]
+        event_image_url = flask.request.form["eventImageURL"]
         contains_data = UserEvents.query.filter_by(
-            email=current_user.email, eventId=event_id
+            email=current_user.email, eventId=event_id, eventName=event_name, eventImageURL=event_image_url
         ).first()
         # if the added event is not in the database it'll be added
         if contains_data is None:
             db.session.begin()
-            insert_data = UserEvents(current_user.email, event_id)
+            insert_data = UserEvents(current_user.email, event_id, event_name, event_image_url)
             db.session.add(insert_data)
             db.session.commit()
             if current_page == "index":
@@ -209,14 +208,16 @@ def delete():
     """
     if flask.request.method == "POST":
         event_id = flask.request.form["eventId"]
+        event_name = flask.request.form["eventName"]
+        event_image_url = flask.request.form["eventImageURL"]
         contains_data = UserEvents.query.filter_by(
-            email=current_user.email, eventId=event_id
+            email=current_user.email, eventId=event_id, eventName=event_name, eventImageURL=event_image_url
         ).first()
         # if deleted event is found in the database it'll be deleated
         if contains_data is not None:
             db.session.begin()
             UserEvents.query.filter_by(
-                email=current_user.email, eventId=event_id
+                email=current_user.email, eventId=event_id, eventName=event_name, eventImageURL=event_image_url
             ).delete()
             db.session.commit()
             return flask.redirect(flask.url_for("profile"))
