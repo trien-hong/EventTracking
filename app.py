@@ -126,14 +126,6 @@ def profile():
     the current user assuming they have added event(s).
     """
     if flask.request.method == "GET":
-        # query the database for all the events of the current user and display
-        # events = UserEvents.query.filter_by(email=current_user.email).all()
-        # for event in events:
-        #     my_list.append(ticketmaster_api.getEvents(event.eventId))
-        # print(my_list)
-        # return flask.render_template(
-        #     "profile.html", user=current_user.email, events=my_list
-        # )
         user = current_user.email.split("@")
         return flask.render_template("profile.html", user=user[0], events=UserEvents.query.filter_by(email=current_user.email).all())
     return ""
