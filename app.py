@@ -101,7 +101,7 @@ def login():
         else:
             # if the email & hash + salt is found it'll log the user in
             login_user(email_query)
-            return flask.redirect(flask.url_for("main"))
+            return flask.redirect(flask.url_for("main"), code=307)
     return flask.render_template("login.html")
 
 
@@ -111,11 +111,15 @@ def main():
     """
     This route will display the events based on the current user's zipcode.
     """
-    if ticketmaster_api.getEvents(current_user.zip) == False:
-        flask.flash("Your zipcode doesn't contain any events. Try searching for an event instead.")
-        return flask.render_template("index.html", allow="False")
-    idList, nameList, imageList, dateList, cityList, stateList, minPriceList, maxPriceList = ticketmaster_api.getEvents(current_user.zip)
-    return flask.render_template("index.html", events=zip(idList, nameList, imageList, dateList, cityList, stateList, minPriceList, maxPriceList), allow="True")
+    if flask.request.method=="GET":
+        idList, nameList, imageList, dateList, cityList, stateList, minPriceList, maxPriceList = ticketmaster_api.getEvents(current_user.zip)
+        return flask.render_template("index.html", events=zip(idList, nameList, imageList, dateList, cityList, stateList, minPriceList, maxPriceList), allow="True")
+    if flask.request.method=="POST":
+        if ticketmaster_api.getEvents(current_user.zip) == False:
+            flask.flash("Your zipcode doesn't contain any events. Try searching for an event instead.")
+            return flask.render_template("index.html", allow="False")
+        idList, nameList, imageList, dateList, cityList, stateList, minPriceList, maxPriceList = ticketmaster_api.getEvents(current_user.zip)
+        return flask.render_template("index.html", events=zip(idList, nameList, imageList, dateList, cityList, stateList, minPriceList, maxPriceList), allow="True")
 
 
 @app.route("/profile", methods=["GET"])
@@ -186,7 +190,8 @@ def add():
             db.session.add(insert_data)
             db.session.commit()
             if current_page == "index":
-                return flask.redirect(flask.url_for("main"))
+                flask.flash("The event has been added to your list.")
+                return flask.redirect(flask.url_for("main"), code=307)
             url = flask.request.referrer
             split = url.split("/")
             last_search = split[-1]
@@ -196,7 +201,7 @@ def add():
         flask.flash(
             "Event has already been added to your list. Please choose another event."
         )
-        return flask.redirect(flask.url_for("main"), code=307)
+        return flask.redirect(flask.url_for("main"))
     return ""
 
 
