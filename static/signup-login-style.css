@@ -84,9 +84,13 @@ button:hover {
 }
 
 h2 {
-  color: #000000;
-  background: #ffffff;
-  text-shadow: 2px 2px 0 #bcbcbc, 4px 4px 0 #9c9c9c;
+background: #FFE74C;
+background: -webkit-linear-gradient(to right, #FFE74C 37%, #FE027E 61%);
+background: -moz-linear-gradient(to right, #FFE74C 37%, #FE027E 61%);
+background: linear-gradient(to right, #FFE74C 37%, #FE027E 61%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+font-style: bold;
   text-align: center;
 }
 
@@ -119,6 +123,7 @@ h2 {
 
 .flashes {
   text-align: center;
+  color: red;
 }
 
 p {

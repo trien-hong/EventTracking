@@ -1,0 +1,56 @@
+* {
+    box-sizing: border-box;
+  }
+  body {
+    background-image: url("bg.jpg");
+    background-size: cover;
+    font-size: 18px;
+    font-family: Georgia, serif;
+    background-color: lightgrey;
+  }
+  .border {
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 20px;
+    position: absolute;
+    width: 90%;
+    background: white;
+    opacity: 0.9;
+    box-shadow: 12px 12px 0px 0px #aaaaaa;
+    font-family: Georgia, serif;
+  }
+  .title {
+    color: #737373;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  .pic {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    display: block;
+    width: 500px;
+    height: 250px;
+  }
+  .row {
+    display: flex;
+  }
+  
+  .column {
+    flex: 50%;
+    padding: 5px;
+    margin-right: 10px;
+    text-align: center;
+  }
+  
+  .info {
+    text-align: center;
+    font-weight: bold;
+  }
+  #map {
+      height: 400px;
+      width: 100%;
+  }
+  
