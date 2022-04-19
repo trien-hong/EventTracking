@@ -15,7 +15,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li class="nav-item active">
-                            <a class="nav-link" href="/main">Home</a>
+                            <a class="nav-link" href="/main"><u>Home</u></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="LinkSpacing" href="/profile">Profile</a>
@@ -47,6 +47,7 @@
                             <div class="row2 item">
                                 {% for event in event_row %}
                                     <center>
+                                        <br>
                                         <p>{{event[1]}}</p>
                                         <p>{{event[3]}} | {{event[4]}}, {{event[5]}}</p>
                                         <form id="{{event[0]}}" method="POST" action="/add"></form>
@@ -56,7 +57,7 @@
                                         <input type="hidden" name="eventImageURL" value="{{event[2]}}" readonly="readonly" form="{{event[0]}}">
                                         <form method="POST" action="/event_details">
                                             <input type="hidden" name="eventId" value="{{event[0]}}" readonly="readonly">
-                                            <input class="item" type="image" src="{{event[2]}}" alt="Event Picture" style="width:250px;height:140px;">
+                                            <input class="item" type="image" src="{{event[2]}}" alt="Event Picture" style="width:225px;height:126px;">
                                         </form>
                                         <br>
                                         <p>{{event[6]}} - {{event[7]}}</p>

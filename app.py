@@ -263,6 +263,7 @@ def event_details():
             temperature_max_f=weather_detail["temperature_max_f"],
             temperature_max_c=weather_detail["temperature_max_c"],
             weather_icon=weather_detail["weather_icon"],
+            weather_description=weather_detail["weather_description"],
             GOOGLEMAP_API_KEY=os.getenv("GOOGLEMAP_API_KEY"),
         )
     return ""

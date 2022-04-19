@@ -8,11 +8,6 @@
   background-color: #E3E4E6;
 }
 
-#map {
-    height: 400px;
-    width: 100%;
-}
-
 #container2 {
     display: grid;
     grid-template-columns: auto auto auto;
