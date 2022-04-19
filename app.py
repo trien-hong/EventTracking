@@ -179,14 +179,17 @@ def add():
         current_page = flask.request.form["currentPage"]
         event_id = flask.request.form["eventId"]
         event_name = flask.request.form["eventName"]
+        event_date = flask.request.form["eventDate"]
         event_image_url = flask.request.form["eventImageURL"]
+        event_address = flask.request.form["eventAddress"]
+        event_price = flask.request.form["eventPrice"]
         contains_data = UserEvents.query.filter_by(
-            email=current_user.email, eventId=event_id, eventName=event_name, eventImageURL=event_image_url
+            email=current_user.email, eventId=event_id, eventName=event_name, eventDate = event_date, eventAddress=event_address, eventImageURL=event_image_url, eventPrice=event_price
         ).first()
         # if the added event is not in the database it'll be added
         if contains_data is None:
             db.session.begin()
-            insert_data = UserEvents(current_user.email, event_id, event_name, event_image_url)
+            insert_data = UserEvents(current_user.email, event_id, event_name, event_date, event_address, event_image_url, event_price)
             db.session.add(insert_data)
             db.session.commit()
             if current_page == "index":
