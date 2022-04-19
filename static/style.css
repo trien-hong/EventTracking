@@ -10,7 +10,7 @@
 
 #container2 {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
     gap: 25px;
     padding: 25px;
     width: 80%;
