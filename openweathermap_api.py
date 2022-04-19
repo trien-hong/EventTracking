@@ -27,7 +27,8 @@ def getWeather(lat: str, lon: str):
         "temperature_c": round(temperature - 273.15, 2),
         "temperature_min_c": round(temperature_min - 273.15, 2),
         "temperature_max_c": round(temperature_max - 273.15, 2),
-        "weather_icon": openweathermap_response_json["weather"][0]["icon"]
+        "weather_icon": openweathermap_response_json["weather"][0]["icon"],
+        "weather_description": openweathermap_response_json["weather"][0]["description"]
     }
     
     return weather_details
