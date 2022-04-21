@@ -6,8 +6,23 @@ load_dotenv(find_dotenv())
 
 def getWeather(lat: str, lon: str):
     """
-    
+    This function is to get the weather information for the event venue location
     """
+    if lat == "TBD" or lon == "TBD":
+        weather_details = {
+            "temperature_f": "N/A",
+            "temperature_min_f": "N/A",
+            "temperature_max_f": "N/A",
+            "temperature_c": "N/A",
+            "temperature_min_c": "N/A",
+            "temperature_max_c": "N/A",
+            "weather_icon": "N/A",
+            "weather_description": "N/A",
+            "humidity": "N/A",
+            "wind": "N/A"
+        }
+        return weather_details
+        
     OPENWEATHERMAP_API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
 
     url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + OPENWEATHERMAP_API_KEY
@@ -28,7 +43,9 @@ def getWeather(lat: str, lon: str):
         "temperature_min_c": round(temperature_min - 273.15, 2),
         "temperature_max_c": round(temperature_max - 273.15, 2),
         "weather_icon": openweathermap_response_json["weather"][0]["icon"],
-        "weather_description": openweathermap_response_json["weather"][0]["description"]
+        "weather_description": openweathermap_response_json["weather"][0]["description"],
+        "humidity": openweathermap_response_json["main"]["humidity"],
+        "wind": openweathermap_response_json["wind"]["speed"]
     }
     
     return weather_details
