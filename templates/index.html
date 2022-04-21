@@ -20,11 +20,14 @@
                         <li class="nav-item">
                             <a class="nav-link" id="LinkSpacing" href="/profile">Profile</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="LinkSpacing" href="/logout">Logout</a>
+                        </li>
                     </ul>
                 </div>
                 <form class="d-flex" method="POST" action="/reroute">
                     <div id="search1">
-                        <input class="form-control" type="text" name="user_input" placeholder="Search..." size="40">
+                        <input class="form-control" type="text" name="user_input" placeholder="Search events..." size="40">
                     </div>
                     <div id="search1">
                         <button class="s_buttonHome" type="submit" value="Submit">Search</button>
@@ -44,26 +47,26 @@
                 <div class="container">
                     <div id="container2">
                         {% for event_row in events|batch(1) %}
-                            <div class="row2 item">
+                            <div class="row2" id="item2">
                                 {% for event in event_row %}
                                     <center>
                                         <br>
                                         <p>{{event[1]}}</p>
-                                        <p>{{event[3]}} | {{event[4]}}, {{event[5]}}</p>
+                                        <p>{{event[3]}} | {{event[4]}}</p>
                                         <form id="{{event[0]}}" method="POST" action="/add"></form>
                                         <input type="hidden" name="currentPage" value="index" readonly="readonly" form="{{event[0]}}">
                                         <input type="hidden" name="eventId" value="{{event[0]}}" readonly="readonly" form="{{event[0]}}">
                                         <input type="hidden" name="eventName" value="{{event[1]}}" readonly="readonly" form="{{event[0]}}">
                                         <input type="hidden" name="eventDate" value="{{event[3]}}" readonly="readonly" form="{{event[0]}}">
-                                        <input type="hidden" name="eventAddress" value="{{event[4]}}, {{event[5]}}" readonly="readonly" form="{{event[0]}}">
+                                        <input type="hidden" name="eventAddress" value="{{event[4]}}" readonly="readonly" form="{{event[0]}}">
                                         <input type="hidden" name="eventImageURL" value="{{event[2]}}" readonly="readonly" form="{{event[0]}}">
-                                        <input type="hidden" name="eventPrice" value="{{event[6]}} - {{event[7]}}" readonly="readonly" form="{{event[0]}}">
+                                        <input type="hidden" name="eventPrice" value="{{event[5]}} - {{event[6]}}" readonly="readonly" form="{{event[0]}}">
                                         <form method="POST" action="/event_details">
                                             <input type="hidden" name="eventId" value="{{event[0]}}" readonly="readonly">
                                             <input class="item" type="image" src="{{event[2]}}" alt="Event Picture" style="width:225px;height:126px;">
                                         </form>
                                         <br>
-                                        <p>{{event[6]}} - {{event[7]}}</p>
+                                        <p>{{event[5]}} - {{event[6]}}</p>
                                         <input class="addHover" type="submit" value="ADD EVENT" form="{{event[0]}}"/>
                                         <br>
                                         <br>
