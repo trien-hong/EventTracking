@@ -46,9 +46,11 @@ jobs:
       - name: Get key
         run: | 
           echo ${{ secrets.TICKETMASTER_API_KEY }}
+          echo ${{ secrets.OPENWEATHERMAP_API_KEY }}
         
       - name: Run test
         env: 
           TICKETMASTER_API_KEY: ${{ secrets.TICKETMASTER_API_KEY }}
+          OPENWEATHERMAP_API_KEY: ${{ secrets.OPENWEATHERMAP_API_KEY }}
         run: |
           python3 -m unit_test
