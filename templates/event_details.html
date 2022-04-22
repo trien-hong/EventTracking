@@ -20,11 +20,14 @@
             <li class="nav-item">
                 <a class="nav-link" id="LinkSpacing" href="/profile">Profile</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" id="LinkSpacing" href="/logout">Logout</a>
+          </li>
         </ul>
     </div>
     <form class="d-flex" method="POST" action="/reroute">
         <div id="search1">
-            <input class="form-control" type="text" name="user_input" placeholder="Search..." size="40">
+            <input class="form-control" type="text" name="user_input" placeholder="Search events..." size="40">
         </div>
         <div id="search1">
             <button class="s_buttonHome" type="submit" value="Submit">Search</button>
@@ -38,24 +41,24 @@
       <div class="row1">
         <div class="column1">
           <p class="info1"><u>Event Information</u></p>
-          <p>Date: {{startDate}}</p>
-          <p>Genre: {{genre}}</p>
-          <p>Min price: {{minPrice}}</p>
-          <p>Max price: {{maxPrice}}</p>
-          <p>Venue: {{venue}}</p>
-          <p>Address: {{address}}</p>
+          <p><b>Date:</b> {{startDate}}</p>
+          <p><b>Genre:</b> {{genre}}</p>
+          <p><b>Min price:</b> {{minPrice}}</p>
+          <p><b>Max price:</b> {{maxPrice}}</p>
+          <p><b>Venue:</b> {{venue}}</p>
+          <p><b>Address:</b> {{address}}</p>
         </div>
         <div class="column1">
           <p class="info1"><u>Weather</u></p>
           <img
             src="http://openweathermap.org/img/wn/{{weather_icon}}@2x.png"
             class="rounded float-up"
-            alt="weather icon"
+            alt="NO ICON"
           />
-          <p>{{weather_description}}</p>
-          <p>Temperature: {{temperature_f}}°F/{{temperature_c}}°C</p>
-          <p>Low: {{temperature_min_f}}°F/{{temperature_min_c}}°C</p>
-          <p>High: {{temperature_max_f}}°F/{{temperature_max_c}}°C</p>
+          <p><b>{{weather_description}}</b>
+          <p><b>Temperature:</b> {{temperature_f}}°F/{{temperature_c}}°C</p>
+          <p><b>Low:</b> {{temperature_min_f}}°F/{{temperature_min_c}}°C | <b>High:</b> {{temperature_max_f}}°F/{{temperature_max_c}}°C</p>
+          <p><b>Humidity:</b> {{humidity}} | <b>Wind:</b> {{wind}}kn</p>
         </div>
       </div>
       <center><hr style="width:60%;height:3px"></center>
