@@ -1,4 +1,4 @@
-# pylint: disable=C0103
+# pylint: disable=C0103, R1702, R0912
 
 """
 SWE Final Project | Event Tracking
@@ -91,10 +91,27 @@ def getEvents(parameter: str):
                 "priceRanges"
                 in ticketmaster_response_json["_embedded"]["events"][index]
             ):
-                minPriceList.append("$" + str(x["priceRanges"][0]["min"]))
-                maxPriceList.append("$" + str(x["priceRanges"][0]["max"]))
+                if (
+                    "min"
+                    in ticketmaster_response_json["_embedded"]["events"][index][
+                        "priceRanges"
+                    ][0]
+                ):
+                    minPriceList.append("$" + str(x["priceRanges"][0]["min"]))
             else:
                 minPriceList.append("TBD")
+            if (
+                "priceRanges"
+                in ticketmaster_response_json["_embedded"]["events"][index]
+            ):
+                if (
+                    "max"
+                    in ticketmaster_response_json["_embedded"]["events"][index][
+                        "priceRanges"
+                    ][0]
+                ):
+                    maxPriceList.append("$" + str(x["priceRanges"][0]["max"]))
+            else:
                 maxPriceList.append("TBD")
             index = index + 1
         return (
@@ -144,19 +161,25 @@ def getEventDetails(eventId: str):
                     "name"
                 ]
     else:
-        genre = "N/A"
+        genre = "TBD"
     if "priceRanges" in ticketmaster_response_json:
-        minPrice = "$" + str(ticketmaster_response_json["priceRanges"][0]["min"])
-        maxPrice = "$" + str(ticketmaster_response_json["priceRanges"][0]["max"])
+        if "min" in ticketmaster_response_json["priceRanges"][0]:
+            minPrice = "$" + str(ticketmaster_response_json["priceRanges"][0]["min"])
     else:
         minPrice = "TBD"
+    if "priceRanges" in ticketmaster_response_json:
+        if "max" in ticketmaster_response_json["priceRanges"][0]:
+            maxPrice = "$" + str(ticketmaster_response_json["priceRanges"][0]["max"])
+    else:
         maxPrice = "TBD"
     if "_embedded" in ticketmaster_response_json:
         if "venues" in ticketmaster_response_json["_embedded"]:
             if "name" in ticketmaster_response_json["_embedded"]["venues"][0]:
                 venue = ticketmaster_response_json["_embedded"]["venues"][0]["name"]
-            else:
-                venue = "TBD"
+    else:
+        venue = "TBD"
+    if "_embedded" in ticketmaster_response_json:
+        if "venues" in ticketmaster_response_json["_embedded"]:
             if "address" in ticketmaster_response_json["_embedded"]["venues"][0]:
                 address = (
                     ticketmaster_response_json["_embedded"]["venues"][0]["address"][
@@ -169,8 +192,10 @@ def getEventDetails(eventId: str):
                     + ", "
                     + ticketmaster_response_json["_embedded"]["venues"][0]["postalCode"]
                 )
-            else:
-                address = "TBD"
+    else:
+        address = "TBD"
+    if "_embedded" in ticketmaster_response_json:
+        if "venues" in ticketmaster_response_json["_embedded"]:
             if "location" in ticketmaster_response_json["_embedded"]["venues"][0]:
                 longitude = ticketmaster_response_json["_embedded"]["venues"][0][
                     "location"
@@ -178,9 +203,9 @@ def getEventDetails(eventId: str):
                 latitude = ticketmaster_response_json["_embedded"]["venues"][0][
                     "location"
                 ]["latitude"]
-            else:
-                longitude = "TBD"
-                latitude = "TBD"
+    else:
+        longitude = "TBD"
+        latitude = "TBD"
     return (
         name,
         eventImageURL,
@@ -279,10 +304,24 @@ def search(userInput: str):
         else:
             cityList.append("TBD")
         if "priceRanges" in ticketmaster_response_json["_embedded"]["events"][index]:
-            minPriceList.append("$" + str(x["priceRanges"][0]["min"]))
-            maxPriceList.append("$" + str(x["priceRanges"][0]["max"]))
+            if (
+                "min"
+                in ticketmaster_response_json["_embedded"]["events"][index][
+                    "priceRanges"
+                ][0]
+            ):
+                minPriceList.append("$" + str(x["priceRanges"][0]["min"]))
         else:
             minPriceList.append("TBD")
+        if "priceRanges" in ticketmaster_response_json["_embedded"]["events"][index]:
+            if (
+                "max"
+                in ticketmaster_response_json["_embedded"]["events"][index][
+                    "priceRanges"
+                ][0]
+            ):
+                maxPriceList.append("$" + str(x["priceRanges"][0]["max"]))
+        else:
             maxPriceList.append("TBD")
         index = index + 1
     return zip(

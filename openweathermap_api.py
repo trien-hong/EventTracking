@@ -1,3 +1,9 @@
+# pylint: disable=C0103, R0914, R0912
+
+"""
+SWE Final Project | Event Tracking
+"""
+
 import os
 import requests
 from dotenv import find_dotenv, load_dotenv
@@ -122,12 +128,21 @@ def getWeather(lat: str, lon: str):
 
 
 def openWeatherMapTest1(lat: str, lon: str):
+    """
+    Used to convert both strings to floating nummbers
+    """
     return [float(lat), float(lon)]
 
 
 def openWeatherMapTest2(kelvin: int):
+    """
+    Used to test kelvin to fahrenheit
+    """
     return round((kelvin - 273.15) * 9 / 5 + 32, 2)
 
 
 def openWeatherMapTest3(kelvin: int):
+    """
+    Used to test kelvin to celsius
+    """
     return round(kelvin - 273.15, 2)
