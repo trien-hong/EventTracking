@@ -4,11 +4,15 @@
 SWE Final Project | Event Tracking
 """
 
-from cgi import test
 import unittest
 from unittest.mock import MagicMock, patch
-from ticketmaster_api import getEvents, getEventDetails, search
-from openweathermap_api import openWeatherMapTest1, openWeatherMapTest2, openWeatherMapTest3
+from ticketmaster_api import getEvents, search
+from openweathermap_api import (
+    getWeather,
+    openWeatherMapTest1,
+    openWeatherMapTest2,
+    openWeatherMapTest3,
+)
 
 
 class TicketmasterMockedTest(unittest.TestCase):
@@ -32,27 +36,20 @@ class TicketmasterMockedTest(unittest.TestCase):
                                 "url": "https://s1.ticketm.net/dam/c/060/c5c08e7a-9912-456c-a060-2758be94e060_105881_CUSTOM.jpg"
                             }
                         ],
-                        "dates": {
-                            "start": {
-                                "localDate": "2022-10-10"
-                            }
-                        },
+                        "dates": {"start": {"localDate": "2022-10-10"}},
                         "_embedded": {
-                            "venues": [{
-                                "city": {
-                                    "name": "Hollywood"
-                                },
-                                "state": {
-                                    "stateCode": "CA"
-                                },
-                            }]
+                            "venues": [
+                                {
+                                    "city": {"name": "Hollywood"},
+                                }
+                            ]
                         },
                     }
                 ],
             },
             "page": {
                 "totalElements": 800,
-            }
+            },
         }
 
         with patch("ticketmaster_api.requests.get") as mock_requests_get:
@@ -65,7 +62,11 @@ class TicketmasterMockedTest(unittest.TestCase):
                     ["Yeat"],
                     [
                         "https://s1.ticketm.net/dam/c/060/c5c08e7a-9912-456c-a060-2758be94e060_105881_CUSTOM.jpg"
-                    ], ["2022-10-10"], ["Hollywood"], ["CA"], ["TBD"], ["TBD"]
+                    ],
+                    ["2022-10-10"],
+                    ["Hollywood"],
+                    ["TBD"],
+                    ["TBD"],
                 ),
             )
 
@@ -75,63 +76,33 @@ class TicketmasterMockedTest(unittest.TestCase):
         """
         mock_response = MagicMock()
         mock_response.json.return_value = {
-            "name": "BTS PERMISSION TO DANCE ON STAGE - LIVE PLAY in Las Vegas",
-            "images": [
-                {
-                    "url": "https://s1.ticketm.net/dam/a/987/77659b74-aaf7-4587-918d-f692669ac987_1619751_TABLET_LANDSCAPE_LARGE_16_9.jpg"
-                }
-            ],
-            "dates": {
-                "start": {
-                    "localDate": "2022-04-08",
-                }
+            "weather": [{"description": "overcast clouds", "icon": "04d"}],
+            "main": {
+                "temp": 280.52,
+                "feels_like": 279.75,
+                "temp_min": 278.3,
+                "temp_max": 282.47,
+                "humidity": 89,
             },
-            "classifications": [
-                {
-                    "genre": {
-                        "name": "Other",
-                    }
-                }
-            ],
-            "_embedded": {
-                "venues": [
-                    {
-                        "name": "MGM Grand Garden Arena",
-                        "postalCode": "89109",
-                        "city": {"name": "Las Vegas"},
-                        "state": {"name": "Nevada"},
-                        "address": {"line1": "3799 Las Vegas Blvd S"},
-                        "location": {
-                            "longitude": "-115.145103",
-                            "latitude": "36.124401",
-                        },
-                    }
-                ]
+            "wind": {
+                "speed": 1.54,
             },
         }
-
-        with patch("ticketmaster_api.requests.get") as mock_requests_get:
+        with patch("openweathermap_api.requests.get") as mock_requests_get:
             mock_requests_get.return_value = mock_response
-
             self.assertEqual(
-                getEventDetails("Z7r9jZ1Ad8eq4"),
+                getWeather("-51.5085", "-0.1257"),
                 {
-                    "name": "BTS PERMISSION TO DANCE ON STAGE - LIVE PLAY in Las Vegas",
-                    "eventImageURL": "https://s1.ticketm.net/dam/a/987/77659b74-aaf7-4587-918d-f692669ac987_1619751_TABLET_LANDSCAPE_LARGE_16_9.jpg",
-                    "startDate": "2022-04-08",
-                    "genre": "Other",
-                    "minPrice": "TBD",
-                    "maxPrice": "TBD",
-                    "venue": "MGM Grand Garden Arena",
-                    "address": "3799 Las Vegas Blvd S"
-                    + ", "
-                    + "Las Vegas"
-                    + ", "
-                    + "Nevada"
-                    + " "
-                    + "89109",
-                    "longitude": "-115.145103",
-                    "latitude": "36.124401",
+                    "temperature_f": 45.27,
+                    "temperature_min_f": 41.27,
+                    "temperature_max_f": 48.78,
+                    "temperature_c": 7.37,
+                    "temperature_min_c": 5.15,
+                    "temperature_max_c": 9.32,
+                    "weather_icon": "04d",
+                    "weather_description": "overcast clouds",
+                    "humidity": 89,
+                    "wind": 1.54,
                 },
             )
 
@@ -146,6 +117,7 @@ class TicketmasterMockedTest(unittest.TestCase):
             mock_requests_get.return_value = mock_response
 
             self.assertEqual(search("12345"), False)
+
 
 class OpenWeatherMapUnmockedTest(unittest.TestCase):
     """
@@ -170,6 +142,7 @@ class OpenWeatherMapUnmockedTest(unittest.TestCase):
         expected_output = 0
         actual_output = openWeatherMapTest3(test)
         self.assertGreater(expected_output, actual_output)
+
 
 if __name__ == "__main__":
     unittest.main()
