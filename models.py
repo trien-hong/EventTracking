@@ -38,7 +38,16 @@ class UserEvents(db.Model):
     eventImageURL = db.Column(db.String(300), nullable=False)
     eventPrice = db.Column(db.String(100), nullable=False)
 
-    def __init__(self, email, eventId, eventName, eventDate, eventAddress, eventImageURL, eventPrice):
+    def __init__(
+        self,
+        email,
+        eventId,
+        eventName,
+        eventDate,
+        eventAddress,
+        eventImageURL,
+        eventPrice,
+    ):
         self.email = email
         self.eventId = eventId
         self.eventName = eventName
