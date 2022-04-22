@@ -4,7 +4,8 @@
 SWE Final Project | Event Tracking
 """
 
-import email
+from waitress import serve
+import time
 import os
 import flask
 from flask_sqlalchemy import SQLAlchemy
@@ -48,6 +49,11 @@ def load_user(user_id):
 
 
 @app.route("/")
+@app.route("/welcome", methods=["GET"])
+def welcome():
+    return flask.render_template("welcome.html")
+
+
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     """
@@ -71,14 +77,18 @@ def signup():
                     insert_data = Users(email_data, password_hash, zip_data)
                     db.session.add(insert_data)
                     db.session.commit()
+                    time.sleep(1)
                     return flask.redirect(flask.url_for("login"))
             else:
                 flask.flash("Zipcode should be 5 numbers. Please try again.")
+                time.sleep(1)
                 return flask.render_template("signup.html")
         else:
             flask.flash("Email needs to end in '.com'. Please try again.")
+            time.sleep(1)
             return flask.render_template("signup.html")
         flask.flash("Email already exists or is incorrect. Please login instead.")
+    time.sleep(1)
     return flask.render_template("signup.html")
 
 
@@ -101,7 +111,9 @@ def login():
         else:
             # if the email & hash + salt is found it'll log the user in
             login_user(email_query)
+            time.sleep(1)
             return flask.redirect(flask.url_for("main"), code=307)
+    time.sleep(1)
     return flask.render_template("login.html")
 
 
@@ -111,15 +123,75 @@ def main():
     """
     This route will display the events based on the current user's zipcode.
     """
-    if flask.request.method=="GET":
-        idList, nameList, imageList, dateList, cityList, stateList, minPriceList, maxPriceList = ticketmaster_api.getEvents(current_user.zip)
-        return flask.render_template("index.html", events=zip(idList, nameList, imageList, dateList, cityList, stateList, minPriceList, maxPriceList), allow="True")
-    if flask.request.method=="POST":
-        if ticketmaster_api.getEvents(current_user.zip) == False:
-            flask.flash("Your zipcode doesn't contain any events. Try searching for an event instead.")
+    if flask.request.method == "GET":
+        (
+            idList,
+            nameList,
+            imageList,
+            dateList,
+            cityList,
+            minPriceList,
+            maxPriceList,
+        ) = ticketmaster_api.getEvents(current_user.zip)
+        if idList == False:
+            flask.flash(
+                "Your zipcode doesn't contain any events. Try searching for an event instead."
+            )
+            time.sleep(1)
             return flask.render_template("index.html", allow="False")
-        idList, nameList, imageList, dateList, cityList, stateList, minPriceList, maxPriceList = ticketmaster_api.getEvents(current_user.zip)
-        return flask.render_template("index.html", events=zip(idList, nameList, imageList, dateList, cityList, stateList, minPriceList, maxPriceList), allow="True")
+        time.sleep(1)
+        return flask.render_template(
+            "index.html",
+            events=zip(
+                idList,
+                nameList,
+                imageList,
+                dateList,
+                cityList,
+                minPriceList,
+                maxPriceList,
+            ),
+            allow="True",
+        )
+    if flask.request.method == "POST":
+        (
+            idList,
+            nameList,
+            imageList,
+            dateList,
+            cityList,
+            minPriceList,
+            maxPriceList,
+        ) = ticketmaster_api.getEvents(current_user.zip)
+        if idList == False:
+            flask.flash(
+                "Your zipcode doesn't contain any events. Try searching for an event instead."
+            )
+            time.sleep(1)
+            return flask.render_template("index.html", allow="False")
+        (
+            idList,
+            nameList,
+            imageList,
+            dateList,
+            cityList,
+            minPriceList,
+            maxPriceList,
+        ) = ticketmaster_api.getEvents(current_user.zip)
+        time.sleep(1)
+        return flask.render_template(
+            "index.html",
+            events=zip(
+                idList,
+                nameList,
+                imageList,
+                dateList,
+                cityList,
+                minPriceList,
+                maxPriceList,
+            ),
+            allow="True",
+        )
 
 
 @app.route("/profile", methods=["GET"])
@@ -131,7 +203,12 @@ def profile():
     """
     if flask.request.method == "GET":
         user = current_user.email.split("@")
-        return flask.render_template("profile.html", user=user[0], events=UserEvents.query.filter_by(email=current_user.email).all())
+        time.sleep(1)
+        return flask.render_template(
+            "profile.html",
+            user=user[0],
+            events=UserEvents.query.filter_by(email=current_user.email).all(),
+        )
     return ""
 
 
@@ -144,6 +221,7 @@ def reroute():
     if flask.request.method == "POST":
         result = flask.request.form["user_input"]
         # the reason for this was to generate dynamic URLs
+        time.sleep(1)
         return flask.redirect(flask.url_for("search", user_input=result), code=307)
     return ""
 
@@ -162,7 +240,9 @@ def search(user_input):
             flask.flash("Search came up empty. Please try again.")
             # user_input will act as the new URL of the user's input
             # ex: /search/<user_input> -> /search/baseball
+            time.sleep(1)
             return flask.render_template("search.html", user_input=user_input)
+        time.sleep(1)
         return flask.render_template(
             "search.html", user_input=user_input, events=events, allow="True"
         )
@@ -184,27 +264,57 @@ def add():
         event_address = flask.request.form["eventAddress"]
         event_price = flask.request.form["eventPrice"]
         contains_data = UserEvents.query.filter_by(
-            email=current_user.email, eventId=event_id, eventName=event_name, eventDate = event_date, eventAddress=event_address, eventImageURL=event_image_url, eventPrice=event_price
+            email=current_user.email,
+            eventId=event_id,
+            eventName=event_name,
+            eventDate=event_date,
+            eventAddress=event_address,
+            eventImageURL=event_image_url,
+            eventPrice=event_price,
         ).first()
         # if the added event is not in the database it'll be added
         if contains_data is None:
             db.session.begin()
-            insert_data = UserEvents(current_user.email, event_id, event_name, event_date, event_address, event_image_url, event_price)
+            insert_data = UserEvents(
+                current_user.email,
+                event_id,
+                event_name,
+                event_date,
+                event_address,
+                event_image_url,
+                event_price,
+            )
             db.session.add(insert_data)
             db.session.commit()
             if current_page == "index":
                 flask.flash("The event has been added to your list.")
+                time.sleep(1)
                 return flask.redirect(flask.url_for("main"), code=307)
             url = flask.request.referrer
             split = url.split("/")
             last_search = split[-1]
+            flask.flash("The event has been added to your list.")
+            time.sleep(1)
             return flask.redirect(
                 flask.url_for("search", user_input=last_search), code=307
             )
-        flask.flash(
-            "Event has already been added to your list. Please choose another event."
-        )
-        return flask.redirect(flask.url_for("main"))
+        if current_page == "index":
+            flask.flash(
+                "Event has already been added to your list. Please choose another event."
+            )
+            time.sleep(1)
+            return flask.redirect(flask.url_for("main"))
+        if current_page == "search":
+            url = flask.request.referrer
+            split = url.split("/")
+            last_search = split[-1]
+            flask.flash(
+                "Event has already been added to your list. Please choose another event."
+            )
+            time.sleep(1)
+            return flask.redirect(
+                flask.url_for("search", user_input=last_search), code=307
+            )
     return ""
 
 
@@ -219,16 +329,25 @@ def delete():
         event_name = flask.request.form["eventName"]
         event_image_url = flask.request.form["eventImageURL"]
         contains_data = UserEvents.query.filter_by(
-            email=current_user.email, eventId=event_id, eventName=event_name, eventImageURL=event_image_url
+            email=current_user.email,
+            eventId=event_id,
+            eventName=event_name,
+            eventImageURL=event_image_url,
         ).first()
         # if deleted event is found in the database it'll be deleated
         if contains_data is not None:
             db.session.begin()
             UserEvents.query.filter_by(
-                email=current_user.email, eventId=event_id, eventName=event_name, eventImageURL=event_image_url
+                email=current_user.email,
+                eventId=event_id,
+                eventName=event_name,
+                eventImageURL=event_image_url,
             ).delete()
             db.session.commit()
+            flask.flash("Event has been deleted from your list.")
+            time.sleep(1)
             return flask.redirect(flask.url_for("profile"))
+        time.sleep(1)
         return flask.redirect(flask.url_for("profile"))
     return ""
 
@@ -245,20 +364,32 @@ def event_details():
         event_id = flask.request.form["eventId"]
         # will call the function getEventDetails with event_id as the parameter
         # and return a dictionary of said event with the most notable information
-        event_detail = ticketmaster_api.getEventDetails(event_id)
-        weather_detail = openweathermap_api.getWeather(event_detail["latitude"], event_detail["longitude"])
+        (
+            name,
+            eventImageURL,
+            startDate,
+            genre,
+            minPrice,
+            maxPrice,
+            venue,
+            address,
+            longitude,
+            latitude,
+        ) = ticketmaster_api.getEventDetails(event_id)
+        weather_detail = openweathermap_api.getWeather(latitude, longitude)
+        time.sleep(1)
         return flask.render_template(
             "event_details.html",
-            name=event_detail["name"],
-            eventImageURL=event_detail["eventImageURL"],
-            startDate=event_detail["startDate"],
-            genre=event_detail["genre"],
-            minPrice=event_detail["minPrice"],
-            maxPrice=event_detail["maxPrice"],
-            venue=event_detail["venue"],
-            address=event_detail["address"],
-            longitude=event_detail["longitude"],
-            latitude=event_detail["latitude"],
+            name=name,
+            eventImageURL=eventImageURL,
+            startDate=startDate,
+            genre=genre,
+            minPrice=minPrice,
+            maxPrice=maxPrice,
+            venue=venue,
+            address=address,
+            longitude=longitude,
+            latitude=latitude,
             temperature_f=weather_detail["temperature_f"],
             temperature_c=weather_detail["temperature_c"],
             temperature_min_f=weather_detail["temperature_min_f"],
@@ -267,6 +398,8 @@ def event_details():
             temperature_max_c=weather_detail["temperature_max_c"],
             weather_icon=weather_detail["weather_icon"],
             weather_description=weather_detail["weather_description"],
+            humidity=weather_detail["humidity"],
+            wind=weather_detail["wind"],
             GOOGLEMAP_API_KEY=os.getenv("GOOGLEMAP_API_KEY"),
         )
     return ""
@@ -278,23 +411,27 @@ def logout():
     """
     The logout route is used to end the user's session and clear their cookies.
     """
+    flask.flash("You have successfully logged out.")
     logout_user()
-    return flask.redirect(flask.url_for("signup"))
+    time.sleep(1)
+    return flask.redirect(flask.url_for("login"))
 
 
-@app.errorhandler(500)
-def internal_error():
-    """
-    The internal error route is used to handle the 500 error.
-    """
-    return flask.redirect(flask.request.referrer)
-
+# @app.errorhandler(500)
+# def internal_error():
+#     """
+#     The internal error route is used to handle the 500 error.
+#     """
+#     #return flask.redirect(flask.request.referrer)
+#     #flask.redirect(flask.url_for("login"))
+#     return flask.redirect(flask.url_for(flask.request.referrer))
 
 if __name__ == "__main__":
     db.create_all()
     from models import Users, UserEvents
 
-    app.run(
-        host=os.getenv("IP", "0.0.0.0"),
-        port=int(os.getenv("PORT", 8080)),
-    )
+    # app.run(
+    #     host=os.getenv("IP", "0.0.0.0"),
+    #     port=int(os.getenv("PORT", 8080)),
+    # )
+    serve(app, host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)))
