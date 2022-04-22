@@ -43,7 +43,7 @@ def getEvents(parameter: str):
         cityList = []
         minPriceList = []
         maxPriceList = []
-        
+
         time.sleep(5)
 
         index = 0
@@ -52,26 +52,60 @@ def getEvents(parameter: str):
             nameList.append(x["name"])
             imageList.append(x["images"][0]["url"])
             if "dates" in ticketmaster_response_json["_embedded"]["events"][index]:
-                if "start" in ticketmaster_response_json["_embedded"]["events"][index]["dates"]:
-                    if "localDate" in ticketmaster_response_json["_embedded"]["events"][index]["dates"]["start"]:
+                if (
+                    "start"
+                    in ticketmaster_response_json["_embedded"]["events"][index]["dates"]
+                ):
+                    if (
+                        "localDate"
+                        in ticketmaster_response_json["_embedded"]["events"][index][
+                            "dates"
+                        ]["start"]
+                    ):
                         dateList.append(x["dates"]["start"]["localDate"])
             else:
                 dateList.append("TBD")
             if "_embedded" in ticketmaster_response_json["_embedded"]["events"][index]:
-                if "venues" in ticketmaster_response_json["_embedded"]["events"][index]["_embedded"]:
-                    if "city" in ticketmaster_response_json["_embedded"]["events"][index]["_embedded"]["venues"][0]:
-                        if "name" in ticketmaster_response_json["_embedded"]["events"][index]["_embedded"]["venues"][0]["city"]:
+                if (
+                    "venues"
+                    in ticketmaster_response_json["_embedded"]["events"][index][
+                        "_embedded"
+                    ]
+                ):
+                    if (
+                        "city"
+                        in ticketmaster_response_json["_embedded"]["events"][index][
+                            "_embedded"
+                        ]["venues"][0]
+                    ):
+                        if (
+                            "name"
+                            in ticketmaster_response_json["_embedded"]["events"][index][
+                                "_embedded"
+                            ]["venues"][0]["city"]
+                        ):
                             cityList.append(x["_embedded"]["venues"][0]["city"]["name"])
             else:
                 cityList.append("TBD")
-            if "priceRanges" in ticketmaster_response_json["_embedded"]["events"][index]:
+            if (
+                "priceRanges"
+                in ticketmaster_response_json["_embedded"]["events"][index]
+            ):
                 minPriceList.append("$" + str(x["priceRanges"][0]["min"]))
                 maxPriceList.append("$" + str(x["priceRanges"][0]["max"]))
             else:
                 minPriceList.append("TBD")
                 maxPriceList.append("TBD")
             index = index + 1
-        return idList, nameList, imageList, dateList, cityList, minPriceList, maxPriceList
+        return (
+            idList,
+            nameList,
+            imageList,
+            dateList,
+            cityList,
+            minPriceList,
+            maxPriceList,
+        )
     return ""
 
 
@@ -92,7 +126,7 @@ def getEventDetails(eventId: str):
     ticketmaster_request = requests.get(url=url)
 
     ticketmaster_response_json = ticketmaster_request.json()
-    
+
     time.sleep(1)
 
     name = ticketmaster_response_json["name"]
@@ -106,7 +140,9 @@ def getEventDetails(eventId: str):
     if "classifications" in ticketmaster_response_json:
         if "genre" in ticketmaster_response_json["classifications"][0]:
             if "name" in ticketmaster_response_json["classifications"][0]["genre"]:
-                genre = ticketmaster_response_json["classifications"][0]["genre"]["name"]
+                genre = ticketmaster_response_json["classifications"][0]["genre"][
+                    "name"
+                ]
     else:
         genre = "N/A"
     if "priceRanges" in ticketmaster_response_json:
@@ -122,16 +158,41 @@ def getEventDetails(eventId: str):
             else:
                 venue = "TBD"
             if "address" in ticketmaster_response_json["_embedded"]["venues"][0]:
-                address = ticketmaster_response_json["_embedded"]["venues"][0]["address"]["line1"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["city"]["name"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["postalCode"]
+                address = (
+                    ticketmaster_response_json["_embedded"]["venues"][0]["address"][
+                        "line1"
+                    ]
+                    + ", "
+                    + ticketmaster_response_json["_embedded"]["venues"][0]["city"][
+                        "name"
+                    ]
+                    + ", "
+                    + ticketmaster_response_json["_embedded"]["venues"][0]["postalCode"]
+                )
             else:
                 address = "TBD"
             if "location" in ticketmaster_response_json["_embedded"]["venues"][0]:
-                longitude = ticketmaster_response_json["_embedded"]["venues"][0]["location"]["longitude"]
-                latitude = ticketmaster_response_json["_embedded"]["venues"][0]["location"]["latitude"]
+                longitude = ticketmaster_response_json["_embedded"]["venues"][0][
+                    "location"
+                ]["longitude"]
+                latitude = ticketmaster_response_json["_embedded"]["venues"][0][
+                    "location"
+                ]["latitude"]
             else:
                 longitude = "TBD"
                 latitude = "TBD"
-    return name, eventImageURL, startDate, genre, minPrice, maxPrice, venue, address, longitude, latitude
+    return (
+        name,
+        eventImageURL,
+        startDate,
+        genre,
+        minPrice,
+        maxPrice,
+        venue,
+        address,
+        longitude,
+        latitude,
+    )
 
 
 def search(userInput: str):
@@ -184,15 +245,36 @@ def search(userInput: str):
         nameList.append(x["name"])
         imageList.append(x["images"][0]["url"])
         if "dates" in ticketmaster_response_json["_embedded"]["events"][index]:
-            if "start" in ticketmaster_response_json["_embedded"]["events"][index]["dates"]:
-                if "localDate" in ticketmaster_response_json["_embedded"]["events"][index]["dates"]["start"]:
+            if (
+                "start"
+                in ticketmaster_response_json["_embedded"]["events"][index]["dates"]
+            ):
+                if (
+                    "localDate"
+                    in ticketmaster_response_json["_embedded"]["events"][index][
+                        "dates"
+                    ]["start"]
+                ):
                     dateList.append(x["dates"]["start"]["localDate"])
         else:
             dateList.append("TBD")
         if "_embedded" in ticketmaster_response_json["_embedded"]["events"][index]:
-            if "venues" in ticketmaster_response_json["_embedded"]["events"][index]["_embedded"]:
-                if "city" in ticketmaster_response_json["_embedded"]["events"][index]["_embedded"]["venues"][0]:
-                    if "name" in ticketmaster_response_json["_embedded"]["events"][index]["_embedded"]["venues"][0]["city"]:
+            if (
+                "venues"
+                in ticketmaster_response_json["_embedded"]["events"][index]["_embedded"]
+            ):
+                if (
+                    "city"
+                    in ticketmaster_response_json["_embedded"]["events"][index][
+                        "_embedded"
+                    ]["venues"][0]
+                ):
+                    if (
+                        "name"
+                        in ticketmaster_response_json["_embedded"]["events"][index][
+                            "_embedded"
+                        ]["venues"][0]["city"]
+                    ):
                         cityList.append(x["_embedded"]["venues"][0]["city"]["name"])
         else:
             cityList.append("TBD")
@@ -203,4 +285,6 @@ def search(userInput: str):
             minPriceList.append("TBD")
             maxPriceList.append("TBD")
         index = index + 1
-    return zip(idList, nameList, imageList, dateList, cityList, minPriceList, maxPriceList)
+    return zip(
+        idList, nameList, imageList, dateList, cityList, minPriceList, maxPriceList
+    )
