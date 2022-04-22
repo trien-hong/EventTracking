@@ -57,6 +57,12 @@
     transform: scale(1.01);
   }
 
+  #item2 {
+    font-family: Georgia, serif;
+    flex-grow: 1;
+    background-color: lightgray;
+  }
+
   .addHover{
     box-shadow: rgb(10, 2, 7) -2px -2px 0px 2px,
       #010202 0px 0px 0px 4px, rgba(0, 0, 0, 0.05) 0px 0px 2px 7px;
