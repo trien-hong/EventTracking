@@ -35,6 +35,15 @@
                 </form>
             </nav>
             {% if allow == 'True' %}
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div id="flash1">
+                                <center> <p>{{message}}</p> </center>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
                 <div class="container">
                     <div id="container2">
                             {% for event_row in events|batch(1) %}
