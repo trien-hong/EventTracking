@@ -1,13 +1,13 @@
-# pylint: disable=E1101, W1508
+# pylint: disable=E1101, W1508, C0103
 
 """
 SWE Final Project | Event Tracking
 """
 
-from waitress import serve
-import time
 import os
+import time
 import flask
+from waitress import serve
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
 from flask_login import (
@@ -51,6 +51,9 @@ def load_user(user_id):
 @app.route("/")
 @app.route("/welcome", methods=["GET"])
 def welcome():
+    """
+    The welcome route is used as the landing page of the web app
+    """
     return flask.render_template("welcome.html")
 
 
@@ -133,7 +136,7 @@ def main():
             minPriceList,
             maxPriceList,
         ) = ticketmaster_api.getEvents(current_user.zip)
-        if idList == False:
+        if idList is False:
             flask.flash(
                 "Your zipcode doesn't contain any events. Try searching for an event instead."
             )
@@ -163,7 +166,7 @@ def main():
             minPriceList,
             maxPriceList,
         ) = ticketmaster_api.getEvents(current_user.zip)
-        if idList == False:
+        if idList is False:
             flask.flash(
                 "Your zipcode doesn't contain any events. Try searching for an event instead."
             )
@@ -192,6 +195,7 @@ def main():
             ),
             allow="True",
         )
+    return ""
 
 
 @app.route("/profile", methods=["GET"])

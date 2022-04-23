@@ -125,6 +125,9 @@ class OpenWeatherMapUnmockedTest(unittest.TestCase):
     """
 
     def test_openWeatherMapTest1(self):
+        """
+        Used to convert both strings to floating nummbers
+        """
         test1 = "123.4"
         test2 = "-35.8"
         expected_output = [123.4, -35.8]
@@ -132,12 +135,18 @@ class OpenWeatherMapUnmockedTest(unittest.TestCase):
         self.assertEqual(expected_output, actual_output)
 
     def test_openWeatherMapTest2(self):
+        """
+        Used to test kelvin to fahrenheit
+        """
         test = 300
         expected_output = -0.67
         actual_output = openWeatherMapTest2(test)
         self.assertLess(expected_output, actual_output)
 
     def test_openWeatherMapTest3(self):
+        """
+        Used to test kelvin to celsius
+        """
         test = 250
         expected_output = 0
         actual_output = openWeatherMapTest3(test)
