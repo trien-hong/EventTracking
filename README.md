@@ -1,5 +1,5 @@
 # URL to Website
-[Follow the link here to see my Heroku app](https://swe-event-tracking-final.herokuapp.com/)
+[Follow the link here to see my Heroku app](https://swe-event-tracker.herokuapp.com/)
 
 # Contributors
 1. Trien Hong
