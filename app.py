@@ -60,7 +60,7 @@ def welcome():
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     """
-    The signup route allows the user to signup with email, password, and zipcode.
+    The signup route allows the user to signup with email, password, and zip code.
     """
     if flask.request.method == "GET":
         return flask.render_template("signup.html")
@@ -83,7 +83,7 @@ def signup():
                     time.sleep(1)
                     return flask.redirect(flask.url_for("login"))
             else:
-                flask.flash("Zipcode should be 5 numbers. Please try again.")
+                flask.flash("Zip code should be 5 numbers. Please try again.")
                 time.sleep(1)
                 return flask.render_template("signup.html")
         else:
@@ -124,7 +124,7 @@ def login():
 @login_required
 def main():
     """
-    This route will display the events based on the current user's zipcode.
+    This route will display the events based on the current user's zip code.
     """
     if flask.request.method == "GET":
         (
@@ -138,7 +138,7 @@ def main():
         ) = ticketmaster_api.getEvents(current_user.zip)
         if idList is False:
             flask.flash(
-                "Your zipcode doesn't contain any events. Try searching for an event instead."
+                "Your zip code doesn't contain any events. Try searching for an event instead."
             )
             time.sleep(1)
             return flask.render_template("index.html", allow="False")
@@ -168,7 +168,7 @@ def main():
         ) = ticketmaster_api.getEvents(current_user.zip)
         if idList is False:
             flask.flash(
-                "Your zipcode doesn't contain any events. Try searching for an event instead."
+                "Your zip code doesn't contain any events. Try searching for an event instead."
             )
             time.sleep(1)
             return flask.render_template("index.html", allow="False")
@@ -215,6 +215,42 @@ def profile():
         )
     return ""
 
+@app.route("/profile_settings", methods=["GET", "POST"])
+@login_required
+def profile_settings():
+    if flask.request.method == "GET":
+        time.sleep(1)
+        return flask.render_template(
+            "profile_settings.html", current_user=current_user.email.split("@")[0]
+        )
+    if flask.request.method == "POST":
+        time.sleep(1)
+        change_email = flask.request.form["email"]
+        change_password = flask.request.form["password"]
+        change_zip = flask.request.form["zip"]
+
+        user = Users.query.filter_by(email=current_user.email).all()
+
+        for x in user:
+            db.session.begin()
+            contains_data = Users.query.filter_by(email=change_email).first()
+            if(contains_data is not None):
+                flask.flash("Email is already in use. Please try another email.")
+            elif (change_email != ""):
+                update_email = Users.query.filter_by(email=current_user.email).update({Users.email: change_email})
+            if(change_password != ""):
+                password_hash = generate_password_hash(change_password, method="sha256")
+                update_password = Users.query.filter_by(email=current_user.email).update({Users.password: password_hash})
+            if(change_zip.isnumeric() is not True):
+                flask.flash("Zip code should be 5 numbers. Please try again.")
+            elif(change_zip != ""):
+                update_zip = Users.query.filter_by(email=current_user.email).update({Users.zip: change_zip})
+            db.session.commit()
+            flask.flash("Changes were successful!")
+        
+        return flask.render_template(
+            "profile_settings.html", current_user=current_user.email.split("@")[0]
+        )
 
 @app.route("/reroute", methods=["POST"])
 @login_required
@@ -420,22 +456,13 @@ def logout():
     time.sleep(1)
     return flask.redirect(flask.url_for("login"))
 
-
-# @app.errorhandler(500)
-# def internal_error():
-#     """
-#     The internal error route is used to handle the 500 error.
-#     """
-#     #return flask.redirect(flask.request.referrer)
-#     #flask.redirect(flask.url_for("login"))
-#     return flask.redirect(flask.url_for(flask.request.referrer))
-
 if __name__ == "__main__":
     db.create_all()
     from models import Users, UserEvents
 
-    # app.run(
-    #     host=os.getenv("IP", "0.0.0.0"),
-    #     port=int(os.getenv("PORT", 8080)),
-    # )
+    app.run(
+        host=os.getenv("IP", "0.0.0.0"),
+        port=int(os.getenv("PORT", 8080)),
+    )
+
     serve(app, host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)))

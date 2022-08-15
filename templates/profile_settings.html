@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/style.css"/>
+        <link rel="shortcut icon" href="#">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/main"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/main">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="LinkSpacing" href="/profile"><u>Profile</u></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="LinkSpacing" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <form class="d-flex" method="POST" action="/reroute">
+                <div id="search1">
+                    <input class="form-control" type="text" name="user_input" placeholder="Search events..." size="40">
+                </div>
+                <div id="search1">
+                    <button class="s_buttonHome" type="submit" value="Submit">Search</button>
+                </div>
+            </form>
+        </nav>
+        <br>
+        <center>
+            <h3>Welcome, {{ current_user }}!</h3>
+            <br>
+            <div class="container3">
+                <br>
+                <p>Any field that is blank will not be updatded for that specific field.</p>
+                <form method="POST" action="/profile_settings">
+                    <input class = "input" type="email" name="email" placeholder="Change your email" minlength="1" maxlength="100" size="35"/>
+                    <br>
+                    <br>
+                    <input class = "input" type="password" name="password" placeholder="Change your password" minlength="1" size="35"/>
+                    <br>
+                    <br>
+                    <input class = "input" type="text" name="zip" placeholder="Change your zip code" minlength="5" maxlength="5" size="35"/>
+                    <br>
+                    <br>
+                    <p>Any field that is not blank will be updated.</p>
+                    <input class = "s_button" type="submit" value="SUBMIT"/>
+                    <br>
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            <br>
+                            {% for message in messages %}
+                                <p><b>{{ message }}<b></p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </form>
+                <br>
+            </div>
+        </center>
+    </body>
+</html>

@@ -148,36 +148,40 @@ def getEventDetails(eventId: str):
 
     name = ticketmaster_response_json["name"]
     eventImageURL = ticketmaster_response_json["images"][0]["url"]
+    startDate = "TBD"
+    genre = "TBD/NA"
+    minPrice = "TBD"
+    maxPrice = "TBD"
+    venue = "TBD"
+    address = "TBD"
+    longitude = "TBD"
+    latitude = "TBD"
+
     if "dates" in ticketmaster_response_json:
         if "start" in ticketmaster_response_json["dates"]:
             if "localDate" in ticketmaster_response_json["dates"]["start"]:
                 startDate = ticketmaster_response_json["dates"]["start"]["localDate"]
-    else:
-        startDate = "TBD"
+    
     if "classifications" in ticketmaster_response_json:
         if "genre" in ticketmaster_response_json["classifications"][0]:
             if "name" in ticketmaster_response_json["classifications"][0]["genre"]:
                 genre = ticketmaster_response_json["classifications"][0]["genre"][
                     "name"
                 ]
-    else:
-        genre = "TBD"
+
     if "priceRanges" in ticketmaster_response_json:
         if "min" in ticketmaster_response_json["priceRanges"][0]:
             minPrice = "$" + str(ticketmaster_response_json["priceRanges"][0]["min"])
-    else:
-        minPrice = "TBD"
+
     if "priceRanges" in ticketmaster_response_json:
         if "max" in ticketmaster_response_json["priceRanges"][0]:
             maxPrice = "$" + str(ticketmaster_response_json["priceRanges"][0]["max"])
-    else:
-        maxPrice = "TBD"
+
     if "_embedded" in ticketmaster_response_json:
         if "venues" in ticketmaster_response_json["_embedded"]:
             if "name" in ticketmaster_response_json["_embedded"]["venues"][0]:
                 venue = ticketmaster_response_json["_embedded"]["venues"][0]["name"]
-    else:
-        venue = "TBD"
+    
     if "_embedded" in ticketmaster_response_json:
         if "venues" in ticketmaster_response_json["_embedded"]:
             if "address" in ticketmaster_response_json["_embedded"]["venues"][0]:
@@ -192,8 +196,7 @@ def getEventDetails(eventId: str):
                     + ", "
                     + ticketmaster_response_json["_embedded"]["venues"][0]["postalCode"]
                 )
-    else:
-        address = "TBD"
+
     if "_embedded" in ticketmaster_response_json:
         if "venues" in ticketmaster_response_json["_embedded"]:
             if "location" in ticketmaster_response_json["_embedded"]["venues"][0]:
@@ -203,9 +206,7 @@ def getEventDetails(eventId: str):
                 latitude = ticketmaster_response_json["_embedded"]["venues"][0][
                     "location"
                 ]["latitude"]
-    else:
-        longitude = "TBD"
-        latitude = "TBD"
+
     return (
         name,
         eventImageURL,
