@@ -460,9 +460,9 @@ if __name__ == "__main__":
     db.create_all()
     from models import Users, UserEvents
 
-    app.run(
+    # app.run(
         # host=os.getenv("IP", "0.0.0.0"),
         # port=int(os.getenv("PORT", 8080)),
-    )
+    # )
 
     serve(app, host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)))
