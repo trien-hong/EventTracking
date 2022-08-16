@@ -1,5 +1,5 @@
 # URL to Website
-[Follow the link here to see our Heroku app (may take a few seconds to load after logging in).](https://swe-event-tracker.herokuapp.com/)
+[Follow the link here to see our Heroku app (may take a few seconds to load after logging in)](https://swe-event-tracker.herokuapp.com/)
 
 # Contributors
 1. Trien Hong
