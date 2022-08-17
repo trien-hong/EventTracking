@@ -224,30 +224,33 @@ def profile_settings():
             "profile_settings.html", current_user=current_user.email.split("@")[0]
         )
     if flask.request.method == "POST":
-        time.sleep(1)
         change_email = flask.request.form["email"]
         change_password = flask.request.form["password"]
         change_zip = flask.request.form["zip"]
-
-        user = Users.query.filter_by(email=current_user.email).all()
-
-        for x in user:
-            db.session.begin()
-            contains_data = Users.query.filter_by(email=change_email).first()
-            if(contains_data is not None):
-                flask.flash("Email is already in use. Please try another email.")
-            elif (change_email != ""):
-                update_email = Users.query.filter_by(email=current_user.email).update({Users.email: change_email})
-            if(change_password != ""):
-                password_hash = generate_password_hash(change_password, method="sha256")
-                update_password = Users.query.filter_by(email=current_user.email).update({Users.password: password_hash})
-            if(change_zip.isnumeric() is not True):
-                flask.flash("Zip code should be 5 numbers. Please try again.")
-            elif(change_zip != ""):
-                update_zip = Users.query.filter_by(email=current_user.email).update({Users.zip: change_zip})
-            db.session.commit()
-            flask.flash("Changes were successful!")
         
+        db.session.begin()
+
+        contains_data = Users.query.filter_by(email=change_email).first()
+        if(contains_data is not None):
+            flask.flash("Email is already in use. Please try another email.")
+        elif (change_email != ""):
+            UserEvents.query.filter_by(email=current_user.email).update({UserEvents.email: change_email})
+            Users.query.filter_by(email=current_user.email).update({Users.email: change_email})
+        
+        if(change_password != ""):
+            password_hash = generate_password_hash(change_password, method="sha256")
+            Users.query.filter_by(email=current_user.email).update({Users.password: password_hash})
+
+        if(change_zip != "" and change_zip.isnumeric() is True):
+            Users.query.filter_by(email=current_user.email).update({Users.zip: change_zip})
+        elif (change_zip != "" and change_zip.isnumeric() is False):
+            flask.flash("Zip code should be 5 numeric characters.")
+        
+        db.session.commit()
+        
+        flask.flash("If you see an error, that specfic entry was not updated. Otherwise it was a success.")
+        
+        time.sleep(1)
         return flask.render_template(
             "profile_settings.html", current_user=current_user.email.split("@")[0]
         )
@@ -461,8 +464,8 @@ if __name__ == "__main__":
     from models import Users, UserEvents
 
     # app.run(
-        # host=os.getenv("IP", "0.0.0.0"),
-        # port=int(os.getenv("PORT", 8080)),
+    #     host=os.getenv("IP", "0.0.0.0"),
+    #     port=int(os.getenv("PORT", 8080)),
     # )
 
     serve(app, host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)))
