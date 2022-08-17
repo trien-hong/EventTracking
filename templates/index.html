@@ -25,7 +25,7 @@
                         </li>
                     </ul>
                 </div>
-                <form class="d-flex" method="POST" action="/reroute">
+                <form class="d-flex" method="POST" action="/rerouteForSearch">
                     <div id="search1">
                         <input class="form-control" type="text" name="user_input" placeholder="Search events..." size="40">
                     </div>
@@ -61,7 +61,7 @@
                                         <input type="hidden" name="eventAddress" value="{{event[4]}}" readonly="readonly" form="{{event[0]}}">
                                         <input type="hidden" name="eventImageURL" value="{{event[2]}}" readonly="readonly" form="{{event[0]}}">
                                         <input type="hidden" name="eventPrice" value="{{event[5]}} - {{event[6]}}" readonly="readonly" form="{{event[0]}}">
-                                        <form method="POST" action="/event_details">
+                                        <form method="POST" action="/rerouteForEventDetails">
                                             <input type="hidden" name="eventId" value="{{event[0]}}" readonly="readonly">
                                             <input class="item" type="image" src="{{event[2]}}" alt="Event Picture" style="width:225px;height:126px;">
                                         </form>

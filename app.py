@@ -255,9 +255,9 @@ def profile_settings():
             "profile_settings.html", current_user=current_user.email.split("@")[0]
         )
 
-@app.route("/reroute", methods=["POST"])
+@app.route("/rerouteForSearch", methods=["POST"])
 @login_required
-def reroute():
+def rerouteForSearch():
     """
     The reroute route is used to keep track of the search term.
     """
@@ -268,8 +268,7 @@ def reroute():
         return flask.redirect(flask.url_for("search", user_input=result), code=307)
     return ""
 
-
-@app.route("/search/<user_input>", methods=["GET", "POST"])
+@app.route("/search/id/<user_input>", methods=["GET", "POST"])
 @login_required
 def search(user_input):
     """
@@ -394,10 +393,22 @@ def delete():
         return flask.redirect(flask.url_for("profile"))
     return ""
 
-
-@app.route("/event_details", methods=["GET", "POST"])
+@app.route("/rerouteForEventDetails", methods=["POST"])
 @login_required
-def event_details():
+def rerouteForEventDetails():
+    """
+    The reroute route is used to keep track of the event that was clicked.
+    """
+    if flask.request.method == "POST":
+        result = flask.request.form["eventId"]
+        # the reason for this was to generate dynamic URLs
+        time.sleep(1)
+        return flask.redirect(flask.url_for("event_details", event_id=result), code=307)
+    return ""
+
+@app.route("/event_details/id/<event_id>", methods=["GET", "POST"])
+@login_required
+def event_details(event_id):
     """
     The event details page is used to display specific information of an event.
     """
