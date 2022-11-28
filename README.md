@@ -1,6 +1,10 @@
 # URL to Website
 [Follow the link here to see our Heroku app (may take a few seconds to load after logging in)](https://swe-event-tracker.herokuapp.com/)
 
+NOTE: Heroku is removing their free tier on November 28, 2022. The link above will no longer work after that date.
+
+[https://help.heroku.com/RSBRUH58/removal-of-heroku-free-product-plans-faq](https://help.heroku.com/RSBRUH58/removal-of-heroku-free-product-plans-faq)
+
 # Contributors
 1. Trien Hong
 2. Michelle Serrano
@@ -48,9 +52,7 @@ Now you should be able to open up the source code within your own IDE. Below you
 ## Installations for forking
 1. Install Flask
 2. Install requests
-3. Install JSON
 4. Install dotenv
-5. Install Black
 6. Install flask_login
 7. Install psycopg2-binary
 8. Install Flask-SQLAlchemy==2.1
@@ -76,18 +78,6 @@ Make sure to add this: Example: `SECRET_KEY="your secret key here"` as well.
 Your secret_key can be anything you want. Just make sure it's a pretty decent key and not "123" or "password".
 
 These secret keys must be put into your .env file to keep the information private. When you clone the github repo, the .env file will not be provided for you, you must create your own .env file within your project folder. The DB URL key will allow access to the DB URL in order to connect with the database you have created. Within the main method of app.py, you'll need to change server to app.run(). You should now be able to run the project locally, accessing data from the APIs.
-
-# Linting
-* E1101 - I read online that I'm suppose to install pylint for flask
-* W1508 - Says that it was expecting a string but the variable is a string
-* R0903 - We don't need public functions in file, just the class for database
-* C0103 - Sometimes you're just so use to camel case and forget pylint likes snake cases more.
-* C0301 - Some of the dictionaries within testing are very long
-* W0622 - I know that zip is a function and it is telling us to rename but though if we did, we would have to rename every zip word throughout app.py
-* R0913 - Too many arguments but we have no choice
-* R0914 - Too many local variables but we also have no choice on this
-* R0912 - Too many branches (we're assuming becuse of the if statements) but it's in the heat of the moment fix
-* R1702 - Too many nested block (we're also assuming because of the if statements) also in the heat of the moment fix
 
 References: 
 We used [this link](https://developers.google.com/maps/documentation/javascript/adding-a-google-map#maps_add_map-javascript) for Google Maps.
