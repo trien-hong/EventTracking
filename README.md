@@ -1,6 +1,10 @@
 # URL to Website
 [Follow the link here to see our Heroku app (may take a few seconds to load after logging in)](https://swe-event-tracker.herokuapp.com/)
 
+NOTE: Heroku is removing their free tier on November 28, 2022. The link above will no longer work after that date.
+
+[https://help.heroku.com/RSBRUH58/removal-of-heroku-free-product-plans-faq](https://help.heroku.com/RSBRUH58/removal-of-heroku-free-product-plans-faq)
+
 # Contributors
 1. Trien Hong
 2. Michelle Serrano
