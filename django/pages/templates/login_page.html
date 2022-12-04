@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}<title>Login</title>{% endblock %}
+{% block navbar %}
+{% endblock %}
+{% block content %}
+    <h2><u>LOGIN</u></h2>
+    <div class="login_signup_reset_form_border">
+        {% if messages %}
+            {% for message in messages %}
+                <h4{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h4>
+            {% endfor %}
+            <hr>
+        {% endif %}
+        <form action="{% url 'login_page' %}" method="POST">
+            {% csrf_token %}
+            <table>
+                {{login_form}}
+            </table>
+            <div class="pt-3">
+                <input class="btn btn-primary" type="submit" value="LOGIN">
+            </div>
+        </form>
+        <hr>
+        <h4>Click the button below to signup or reset password.</h4>
+        <a class="btn btn-primary" href="{% url 'signup_page' %}">SIGNUP</a> &nbsp|&nbsp <a class="btn btn-primary" href="{% url 'password_reset' %}">PASSWORD RESET</a>
+    </div>
+{% endblock %}

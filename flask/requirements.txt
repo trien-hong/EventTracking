@@ -1,0 +1,7 @@
+python-dotenv
+requests
+Flask
+flask_login
+psycopg2-binary
+Flask-SQLAlchemy
+waitress

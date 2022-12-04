@@ -1,3 +1,26 @@
+# Update
+I have since added a django version of the web app. The django version contains some new features along with updated code. This version does not contain any of the testing.
+
+I am currently working on a React version with a django back-end server using postgresql database.
+
+To get this app running you need to setup your .env file first. Within your .env file you'll add in these variables.
+  * `TICKETMASTER_API_KEY="ENTER YOUR THE TICKETMASTER API KEY HERE"`
+  * `OPENWEATHERMAP_API_KEY="ENTER YOUR OPEN WEATHER MAP API KEY HERE"`
+  * `DB_NAME="postgres"`
+  * `DB_USER="postgres"`
+  * `DB_PASSWORD="postgres"`
+  * `DB_HOST="db"`
+  * `DB_PORT="5432"`
+  * `POSTGRES_DB="postgres"`
+  * `POSTGRES_USER="postgres"`
+  * `POSTGRES_PASSWORD="postgres"`
+
+Remember to get your free API keys before starting. You can run the app locally using docker. Ensure you have docker and docker-compose installed. Install Docker Desktop also as this will help out.
+
+Ensure you're in the django version/folder before starting. In your terminal type in `docker-compose up`. You will then need to open the terminal of the app in the container on Docker Desktop. Once opened, type in `python3 manage.py migrate`.
+
+This should create all the tables in the database and your app is ready to go. In your browser type in `localhost:8001`.
+
 # URL to Website
 [Follow the link here to see our Heroku app (may take a few seconds to load after logging in)](https://swe-event-tracker.herokuapp.com/)
 

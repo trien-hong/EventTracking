@@ -1,0 +1,125 @@
+body {
+  background-color: #E3E4E6;
+}
+
+.profile_link {
+    top: 10px;
+    right: 10px;
+    position: absolute;
+}
+
+#container2 {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: 25px;
+    padding: 25px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.row2 {
+    border-style: solid;
+    border-radius: 5px;
+}
+
+.s_buttonHome {
+    padding: 7px;
+    text-align: center;
+    font-size: 15px;
+    font-family: Georgia, serif;
+    display: block;
+    margin: 0 auto;
+    background-color: white;
+    border: 1px;
+    cursor: pointer;
+    
+    box-shadow: rgb(255, 198, 0) -2px -2px 0px 2px,
+    rgb(246, 84, 174)   0px 0px 0px 4px, rgba(0, 0, 0, 0.05) 0px 0px 2px 7px;
+    transition: all 0.2s;
+    border-radius: 10px;
+  }
+
+  .s_buttonHome:hover {
+    box-shadow: #5f54f6 -2px -2px 0px 2px,
+      #246474 0px 0px 0px 4px, rgba(0, 0, 0, 0.05) 0px 0px 2px 7px;
+    transform: scale(1.01);
+  }
+
+  .item {
+    font-family: Georgia, serif;
+    flex-grow: 1;
+    background-color: lightgray;
+  }
+
+  .item:hover {
+    box-shadow: #5f54f6 -2px -2px 0px 2px,
+    #246474 0px 0px 0px 4px, rgba(0, 0, 0, 0.05) 0px 0px 2px 7px;
+    transform: scale(1.01);
+  }
+
+  #item2 {
+    font-family: Georgia, serif;
+    flex-grow: 1;
+    background-color: lightgray;
+  }
+
+  .addHover{
+    box-shadow: rgb(10, 2, 7) -2px -2px 0px 2px,
+      #010202 0px 0px 0px 4px, rgba(0, 0, 0, 0.05) 0px 0px 2px 7px;
+    transform: scale(1.01);
+  }
+  .addHover:hover {
+    box-shadow: #5f54f6  -2px -2px 0px 2px,
+    #246474 0px 0px 0px 4px, rgba(0, 0, 0, 0.05) 0px 0px 2px 7px;
+      transform: scale(1.01);
+  }
+
+  #search1 {
+      margin-right: 20px;
+  }
+
+  .nav-link:hover {
+    box-shadow: #5f54f6  -2px -2px 0px 2px,
+    #246474 0px 0px 0px 4px, rgba(0, 0, 0, 0.05) 0px 0px 2px 7px;
+      transform: scale(1.01);
+  }
+  .navbar .navbar-nav .nav-link {
+    color: black;
+    font-size: 1.1em;
+  }
+  .navbar .navbar-nav .nav-link:hover {
+  background-color: grey;
+  color: black;
+  }
+
+  #LinkSpacing {
+    margin-left: 20px;
+   }
+
+   #flash1 {
+     margin-top: 15px;
+     color: maroon;
+     font-weight: bold;
+     font-family: Georgia, serif;
+   }
+
+   #flash2 {
+    margin-top: 15px;
+    color: maroon;
+    font-weight: bold;
+    font-family: Georgia, serif;
+  }
+
+#profile_settings_btn {
+  position: absolute;
+  right: 10px;
+  top: 70px;
+}
+
+.container3 {
+  background-color: #DFDFDF;
+  border-style: double;
+  display: inline-block;
+  padding-right: 10px;
+  padding-left: 10px;
+}

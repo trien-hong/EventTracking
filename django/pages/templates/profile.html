@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}<title>Profile</title>{% endblock %}
+{% block homepage %}<a class="btn btn-primary mx-1" href="{% url 'index' %}">HOMEPAGE</a>{% endblock %}
+{% block profile %}<a class="btn btn-primary mx-1" href="{% url 'profile' %}"><u>PROFILE</u></a>{% endblock %}
+{% block settings %}<a class="btn btn-primary mx-1" href="{% url 'settings' %}">SETTINGS</a>{% endblock %}
+{% block logout_action %}<a class="btn btn-primary mx-1" href="{% url 'logout_action' %}">LOGOUT</a>{% endblock %}
+{% block content %}
+    <div class="pt-3">
+        <h2>Welcome, {{username}}!</h2>
+    </div>
+    <hr>
+    {% if messages %}
+        {% for message in messages %}
+            <h4{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h4>
+        {% endfor %}
+    {% endif %}
+    <div class="events">
+        {% for event in events %}
+            <div class="event_border">
+                <p>{{event.event_title}}</p>
+                <p>{{event.event_date}} &nbsp|&nbsp {{event.event_location}}</p>
+                <form method="POST" action="{% url 'event_details' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="eventId" value="{{event.event_id}}" readonly="readonly">
+                    <input type="image" src="{{event.event_image_url}}" alt="Image Unavailable" style="width:225px;height:126px;">
+                </form>
+                <div class="pt-2">
+                </div>
+                <p>{{event.event_price}}</p>
+                <form id="{{event.event_id}}" action="{% url 'deleteEventFromDatabase' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="eventId" value="{{event.event_id}}" readonly="readonly" form="{{event.event_id}}">
+                    <input class="btn btn-primary" type="submit" value="REMOVE EVENT" form="{{event.event_id}}">
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
