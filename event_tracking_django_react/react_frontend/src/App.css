@@ -1,0 +1,19 @@
+*{
+  margin: 0;
+}
+
+#event_border {
+  background-color: #E6E6E6;
+  border-style: solid;
+  display: inline-block;
+  padding: 1%;
+}
+
+.events {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  width: 70%;
+  padding: 10px;
+  margin: 0 auto;
+}

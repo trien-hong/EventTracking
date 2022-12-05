@@ -1,0 +1,6 @@
+.env
+*.pyc
+*.pyo
+/database
+django_backend/migrations/*
+!django_backend/migrations/__init__.py
