@@ -1,5 +1,5 @@
 # Update
-There are currently 3 different versions. One using Django, one using Flask, and one using Django as back-end with React as front-end (unfinished).
+There are currently 3 different versions. One using Django, one using Flask, and one using Django as back-end with React as front-end (being worked on).
 
 The Django version contains some new features along with updated code. This version does not contain any of the testing.
 

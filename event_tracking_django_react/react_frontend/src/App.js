@@ -5,11 +5,13 @@ import { AppBar, Toolbar, Button, Typography } from '@mui/material';
 function App() {
   const [buttonColorEvents, setButtonColorEvents] = useState("primary");
   const [buttonColorProfile, setButtonColorProfile] = useState("primary");
-  const [events, setEvents] = useState([""])
+  const [events, setEvents] = useState([""]);
+  const [profileEvents, setProfileEvents] = useState([""]);
   const [displayItem, setDisplayItem] = useState("");
 
   useEffect(() => {
-    getEvents()
+    getEvents();
+    getProfileEvents();
   }, []);
 
   // async function getEvents() {
@@ -206,11 +208,37 @@ function App() {
     setEvents(data)
   }
 
+  async function getProfileEvents() {
+    const response = await fetch("http://127.0.0.1:8000/api/profile/");
+    const data = await response.json();
+    setProfileEvents(data);
+  }
+
+  async function addEvent(event_id, title, date, imageUrl, minPrice, maxPrice) {
+    fetch(`http://127.0.0.1:8000/api/profile/save/event/id/${event_id}/`, {
+      method: "POST",
+      body: JSON.stringify({
+        event_id: event_id,
+        title: title,
+        date: date,
+        imageUrl: imageUrl,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+      })
+    })
+  }
+
+  function deleteEvent() {
+  }
+
+  function saveProfileChanges() {
+  }
+
   function displayEvents() {
     if (buttonColorEvents === "primary") {
       setButtonColorEvents("success")
       setButtonColorProfile("primary")
-
+      
       setDisplayItem (
         <div className="events">
           {events.map((event, i) =>
@@ -226,7 +254,7 @@ function App() {
                 <br></br>
                 <Typography>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
                 <br></br>
-                <Button variant="contained" id={event.id} onClick={() => { saveEvent(event.id, event.title, event.date, event.city, event.imageUrl, event.minPrice, event.maxPrice); }}>ADD EVENT</Button>
+                <Button variant="contained" id={event.id} onClick={() => { addEvent(event.id, event.title, event.date, event.imageUrl, event.minPrice, event.maxPrice); }}>ADD EVENT</Button>
                 <br></br>
                 <br></br>
               </center>
@@ -235,25 +263,39 @@ function App() {
         </div>
       )
     } else {
-      console.log("event working")
       setButtonColorEvents("primary")
       setButtonColorProfile("primary")
       setDisplayItem(null)
     }
   }
 
-  function saveEvent(id, title, date, city, imageUrl, minPrice, maxPrice) {
-    console.log(id)
-  }
-
-  async function displayProfile() {
+  function displayProfile() {
     if (buttonColorProfile === "primary") {
       setButtonColorEvents("primary")
       setButtonColorProfile("success")
-      
+      getProfileEvents()
+
       setDisplayItem (
-        <div>
-          <h1>hello profile</h1>
+        <div className="events">
+          {profileEvents.map((event, i) =>
+            <div className={event.id} id="event_border" key={i}>
+              <center>
+                <br></br>
+                <Typography><b>{event.title}</b></Typography>
+                <br></br>
+                <Typography>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
+                <br></br>
+                <img src={event.imageUrl} alt="image not found" width={225} height={126}/>
+                <br></br>
+                <br></br>
+                <Typography>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
+                <br></br>
+                <Button variant="contained" id={event.id} onClick={() => { deleteEvent(); }}>DELETE EVENT</Button>
+                <br></br>
+                <br></br>
+              </center>
+            </div>
+          )}
         </div>
       )
     } else {
