@@ -75,6 +75,19 @@ def profile(request):
     serializer = ProfileSerializer(data, many=True)
     return Response(serializer.data)
 
+@api_view(["DELETE"])
+def profileDeleteEventId(request, id):
+    """
+    /api/profile/delete/event/id/<str:id>/
+    """
+    data = json.loads(request.body)
+    if Profile.objects.all().filter(event_id=data["event_id"]).exists():
+        event = Profile.objects.get(event_id=data["event_id"])
+        event.delete()
+        return Response(True)
+    else:
+        return Response(False)
+
 @api_view(["POST"])
 def profileSaveEventId(request, id):
     """
@@ -82,10 +95,8 @@ def profileSaveEventId(request, id):
     """
     data = json.loads(request.body)
     if Profile.objects.all().filter(event_id=data["event_id"]).exists() == False:
-        event = Profile(event_id=data["event_id"], title=data["title"], date=data["date"], imageUrl=data["imageUrl"], minPrice=data["minPrice"], maxPrice=data["maxPrice"])
+        event = Profile(event_id=data["event_id"], title=data["title"], date=data["date"], city=data["city"], imageUrl=data["imageUrl"], minPrice=data["minPrice"], maxPrice=data["maxPrice"])
         event.save()
-        print("True")
         return Response(True)
     else:
-        print("False")
         return Response(False)

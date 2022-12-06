@@ -10,8 +10,8 @@ function App() {
   const [displayItem, setDisplayItem] = useState("");
 
   useEffect(() => {
-    getEvents();
-    getProfileEvents();
+    getEvents()
+    getProfileEvents()
   }, []);
 
   // async function getEvents() {
@@ -21,7 +21,7 @@ function App() {
   // }
 
   function getEvents() {
-    // filler data for now so I don't keep making request to Ticketmaster API
+    // filler data for now so I don't keep making request to Ticketmaster API on the back-end
     const data = [
       {
           "id": "vvG10Z9fLftAso",
@@ -214,31 +214,42 @@ function App() {
     setProfileEvents(data);
   }
 
-  async function addEvent(event_id, title, date, imageUrl, minPrice, maxPrice) {
-    fetch(`http://127.0.0.1:8000/api/profile/save/event/id/${event_id}/`, {
+  async function addEvent(event_id, title, date, city, imageUrl, minPrice, maxPrice) {
+    await fetch(`http://127.0.0.1:8000/api/profile/save/event/id/${event_id}/`, {
       method: "POST",
       body: JSON.stringify({
         event_id: event_id,
         title: title,
         date: date,
+        city: city,
         imageUrl: imageUrl,
         minPrice: minPrice,
         maxPrice: maxPrice,
       })
     })
+    getProfileEvents();
   }
 
-  function deleteEvent() {
-  }
+  async function deleteProfileEvent(index, event_id) {
+    const copyOfProfileEvents = profileEvents
+    copyOfProfileEvents.splice(index, 1)
+    setProfileEvents(copyOfProfileEvents)
 
-  function saveProfileChanges() {
+    await fetch(`http://127.0.0.1:8000/api/profile/delete/event/id/${event_id}/`, {
+      method: "DELETE",
+      body: JSON.stringify({
+        event_id: event_id
+      })
+    })
+
+    displayProfile()
   }
 
   function displayEvents() {
     if (buttonColorEvents === "primary") {
       setButtonColorEvents("success")
       setButtonColorProfile("primary")
-      
+
       setDisplayItem (
         <div className="events">
           {events.map((event, i) =>
@@ -254,7 +265,7 @@ function App() {
                 <br></br>
                 <Typography>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
                 <br></br>
-                <Button variant="contained" id={event.id} onClick={() => { addEvent(event.id, event.title, event.date, event.imageUrl, event.minPrice, event.maxPrice); }}>ADD EVENT</Button>
+                <Button variant="contained" id={event.id} onClick={() => { addEvent(event.id, event.title, event.date, event.city, event.imageUrl, event.minPrice, event.maxPrice); }}>ADD EVENT</Button>
                 <br></br>
                 <br></br>
               </center>
@@ -269,11 +280,10 @@ function App() {
     }
   }
 
-  function displayProfile() {
+  async function displayProfile() {
     if (buttonColorProfile === "primary") {
       setButtonColorEvents("primary")
       setButtonColorProfile("success")
-      getProfileEvents()
 
       setDisplayItem (
         <div className="events">
@@ -290,7 +300,7 @@ function App() {
                 <br></br>
                 <Typography>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
                 <br></br>
-                <Button variant="contained" id={event.id} onClick={() => { deleteEvent(); }}>DELETE EVENT</Button>
+                <Button variant="contained" id={event.id} onClick={() => { deleteProfileEvent(i, event.event_id); }}>DELETE EVENT</Button>
                 <br></br>
                 <br></br>
               </center>
