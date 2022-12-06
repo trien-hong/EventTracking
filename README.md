@@ -17,7 +17,7 @@ To get the Django web app running you need to setup your .env file first. Within
 
 Remember to get your free API keys before starting. You can run the app locally using docker. Ensure you have docker and docker-compose installed. Install Docker Desktop also as this will help out.
 
-Ensure you're in the Django version/folder before starting. In your terminal type in `docker-compose up`. You will then need to open the terminal of the app in the container on Docker Desktop. Once opened, type in `python3 manage.py migrate`.
+Ensure you're in the Django version/folder before starting. In your terminal type in `docker-compose up`. You will then need to open the terminal of the app in the container on Docker Desktop. Once opened, type in `python3 manage.py makemigrations` then `python3 manage.py migrate`. I believe it's possible to just do `python3 manage.py migrate`.
 
 This should create all the tables in the database and your app is ready to go. In your browser type in `localhost:8001`.
 
