@@ -36,9 +36,9 @@ def getEvents(input):
             event = {}
             
             try:
-                event["id"] = x["id"]
+                event["event_id"] = x["id"]
             except KeyError as e:
-                event["id"] = "TBD"
+                event["event_id"] = "TBD"
 
             try:
                 event["title"] = x["name"]
@@ -92,9 +92,9 @@ def getEventDetails(eventId):
     ticketmaster_response_json = ticketmaster_request.json()
 
     try:
-        id = ticketmaster_response_json["id"]
+        event_id = ticketmaster_response_json["id"]
     except KeyError as e:
-        id = "TBD"
+        event_id = "TBD"
 
     try:
         title = ticketmaster_response_json["name"]
@@ -107,9 +107,9 @@ def getEventDetails(eventId):
         imageUrl = "TBD"
     
     try:
-        startDate = ticketmaster_response_json["dates"]["start"]["localDate"]
+        date = ticketmaster_response_json["dates"]["start"]["localDate"]
     except KeyError as e:
-        startDate = "TBD"
+        date = "TBD"
 
     try:
         genre = ticketmaster_response_json["classifications"][0]["genre"]["name"]
@@ -132,7 +132,7 @@ def getEventDetails(eventId):
         venue = "TBD"
 
     try:
-        address = ticketmaster_response_json["_embedded"]["venues"][0]["address"]["line1"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["city"]["name"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["postalCode"]
+        address = ticketmaster_response_json["_embedded"]["venues"][0]["address"]["line1"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["city"]["name"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["state"]["stateCode"] + " " + ticketmaster_response_json["_embedded"]["venues"][0]["postalCode"]
     except KeyError as e:
         address = "TBD"
 
@@ -144,10 +144,10 @@ def getEventDetails(eventId):
         longitude = "TBD"
     
     event_details = {
-        "id": id,
+        "event_id": event_id,
         "title": title,
         "imageUrl": imageUrl,
-        "startDate": startDate,
+        "date": date,
         "genre": genre,
         "minPrice": minPrice,
         "maxPrice": maxPrice,

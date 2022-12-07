@@ -5,15 +5,22 @@
 #event_border {
   background-color: #E6E6E6;
   border-style: solid;
+  border-radius: 10px;
   display: inline-block;
   padding: 1%;
 }
 
 .events {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr); 
   gap: 20px;
-  width: 70%;
+  width: 85%;
   padding: 10px;
   margin: 0 auto;
+}
+
+#event_border > center > img:hover {
+  border-style: double;
+  cursor: pointer;
+  border-width: 5px;
 }
