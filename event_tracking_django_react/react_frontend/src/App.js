@@ -1,17 +1,16 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import { AppBar, Toolbar, Button, Typography } from '@mui/material';
+import DisplayProfile from './pages/DisplayProfile';
 
 function App() {
   const [buttonColorEvents, setButtonColorEvents] = useState("primary");
   const [buttonColorProfile, setButtonColorProfile] = useState("primary");
   const [events, setEvents] = useState([""]);
-  const [profileEvents, setProfileEvents] = useState([""]);
   const [displayItem, setDisplayItem] = useState("");
 
   useEffect(() => {
     getEvents()
-    getProfileEvents()
   }, []);
 
   // async function getEvents() {
@@ -208,12 +207,6 @@ function App() {
     setEvents(data)
   }
 
-  async function getProfileEvents() {
-    const response = await fetch("http://127.0.0.1:8000/api/profile/");
-    const data = await response.json();
-    setProfileEvents(data);
-  }
-
   async function getEventDetails(event_id) {
     const response = await fetch(`http://127.0.0.1:8000/api/events/id/${event_id}/`);
     const data = await response.json();
@@ -223,8 +216,8 @@ function App() {
 
   async function addEvent(event_id, title, date, city, imageUrl, minPrice, maxPrice) {
     await fetch(`http://127.0.0.1:8000/api/profile/save/event/id/${event_id}/`, {
-      method: "POST",
-      body: JSON.stringify({
+    method: "POST",
+    body: JSON.stringify({
         event_id: event_id,
         title: title,
         date: date,
@@ -232,24 +225,8 @@ function App() {
         imageUrl: imageUrl,
         minPrice: minPrice,
         maxPrice: maxPrice,
-      })
+        })
     })
-    getProfileEvents();
-  }
-
-  async function deleteProfileEvent(index, event_id) {
-    const copyOfProfileEvents = profileEvents
-    copyOfProfileEvents.splice(index, 1)
-    setProfileEvents(copyOfProfileEvents)
-
-    await fetch(`http://127.0.0.1:8000/api/profile/delete/event/id/${event_id}/`, {
-      method: "DELETE",
-      body: JSON.stringify({
-        event_id: event_id
-      })
-    })
-
-    displayProfile()
   }
 
   function displayEvents() {
@@ -293,27 +270,7 @@ function App() {
       setButtonColorProfile("success")
       
       setDisplayItem (
-        <div className="events">
-          {profileEvents.map((event, i) =>
-            <div className={event.id} id="event_border" key={i}>
-              <center>
-                <br></br>
-                <Typography><b>{event.title}</b></Typography>
-                <br></br>
-                <Typography>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
-                <br></br>
-                <img src={event.imageUrl} alt="image not found" width={225} height={126} onClick={() => { displayEventDetails(event.event_id); }}/>
-                <br></br>
-                <br></br>
-                <Typography>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
-                <br></br>
-                <Button variant="contained" id={event.id} onClick={() => { deleteProfileEvent(i, event.event_id); }}>DELETE EVENT</Button>
-                <br></br>
-                <br></br>
-              </center>
-            </div>
-          )}
-        </div>
+        <DisplayProfile/>
       )
     } else {
       setButtonColorEvents("primary")
