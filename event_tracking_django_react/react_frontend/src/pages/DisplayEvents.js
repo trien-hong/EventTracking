@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button, Typography } from '@mui/material';
 
-function DisplayEvents() {
+function DisplayEvents(props) {
     const [events, setEvents] = useState([""]);
 
     useEffect(() => {
@@ -217,18 +217,21 @@ function DisplayEvents() {
         })
     }
 
+    function sendDataToMainApp(event_id) {
+        props.data(event_id);
+    };
+
     return (
         <div className="events">
             {events.map((event, i) =>
-                <div className={event.id} id="event_border" key={i}>
+                <div className={event.event_id} id="event_border" key={i}>
                     <center>
                         <br></br>
                         <Typography><b>{event.title}</b></Typography>
                         <br></br>
                         <Typography>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
                         <br></br>
-                        <img src={event.imageUrl} alt="image not found" width={225} height={126}/>
-                        {/* <img src={event.imageUrl} alt="image not found" width={225} height={126} onClick={() => { displayEventDetails(event.event_id); }}/> */}
+                        <img src={event.imageUrl} alt="image not found" width={225} height={126} onClick={() => { sendDataToMainApp(event.event_id); }}/>
                         <br></br>
                         <br></br>
                         <Typography>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
