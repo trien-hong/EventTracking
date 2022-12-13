@@ -6,13 +6,13 @@ function DisplayEventDetails(id) {
     const event_id = id.data;
 
     useEffect(() => {
-        getEventDetails()
+        getEventDetails();
     }, []);
 
     async function getEventDetails() {
         const response = await fetch(`http://127.0.0.1:8000/api/events/id/${event_id}/`);
         const data = await response.json();
-        setEventDetails(data)
+        setEventDetails(data);
     }
 
     return (
@@ -34,7 +34,7 @@ function DisplayEventDetails(id) {
             </center>
             <br></br>
         </div>
-    )
+    );
 }
 
-export default DisplayEventDetails
+export default DisplayEventDetails;

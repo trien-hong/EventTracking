@@ -1,51 +1,86 @@
 import { useState } from 'react';
 import './App.css';
-import { AppBar, Toolbar, Button } from '@mui/material';
+import { AppBar, Toolbar, Button, TextField, Typography } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import DisplayEvents from './pages/DisplayEvents';
 import DisplayProfile from './pages/DisplayProfile';
 import DisplayEventDetails from './pages/DisplayEventDetails';
+import DisplaySearch from './pages/DisplaySearch';
 
 function App() {
   const [buttonColorEvents, setButtonColorEvents] = useState("primary");
   const [buttonColorProfile, setButtonColorProfile] = useState("primary");
+  const [search, setSearch] = useState("");
   const [displayItem, setDisplayItem] = useState("");
 
   const displayEventDetails = (event_id) => {
-    setButtonColorEvents("primary")
-    setButtonColorProfile("primary")
+    setButtonColorEvents("primary");
+    setButtonColorProfile("primary");
     
     setDisplayItem (
       <DisplayEventDetails data={event_id}/>
-    )
+    );
   }
 
   function displayEvents() {
     if (buttonColorEvents === "primary") {
-      setButtonColorEvents("success")
-      setButtonColorProfile("primary")
+      setButtonColorEvents("success");
+      setButtonColorProfile("primary");
 
       setDisplayItem (
         <DisplayEvents data={displayEventDetails}/>
-      )
+      );
     } else {
-      setButtonColorEvents("primary")
-      setButtonColorProfile("primary")
-      setDisplayItem(null)
+      setButtonColorEvents("primary");
+      setButtonColorProfile("primary");
+      setDisplayItem(null);
     }
   }
 
   function displayProfile() {
     if (buttonColorProfile === "primary") {
-      setButtonColorEvents("primary")
-      setButtonColorProfile("success")
+      setButtonColorEvents("primary");
+      setButtonColorProfile("success");
       
       setDisplayItem (
         <DisplayProfile data={displayEventDetails}/>
-      )
+      );
     } else {
-      setButtonColorEvents("primary")
-      setButtonColorProfile("primary")
-      setDisplayItem(null)
+      setButtonColorEvents("primary");
+      setButtonColorProfile("primary");
+      setDisplayItem(null);
+    }
+  }
+
+  async function displaySearch() {
+    setButtonColorEvents("primary");
+    setButtonColorProfile("primary");
+    const data = await getSearchEvents();
+    if (data === false) {
+      setDisplayItem (
+        <div class="emptySearch">
+          <br></br>
+          <center>
+            <Typography variant="h5">Your search "{search}" came up empty. Please try again.</Typography>
+          </center>
+        </div>
+      );
+    } else {
+      setDisplayItem (
+        <DisplaySearch data={displayEventDetails} searchEvents={data}/>
+      );
+    }
+  }
+
+  async function getSearchEvents() {
+    const response = await fetch(`http://127.0.0.1:8000/api/events/search/input/${search}/`);
+    const data = await response.json();
+    return data
+  }
+
+  function handleEnter(event) {
+    if (event.key === "Enter") {
+      displaySearch();
     }
   }
 
@@ -54,6 +89,8 @@ function App() {
       <AppBar position="static" sx={{ background: "gray" }}>
         <Toolbar>
           <Button sx={{ margin: 'auto' }} color={buttonColorEvents} variant="contained" onClick={() => { displayEvents(); }}>Events</Button>
+          <TextField sx={{ background: "white", width: 375, mr: 2 }} id="filled-basic" label="Search events here..." variant="filled" onChange={(event) => { setSearch(event.target.value); }} onKeyPress={(event) => { handleEnter(event); }}/>
+          <SearchIcon id="search" onClick={() => { displaySearch(); }}/>
           <Button sx={{ margin: 'auto' }} color={buttonColorProfile} variant="contained" onClick={() => { displayProfile(); }}>Profile</Button>
         </Toolbar>
       </AppBar>

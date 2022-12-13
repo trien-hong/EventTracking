@@ -24,6 +24,11 @@ def getRoutes(request):
             'description': 'Returns a single event object'
         },
         {
+            'Endpoint': 'api/events/input/<str:input>',
+            'method': 'GET',
+            'description': 'Returns an array of events based on input. Used for searching events.'
+        },
+        {
             'Endpoint': 'api/profile/',
             'method': 'GET',
             'description': 'Returns an array of events from which the user have added/saved'
@@ -59,9 +64,9 @@ def eventsId(request, id):
     return Response(events)
 
 @api_view(["GET"])
-def eventsInput(request, input):
+def eventsSearchInput(request, input):
     """
-    /api/events/input/<str:input>/
+    /api/events/search/input/<str:input>/
     """
     events = ticketmaster_api.getEvents(input)
     return Response(events)

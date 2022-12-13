@@ -5,7 +5,7 @@ function DisplayEvents(props) {
     const [events, setEvents] = useState([""]);
 
     useEffect(() => {
-        getEvents()
+        getEvents();
     }, []);
 
     // async function getEvents() {
@@ -199,7 +199,7 @@ function DisplayEvents(props) {
             }
         ]
 
-        setEvents(data)
+        setEvents(data);
     }
 
     async function addEvent(event_id, title, date, city, imageUrl, minPrice, maxPrice) {
@@ -214,12 +214,12 @@ function DisplayEvents(props) {
                 minPrice: minPrice,
                 maxPrice: maxPrice,
             })
-        })
+        });
     }
 
     function sendDataToMainApp(event_id) {
         props.data(event_id);
-    };
+    }
 
     return (
         <div className="events">
@@ -243,7 +243,7 @@ function DisplayEvents(props) {
                 </div>
             )}
         </div>
-    )
+    );
 }
 
-export default DisplayEvents
+export default DisplayEvents;

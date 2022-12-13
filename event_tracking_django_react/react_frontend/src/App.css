@@ -2,6 +2,15 @@
   margin: 0;
 }
 
+#search:hover {
+  border-style: solid;
+  cursor: pointer;
+}
+
+#emptySearch {
+  color: red;
+}
+
 #event_border {
   background-color: #E6E6E6;
   border-style: solid;
