@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { useState, useEffect } from "react";
 
-function DisplayEventDetails(id) {
+function EventDetails(id) {
     const [eventDetails, setEventDetails] = useState([""]);
     const event_id = id.data;
 
@@ -37,4 +37,4 @@ function DisplayEventDetails(id) {
     );
 }
 
-export default DisplayEventDetails;
+export default EventDetails;

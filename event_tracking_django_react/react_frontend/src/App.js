@@ -2,10 +2,10 @@ import { useState } from 'react';
 import './App.css';
 import { AppBar, Toolbar, Button, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import DisplayEvents from './pages/DisplayEvents';
-import DisplayProfile from './pages/DisplayProfile';
-import DisplayEventDetails from './pages/DisplayEventDetails';
-import DisplaySearch from './pages/DisplaySearch';
+import Events from './pages/Events';
+import Profile from './pages/Profile';
+import EventDetails from './pages/EventDetails';
+import Search from './pages/Search';
 
 function App() {
   const [buttonColorEvents, setButtonColorEvents] = useState("primary");
@@ -18,7 +18,7 @@ function App() {
     setButtonColorProfile("primary");
     
     setDisplayItem (
-      <DisplayEventDetails data={event_id}/>
+      <EventDetails data={event_id}/>
     );
   }
 
@@ -28,7 +28,7 @@ function App() {
       setButtonColorProfile("primary");
 
       setDisplayItem (
-        <DisplayEvents data={displayEventDetails}/>
+        <Events data={displayEventDetails}/>
       );
     } else {
       setButtonColorEvents("primary");
@@ -43,7 +43,7 @@ function App() {
       setButtonColorProfile("success");
       
       setDisplayItem (
-        <DisplayProfile data={displayEventDetails}/>
+        <Profile data={displayEventDetails}/>
       );
     } else {
       setButtonColorEvents("primary");
@@ -67,7 +67,7 @@ function App() {
       );
     } else {
       setDisplayItem (
-        <DisplaySearch data={displayEventDetails} searchEvents={data}/>
+        <Search data={displayEventDetails} searchEvents={data}/>
       );
     }
   }

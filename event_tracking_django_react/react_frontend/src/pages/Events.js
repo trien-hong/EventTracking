@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button, Typography } from '@mui/material';
 
-function DisplayEvents(props) {
+function Events(props) {
     const [events, setEvents] = useState([""]);
 
     useEffect(() => {
@@ -246,4 +246,4 @@ function DisplayEvents(props) {
     );
 }
 
-export default DisplayEvents;
+export default Events;
