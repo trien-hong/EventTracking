@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Typography, Button } from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 function Search() {
     const [searchEvents, setSearchEvents] = useState([""]);
-    const { input } = useParams();
+    const [searchParams] = useSearchParams();
+    const search = searchParams.get("q");
     const navigate = useNavigate();
 
     useEffect(() => {
         getSearchEvents();
-    }, [input]);
+    }, [search]);
 
     async function getSearchEvents() {
-        const response = await fetch(`http://127.0.0.1:8000/api/events/search/input/${input}/`);
+        const response = await fetch(`http://127.0.0.1:8000/api/events/search/input/${search}/`);
         const data = await response.json();
         setSearchEvents(data);
     };
@@ -63,7 +64,7 @@ function Search() {
             ) : (
                 <div>
                     <br></br>
-                    <Typography id="emptyEvents" variant="h5" align="center">Your search of "{input}" came back empty.</Typography>   
+                    <Typography id="emptyEvents" variant="h5" align="center">Your search of "{search}" came back empty.</Typography>   
                 </div>
             )}
         </div>

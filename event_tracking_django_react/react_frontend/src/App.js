@@ -14,7 +14,7 @@ function App() {
       <Routes>
         <Route path="/events/" element={ <Events/> }/>
         <Route path="/profile/" element={ <Profile/> }/>
-        <Route path="/search/input/:input/" element={ <Search/> }/>
+        <Route path="/search/" element={ <Search/> }/>
         <Route path="/eventDetails/id/:id/" element={ <EventDetails/> }/>
       </Routes>
     </div>

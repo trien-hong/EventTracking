@@ -31,7 +31,7 @@ function Header() {
     function goToSearch(event) {
         if(event.key === "Enter") {
             changeButtonColorSearch();
-            navigate(`/search/input/${search}/`);
+            navigate({ pathname: "/search", search: `?q=${search}` });
         }
     }
 
@@ -41,7 +41,7 @@ function Header() {
                 <Toolbar>
                     <Button sx={{ margin: 'auto' }} color={buttonColorEvents} variant="contained" component={Link} to="/events" onClick={() => { changeButtonColorEvents(); }}>EVENTS</Button>
                     <TextField sx={{ background: "white", width: 375, mr: 1 }} label="Search events here..." variant="filled" onChange={(event) => { setSearch(event.target.value); }} onKeyPress={(event) => { goToSearch(event); }}/>
-                    <Button color={buttonColorSearch} variant="contained" component={Link} to={`/search/input/${search}/`} onClick={() => { changeButtonColorSearch(); }}>
+                    <Button color={buttonColorSearch} variant="contained" component={Link} to={{ pathname: "/search", search: `?q=${search}` }} onClick={() => { changeButtonColorSearch(); }}>
                         <SearchIcon/>
                     </Button>
                     <Button sx={{ margin: 'auto' }} color={buttonColorProfile} variant="contained" component={Link} to="/profile" onClick={() => { changeButtonColorProfile(); }}>PROFILE</Button>
