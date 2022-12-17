@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Button, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-function Events(props) {
+function Events() {
     const [events, setEvents] = useState([""]);
-
+    const navigate = useNavigate();
     useEffect(() => {
         getEvents();
     }, []);
@@ -198,7 +199,6 @@ function Events(props) {
                 "maxPrice": "$115.0"
             }
         ]
-
         setEvents(data);
     }
 
@@ -217,8 +217,8 @@ function Events(props) {
         });
     }
 
-    function sendDataToMainApp(event_id) {
-        props.data(event_id);
+    function goToEventDetails(event_id) {
+        navigate(`/eventDetails/id/${event_id}/`);
     }
 
     return (
@@ -231,7 +231,7 @@ function Events(props) {
                         <br></br>
                         <Typography>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
                         <br></br>
-                        <img src={event.imageUrl} alt="image not found" width={225} height={126} onClick={() => { sendDataToMainApp(event.event_id); }}/>
+                        <img src={event.imageUrl} alt="image not found" width={225} height={126} onClick={() => { goToEventDetails(event.event_id); }}/>
                         <br></br>
                         <br></br>
                         <Typography>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>

@@ -78,7 +78,10 @@ def profile(request):
     """
     data = Profile.objects.all()
     serializer = ProfileSerializer(data, many=True)
-    return Response(serializer.data)
+    if serializer.data == []:
+        return Response(False)
+    else:
+        return Response(serializer.data)
 
 @api_view(["DELETE"])
 def profileDeleteEventId(request, id):

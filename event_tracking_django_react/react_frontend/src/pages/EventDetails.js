@@ -1,16 +1,17 @@
-import { Typography } from '@mui/material';
 import { useState, useEffect } from "react";
+import { Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
-function EventDetails(id) {
+function EventDetails() {
     const [eventDetails, setEventDetails] = useState([""]);
-    const event_id = id.data;
+    const { id } = useParams();
 
     useEffect(() => {
         getEventDetails();
     }, []);
 
     async function getEventDetails() {
-        const response = await fetch(`http://127.0.0.1:8000/api/events/id/${event_id}/`);
+        const response = await fetch(`http://127.0.0.1:8000/api/events/id/${id}/`);
         const data = await response.json();
         setEventDetails(data);
     }
@@ -20,6 +21,8 @@ function EventDetails(id) {
             <br></br>
             <center>
                 <div className={eventDetails.event_id} id="event_border">
+                    <Typography variant="h4"><b><u>Event Details</u></b></Typography>
+                    <br></br>
                     <Typography variant="h5"><b>{eventDetails.title}</b></Typography>
                     <br></br>
                     <img src={eventDetails.imageUrl} alt="image not found" width={700} height={393}/>
