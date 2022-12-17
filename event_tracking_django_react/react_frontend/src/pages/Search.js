@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Typography, Button } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import AddEventButton from '../components/AddEventButton';
 
 function Search() {
     const [searchEvents, setSearchEvents] = useState([""]);
@@ -21,21 +22,6 @@ function Search() {
             setSearchEvents(data);
         }
     };
-
-    async function addEvent(event_id, title, date, city, imageUrl, minPrice, maxPrice) {
-        await fetch(`http://127.0.0.1:8000/api/profile/save/event/id/${event_id}/`, {
-        method: "POST",
-            body: JSON.stringify({
-                event_id: event_id,
-                title: title,
-                date: date,
-                city: city,
-                imageUrl: imageUrl,
-                minPrice: minPrice,
-                maxPrice: maxPrice,
-            })
-        });
-    }
 
     function goToEventDetails(event_id) {
         navigate(`/eventDetails/id/${event_id}/`);
@@ -58,7 +44,7 @@ function Search() {
                                 <br></br>
                                 <Typography>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
                                 <br></br>
-                                <Button variant="contained" id={event.id} onClick={() => { addEvent(event.event_id, event.title, event.date, event.city, event.imageUrl, event.minPrice, event.maxPrice); }}>ADD EVENT</Button>
+                                <AddEventButton event={event}/>
                                 <br></br>
                                 <br></br>
                             </center>
