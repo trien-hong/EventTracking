@@ -132,9 +132,20 @@ def getEventDetails(eventId):
         venue = "TBD"
 
     try:
-        address = ticketmaster_response_json["_embedded"]["venues"][0]["address"]["line1"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["city"]["name"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["state"]["stateCode"] + " " + ticketmaster_response_json["_embedded"]["venues"][0]["postalCode"]
+        state = ticketmaster_response_json["_embedded"]["venues"][0]["state"]["stateCode"]
     except KeyError as e:
-        address = "TBD"
+        state = False
+
+    if state == False:
+        try:
+            address = ticketmaster_response_json["_embedded"]["venues"][0]["address"]["line1"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["city"]["name"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["postalCode"]
+        except:
+            address = "TBD"
+    else:
+        try:
+            address = ticketmaster_response_json["_embedded"]["venues"][0]["address"]["line1"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["city"]["name"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["state"]["stateCode"] + " " + ticketmaster_response_json["_embedded"]["venues"][0]["postalCode"]
+        except KeyError as e:
+            address = "TBD"
 
     try:
         latitude = ticketmaster_response_json["_embedded"]["venues"][0]["location"]["latitude"]

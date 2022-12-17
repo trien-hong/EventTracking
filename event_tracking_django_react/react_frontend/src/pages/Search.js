@@ -13,9 +13,13 @@ function Search() {
     }, [search]);
 
     async function getSearchEvents() {
-        const response = await fetch(`http://127.0.0.1:8000/api/events/search/input/${search}/`);
-        const data = await response.json();
-        setSearchEvents(data);
+        if (search === "") {
+            setSearchEvents(false)
+        } else {
+            const response = await fetch(`http://127.0.0.1:8000/api/events/search/input/${search}/`);
+            const data = await response.json();
+            setSearchEvents(data);
+        }
     };
 
     async function addEvent(event_id, title, date, city, imageUrl, minPrice, maxPrice) {
