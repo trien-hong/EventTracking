@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
-import { Typography } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 
 function EventDetails() {
     const [eventDetails, setEventDetails] = useState([""]);
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         getEventDetails();
@@ -15,13 +18,17 @@ function EventDetails() {
         const data = await response.json();
         setEventDetails(data);
     }
+    
+    function goBack() {
+        navigate(-1);
+    }
 
     return (
         <div>
             <br></br>
             <center>
                 <div className={eventDetails.event_id} id="event_border">
-                    <Typography variant="h4"><b><u>Event Details</u></b></Typography>
+                    <Typography variant="h5"><Button id="backArrow" variant="contained" onClick={() => { goBack(); }}><ArrowBackIcon/></Button> | <b><u>Event Details</u></b></Typography>
                     <br></br>
                     <Typography variant="h5"><b>{eventDetails.title}</b></Typography>
                     <br></br>
