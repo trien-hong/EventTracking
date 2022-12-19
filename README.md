@@ -1,106 +1,19 @@
 # Update
-There are currently 3 different versions. One using Flask (outdated), one using Django, and one using Django as back-end with React as front-end (being worked on). The most updated version is Django or Django with React. Flask version is quite outdated.
+There are currently 3 different versions. One using Flask (outdated), one using Django with templates, and one using Django as back-end with React as front-end (being worked on). All versions uses PostgreSQL as the database. The most updated versions is Django or Django with React. Flask version is quite outdated.
 
-The Django version contains some new features along with updated code. This version does not contain any of the testing.
+The Django and Django with React version contains some new features along with updated code (compared to Flask). Both Django versions can be run using docker-compose. These versions also do not contain any of the testing.
 
-To get the Django web app running you need to setup your .env file first. Within your .env file you'll add in these variables.
-  * `TICKETMASTER_API_KEY="ENTER YOUR THE TICKETMASTER API KEY HERE"`
-  * `OPENWEATHERMAP_API_KEY="ENTER YOUR OPEN WEATHER MAP API KEY HERE"`
-  * `DB_NAME="postgres"`
-  * `DB_USER="postgres"`
-  * `DB_PASSWORD="postgres"`
-  * `DB_HOST="db"`
-  * `DB_PORT="5432"`
-  * `POSTGRES_DB="postgres"`
-  * `POSTGRES_USER="postgres"`
-  * `POSTGRES_PASSWORD="postgres"`
+Each version has it's own README.md file.
 
-Remember to get your free API keys before starting. You can run the app locally using docker. Ensure you have docker and docker-compose installed. Install Docker Desktop also as this will help out.
+# Event Tracking Web App
+Users can sign up using their email/username, password (which are hashed and not plaintext), and a zip code. These three information will then be saved into a PostgreSQL database.
 
-Ensure you're in the Django version/folder before starting. In your terminal type in `docker-compose up`. You will then need to open the terminal of the app in the container on Docker Desktop. Once opened, type in `python3 manage.py makemigrations` then `python3 manage.py migrate`. I believe it's possible to just do `python3 manage.py migrate`.
+When the user tried to login, we query the database for matching credentials. If matching, the user is now logged in.
 
-This should create all the tables in the database and your app is ready to go. In your browser type in `localhost:8001`.
+On the homepage, we make an API call to Ticketmaster using the current logged in user's zip code. Tickmaster will then send back a JSON containing events based on that zip code.
 
-# URL to Website
-[Follow the link here to see our Heroku app (may take a few seconds to load after logging in)](https://swe-event-tracker.herokuapp.com/)
+If no events exist, the user may also search for events using keywords such as "baseball", "concerts", "comedy", etc. You can also search with zip codes.
 
-NOTE: Heroku is removing their free tier starting on November 28, 2022. The link above may or may not be working anymore.
+Each event that is displayed is also clickable to see even more details of that specific event Along with weather for the location and a general location/map with parking and ATMS.
 
-[https://help.heroku.com/RSBRUH58/removal-of-heroku-free-product-plans-faq](https://help.heroku.com/RSBRUH58/removal-of-heroku-free-product-plans-faq)
-
-# Contributors
-1. Trien Hong
-2. Michelle Serrano
-3. Nhi Tran
-4. Chengpeng Wu
-5. Abdisamed Abdulhakim
-
-# Technologies Used
-### Frameworks
-
-**Flask** is a framework used to create a web application.
-
-### Libraries
-
-***Requests*** is an HTTP library. This library lets you get information from HTML to python (HTTP requests).
-
-***Flask_login*** is a library that provides different functionality that is usually handled for a user to login. 
-It allows the user to login, logout, sessions, and allowing for specific routes to be decorated with `@login_required`.
-
-**Pyscog2-binary** is a library that allows the connection between Python and PostgresSQL (Database Management System).
-
-# Other Technology
-
-### Flask-SQLAlchemy
-For this final project we used Flask-SQLAlchemy which provided us with the ability to use SQLAlchemy with Flask. SQLAlchemy is a library which basically allows the use of databases with Python. For this project we had to create a database and we use python/Flask in order to communicate with the database.
-
-### Boostrap
-We also used bootstrap for some of our styling. Bootstrap helps make the app look consistent and adds some extra styling.
-
-# APIs Used
-
-### Ticketmaster API
-This API helps get information for different kind of events, such as concerts and sports games. In order to display information about the events such as, title, poster, price range, and location, requests were made to the Ticketmaster API. With the help of ***JSON***, which allowed to view data being called from the API, in a formatted way, we were able to see the data received from Ticketmaster.
-
-### The Maps JavaScript (Google) API
-We used the Google Maps API to find a way to get the map of a specific event to display on the event's details page.
-
-### Weather API
-We used the Weather API to get the current weather of the event location. We would have liked to add a forecast. However, the event dates are so spread out. Some events are 2-3+ months ahead of the cuerrent date.
-
-# Forking/Cloning the repository
-Before forking the repository, certain **installations** need to be made (they can be found below). In your terminal use the command: `git clone < copy and paste ssh url link here>`
-Now you should be able to open up the source code within your own IDE. Below you will find API Key Instructions that need to be followed in order to be able to access data. From here you are able to modify the project, and eventually run your project locally with the command `python3 app.py`.
-
-## Installations for forking
-1. Install Flask
-2. Install requests
-4. Install dotenv
-6. Install flask_login
-7. Install psycopg2-binary
-8. Install Flask-SQLAlchemy==2.1
-9. Install postgresql
-10. Install waitress
-
-# API Key Instructions
-In order to properly access information from the Ticketmaster API, you must request an API key at their site. [Follow the link here](https://developer.ticketmaster.com/products-and-docs/apis/getting-started/). Next, you will need to request a The Maps Javascript (Google) API key in order to be able to access the map. [Follow the link here](https://developers.google.com/maps/documentation/javascript/overview). Finally, you will need to request the Weather API to get the current weather data. [Follow the link here](https://openweathermap.org/api).
-Once you have your API key, create a .env file in the project folder. Within the .env file create a variable TICKETMASTER_API_KEY and GOOGLEMAP_API_KEY; set them equal
-to your API keys respectively.
-Example:
-`TICKETMASTER_API_KEY="your key here"`
-`GOOGLEMAP_API_KEY="your key here"`
-`OPENWEATHERMAP_API_KEY="your key here"`
-
-In addition to those three API keys, you will need a key for your DATABASE url and a SECRET key.
-For the database URL, an option your have to create your database URL is creating a Heroku account, and a database. Run the following commands to obtain a database URL:
-1. `heroku addons:create heroku-postgresql:hobby-dev`
-2. `heroku config (copy output)`
-3. `Export DATABASE_URL='copy-paste-value-in-here`
-Then you will add this key, Example: `DATABASE_URL="your DB url here"`, in your .env file.
-Make sure to add this: Example: `SECRET_KEY="your secret key here"` as well.
-Your secret_key can be anything you want. Just make sure it's a pretty decent key and not "123" or "password".
-
-These secret keys must be put into your .env file to keep the information private. When you clone the github repo, the .env file will not be provided for you, you must create your own .env file within your project folder. The DB URL key will allow access to the DB URL in order to connect with the database you have created. Within the main method of app.py, you'll need to change server to app.run(). You should now be able to run the project locally, accessing data from the APIs.
-
-References: 
-We used [this link](https://developers.google.com/maps/documentation/javascript/adding-a-google-map#maps_add_map-javascript) for Google Maps.
+There is also a profile component in which the user can add the specific event into a personal list. They may also delete it.
