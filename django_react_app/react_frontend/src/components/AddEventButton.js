@@ -4,7 +4,7 @@ function AddEventButton(props) {
     const {event} = props;
 
     async function addEvent() {
-        await fetch(`http://127.0.0.1:8000/api/profile/save/event/id/${event.event_id}/`, {
+        await fetch(`http://127.0.0.1/api/profile/save/event/id/${event.event_id}/`, {
         method: "POST",
             body: JSON.stringify({
                 event_id: event.event_id,

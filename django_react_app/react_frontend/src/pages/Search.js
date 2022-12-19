@@ -17,7 +17,7 @@ function Search() {
         if (search === "") {
             setSearchEvents(false)
         } else {
-            const response = await fetch(`http://127.0.0.1:8000/api/events/search/input/${search}/`);
+            const response = await fetch(`http://127.0.0.1/api/events/search/input/${search}/`);
             const data = await response.json();
             setSearchEvents(data);
         }

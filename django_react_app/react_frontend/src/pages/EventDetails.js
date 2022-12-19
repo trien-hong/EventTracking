@@ -14,7 +14,7 @@ function EventDetails() {
     }, []);
 
     async function getEventDetails() {
-        const response = await fetch(`http://127.0.0.1:8000/api/events/id/${id}/`);
+        const response = await fetch(`http://127.0.0.1/api/events/id/${id}/`);
         const data = await response.json();
         setEventDetails(data);
     }
