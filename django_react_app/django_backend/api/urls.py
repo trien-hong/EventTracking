@@ -1,5 +1,10 @@
 from django.urls import path
 from . import views
+from . views import MyTokenObtainPairView
+
+from rest_framework_simplejwt.views import (
+    TokenRefreshView,
+)
 
 urlpatterns = [
     path("", views.getRoutes, name="routes"),
@@ -10,4 +15,6 @@ urlpatterns = [
     path("api/profile/", views.profile, name="profile"),
     path("api/profile/delete/event/id/<str:id>/", views.profileDeleteEventId, name="profileDeleteEventId"),
     path("api/profile/save/event/id/<str:id>/", views.profileSaveEventId, name="profileSaveEventId"),
+    path("api/token/", MyTokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 ]

@@ -5,6 +5,7 @@ coverage
 Django
 django-cors-headers
 djangorestframework
+djangorestframeowkr-simplejwt
 pytz
 sqlparse
 psycopg2-binary
