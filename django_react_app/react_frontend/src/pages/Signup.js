@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 function Signup() {
-    const [errorMessages, setErrorMessages] = useState([null]);
+    const [messages, setMessages] = useState([null]);
 
     async function signup(e) {
         e.preventDefault();
@@ -20,15 +20,18 @@ function Signup() {
         });
         const data = await response.json();
         if (data !== true) {
-            setErrorMessages(data)
+            setMessages(data)
+        } else {
+            alert("Account has been created!\n\nYou can now login.")
+            setMessages(["Account has been created! You can now login."])
         }
     }
 
     return (
         <div>
             <center>
-                <div className="errorMessages">
-                    {errorMessages.map((error, i) =>
+                <div className="messages">
+                    {messages.map((error, i) =>
                         <div key={i}>
                             <p>{error}</p>
                         </div>

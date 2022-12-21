@@ -6,7 +6,7 @@ import UserAuthContext from '../contexts/UserAuthContext';
 
 function Events() {
     const [events, setEvents] = useState([""]);
-    const {userInfo} = useContext(UserAuthContext)
+    const {user} = useContext(UserAuthContext)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -14,8 +14,8 @@ function Events() {
     }, []);
 
     async function getEvents() {
-        // const response = await fetch(`http://127.0.0.1:8000/api/events/search/input/${userInfo.zip_code}/`);
-        const response = await fetch(`http://127.0.0.1/api/events/search/input/${userInfo.zip_code}/`);
+        // const response = await fetch(`http://127.0.0.1:8000/api/events/search/input/${user.zip_code}/`);
+        const response = await fetch(`http://127.0.0.1/api/events/search/input/${user.zip_code}/`);
         const data = await response.json()
         setEvents(data)
     }

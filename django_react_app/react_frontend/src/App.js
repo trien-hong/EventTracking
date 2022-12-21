@@ -13,12 +13,12 @@ import UserAuthContextProvider from './contexts/UserAuthContextProvider';
 function App() {
   return(
     <div>
-      <Header>
-      </Header>
       <UserAuthContextProvider>
+        <Header>
+        </Header>
         <Routes>
-        <Route path="/signup/" element={ <Signup/> }/>
-        <Route path="/login/" element={ <Login/> }/>
+          <Route path="/signup/" element={ <Signup/> }/>
+          <Route path="/login/" element={ <Login/> }/>
           <Route element={<PrivateRoute/>}>
             <Route path="/events/" element={<Events/>}/>
           </Route>

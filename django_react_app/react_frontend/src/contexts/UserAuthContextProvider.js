@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import jwt_decode from 'jwt-decode';
 import UserAuthContext from './UserAuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function UserAuthContextProvider({children}) {
-    const [userInfo, setUserInfo] = useState(null);
-    const [errorMessage, setErrorMessage] = useState(null);
+    const [user, setUser] = useState(() => localStorage.getItem("authTokens") ? jwt_decode(localStorage.getItem("authTokens")) : null);
+    const [message, setMessage] = useState(null);
+    const navigate = useNavigate();
 
-    const loginUser = async(e) => {
+    async function login(e){
         e.preventDefault()
         // const response = await fetch('http://127.0.0.1:8000/api/token/', {
         const response = await fetch('http://127.0.0.1/api/token/', {
@@ -22,18 +24,27 @@ function UserAuthContextProvider({children}) {
         const data = await response.json()
         
         if(response.status === 200) {
-            setUserInfo(jwt_decode(data.access));
-            setErrorMessage(null);
+            setUser(jwt_decode(data.access));
+            setMessage(null);
+            localStorage.setItem("authTokens", JSON.stringify(data))
+            navigate(`/events/`);
         } else {
             alert(data["detail"]);
-            setErrorMessage(data["detail"]);
+            setMessage(data["detail"]);
         }
     }
 
+    function logout() {
+        setUser(null);
+        localStorage.removeItem("authTokens");
+        navigate("/login/")
+    }
+
     const data = {
-        userInfo: userInfo,
-        errorMessage: errorMessage,
-        loginUser: loginUser
+        user: user,
+        message: message,
+        login: login,
+        logout: logout
     }
 
     return (

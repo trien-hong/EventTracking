@@ -5,7 +5,7 @@ import UserAuthContext from '../contexts/UserAuthContext';
 
 function Profile() {
     const [profileEvents, setProfileEvents] = useState([""]);
-    const {userInfo} = useContext(UserAuthContext)
+    const {user} = useContext(UserAuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -13,8 +13,8 @@ function Profile() {
     }, []);
 
     async function getProfileEvents() {
-        // const response = await fetch("http://127.0.0.1:8000/api/profile/");
-        const response = await fetch("http://127.0.0.1/api/profile/");
+        const response = await fetch("http://127.0.0.1:8000/api/profile/");
+        // const response = await fetch("http://127.0.0.1/api/profile/");
         const data = await response.json();
         setProfileEvents(data);
     }
@@ -39,7 +39,7 @@ function Profile() {
 
     return (
         <div>
-            <p>Welcome, {userInfo.username}</p>
+            <p>Welcome, {user.username}</p>
             {profileEvents ? (
                 <div className="events">
                     {profileEvents.map((event, i) =>
