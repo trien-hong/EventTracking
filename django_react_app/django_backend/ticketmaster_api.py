@@ -136,6 +136,11 @@ def getEventDetails(eventId):
     except KeyError as e:
         state = False
 
+    try:
+        city = ticketmaster_response_json["_embedded"]["venues"][0]["city"]["name"]
+    except KeyError as e:
+        city = False
+
     if state == False:
         try:
             address = ticketmaster_response_json["_embedded"]["venues"][0]["address"]["line1"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["city"]["name"] + ", " + ticketmaster_response_json["_embedded"]["venues"][0]["postalCode"]
@@ -162,6 +167,7 @@ def getEventDetails(eventId):
         "genre": genre,
         "minPrice": minPrice,
         "maxPrice": maxPrice,
+        "city": city,
         "venu": venue,
         "address": address,
         "latitude": latitude,

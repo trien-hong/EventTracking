@@ -17,8 +17,9 @@ function App() {
         <Header>
         </Header>
         <Routes>
-          <Route path="/signup/" element={ <Signup/> }/>
+          <Route path="/" element={ <Login/> }/>
           <Route path="/login/" element={ <Login/> }/>
+          <Route path="/signup/" element={ <Signup/> }/>
           <Route element={<PrivateRoute/>}>
             <Route path="/events/" element={<Events/>}/>
           </Route>
@@ -29,7 +30,7 @@ function App() {
             <Route path="/profile/" element={<Profile/>}/>
           </Route>
           <Route element={<PrivateRoute/>}>
-            <Route path="/events/id/details/:id/" element={<EventDetails/>}/>
+            <Route path="/events/details/id/:id/" element={<EventDetails/>}/>
           </Route>
         </Routes>
       </UserAuthContextProvider>

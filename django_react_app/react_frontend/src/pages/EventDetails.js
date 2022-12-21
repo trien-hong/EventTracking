@@ -3,6 +3,7 @@ import { Typography, Button } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
+import AddEventButton from '../components/AddEventButton';
 
 function EventDetails() {
     const [eventDetails, setEventDetails] = useState([""]);
@@ -17,6 +18,7 @@ function EventDetails() {
         // const response = await fetch(`http://127.0.0.1:8000/api/events/id/${id}/`);
         const response = await fetch(`http://127.0.0.1/api/events/id/${id}/`);
         const data = await response.json();
+        console.log(data);
         setEventDetails(data);
     }
     
@@ -41,6 +43,8 @@ function EventDetails() {
                     <Typography variant="h6"><b>Venu:</b> {eventDetails.venu}</Typography>
                     <Typography variant="h6"><b>Address:</b> {eventDetails.address}</Typography>
                     <Typography variant="h6"><b>Price:</b> {eventDetails.minPrice} &nbsp;-&nbsp; {eventDetails.maxPrice}</Typography>
+                    <br></br>
+                    <AddEventButton event={eventDetails}/>
                 </div>
             </center>
             <br></br>

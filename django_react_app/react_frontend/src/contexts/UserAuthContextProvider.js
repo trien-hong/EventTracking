@@ -8,6 +8,10 @@ function UserAuthContextProvider({children}) {
     const [message, setMessage] = useState(null);
     const navigate = useNavigate();
 
+    function clearLoginMessage() {
+        setMessage(null);
+    }
+
     async function login(e){
         e.preventDefault()
         // const response = await fetch('http://127.0.0.1:8000/api/token/', {
@@ -30,7 +34,12 @@ function UserAuthContextProvider({children}) {
             navigate(`/events/`);
         } else {
             alert(data["detail"]);
-            setMessage(data["detail"]);
+            setMessage(
+                <div id="errors">
+                    ERROR: {data["detail"]}.
+                    <hr></hr>
+                </div>
+            );
         }
     }
 
@@ -43,6 +52,7 @@ function UserAuthContextProvider({children}) {
     const data = {
         user: user,
         message: message,
+        clearLoginMessage: clearLoginMessage,
         login: login,
         logout: logout
     }

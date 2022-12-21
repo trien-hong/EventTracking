@@ -45,17 +45,17 @@ def getRoutes(request):
             'description': 'Returns an array of events based on input. Used for searching events.'
         },
         {
-            'Endpoint': '/api/profile/',
+            'Endpoint': '/api/profile/username/<str:username>/',
             'method': 'GET',
             'description': 'Returns an array of events from which the user have added/saved'
         },
         {
-            'Endpoint': '/api/profile/save/id/<str:id>/',
+            'Endpoint': '/api/profile/username/<str:username>/save/event/id/<str:id>/',
             'method': 'POST',
             'description': 'Saves an event with data sent in post request'
         },
         {
-            'Endpoint': '/api/profile/delete/id/<str:id>/',
+            'Endpoint': '/api/profile/username/<str:username>/delete/event/id/<str:id>/',
             'method': 'DELETE',
             'description': 'Deletes an event from profile'
         },
@@ -104,11 +104,11 @@ def eventsSearchInput(request, input):
     return Response(events)
 
 @api_view(["GET"])
-def profile(request):
+def profile(request, username):
     """
-    /api/profile/
+    /api/profile/username/<str:username>/
     """
-    data = UserEvents.objects.all()
+    data = UserEvents.objects.all().filter(username=username)
     serializer = UserEventsSerializer(data, many=True)
     if serializer.data == []:
         return Response(False)
@@ -116,26 +116,26 @@ def profile(request):
         return Response(serializer.data)
 
 @api_view(["DELETE"])
-def profileDeleteEventId(request, id):
+def profileDeleteEventId(request, username, id):
     """
-    /api/profile/delete/event/id/<str:id>/
+    /api/profile/username/<str:username>/delete/event/id/<str:id>/
     """
     data = json.loads(request.body)
-    if UserEvents.objects.all().filter(event_id=data["event_id"]).exists():
-        event = UserEvents.objects.get(event_id=data["event_id"])
+    if UserEvents.objects.all().filter(username=username, event_id=data["event_id"]).exists():
+        event = UserEvents.objects.get(username=username, event_id=data["event_id"])
         event.delete()
         return Response(True)
     else:
         return Response(False)
 
 @api_view(["POST"])
-def profileSaveEventId(request, id):
+def profileSaveEventId(request, username, id):
     """
-    /api/profile/save/event/id/<str:id>/
+    /api/profile/username/<str:username>/save/event/id/<str:id>/
     """
     data = json.loads(request.body)
-    if UserEvents.objects.all().filter(event_id=data["event_id"]).exists() == False:
-        event = UserEvents(event_id=data["event_id"], title=data["title"], date=data["date"], city=data["city"], imageUrl=data["imageUrl"], minPrice=data["minPrice"], maxPrice=data["maxPrice"])
+    if UserEvents.objects.all().filter(username=username, event_id=data["event_id"]).exists() == False:
+        event = UserEvents(event_id=data["event_id"], title=data["title"], date=data["date"], city=data["city"], imageUrl=data["imageUrl"], minPrice=data["minPrice"], maxPrice=data["maxPrice"], username=username)
         event.save()
         return Response(True)
     else:

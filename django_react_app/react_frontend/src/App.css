@@ -2,12 +2,23 @@
   margin: 0;
 }
 
+.login_signup_form {
+  background-color: #DFDFDF;
+  border-style: solid;
+  display: inline-block;
+  padding: 1%;
+}
+
+#icons {
+  transform: scale(1.5);
+}
+
 #search:hover {
   border-style: solid;
   cursor: pointer;
 }
 
-#emptyEvents {
+#errors {
   color: red;
 }
 

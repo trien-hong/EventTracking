@@ -17,15 +17,15 @@ function Search() {
         if (search === "") {
             setSearchEvents(false)
         } else {
-            const response = await fetch(`http://127.0.0.1:8000/api/events/search/input/${search}/`);
-            // const response = await fetch(`http://127.0.0.1/api/events/search/input/${search}/`);
+            // const response = await fetch(`http://127.0.0.1:8000/api/events/search/input/${search}/`);
+            const response = await fetch(`http://127.0.0.1/api/events/search/input/${search}/`);
             const data = await response.json();
             setSearchEvents(data);
         }
     };
 
     function goToEventDetails(event_id) {
-        navigate(`/events/id/details/${event_id}/`);
+        navigate(`/events/details/id/${event_id}/`);
     }
 
     return (
@@ -55,7 +55,7 @@ function Search() {
             ) : (
                 <div>
                     <br></br>
-                    <Typography id="emptyEvents" variant="h5" align="center">Your search of "{search}" came back empty.</Typography>   
+                    <Typography id="errors" variant="h5" align="center">Your search of "{search}" came back empty.</Typography>   
                 </div>
             )}
         </div>

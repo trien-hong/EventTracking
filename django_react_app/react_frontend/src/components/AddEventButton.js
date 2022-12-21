@@ -1,11 +1,14 @@
+import { useContext } from 'react';
 import { Button } from '@mui/material';
+import UserAuthContext from '../contexts/UserAuthContext';
 
 function AddEventButton(props) {
+    const {user} = useContext(UserAuthContext);
     const {event} = props;
 
     async function addEvent() {
-        // await fetch(`http://127.0.0.1:8000/api/profile/save/event/id/${event.event_id}/`, {
-        await fetch(`http://127.0.0.1/api/profile/save/event/id/${event.event_id}/`, {
+        // await fetch(`http://127.0.0.1:8000/api/profile/username/${user.username}/save/event/id/${event.event_id}/`, {
+        await fetch(`http://127.0.0.1/api/profile/username/${user.username}/save/event/id/${event.event_id}/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

@@ -13,15 +13,15 @@ function Profile() {
     }, []);
 
     async function getProfileEvents() {
-        const response = await fetch("http://127.0.0.1:8000/api/profile/");
-        // const response = await fetch("http://127.0.0.1/api/profile/");
+        // const response = await fetch(`http://127.0.0.1:8000/api/profile/username/${user.username}/`);
+        const response = await fetch(`http://127.0.0.1/api/profile/username/${user.username}/`);
         const data = await response.json();
         setProfileEvents(data);
     }
 
     async function deleteProfileEvent(event_id) {
-        // await fetch(`http://127.0.0.1:8000/api/profile/delete/event/id/${event_id}/`, {
-        await fetch(`http://127.0.0.1/api/profile/delete/event/id/${event_id}/`, {
+        // await fetch(`http://127.0.0.1:8000/api/profile/username/${user.username}/delete/event/id/${event_id}/`, {
+        await fetch(`http://127.0.0.1/api/profile/username/${user.username}/delete/event/id/${event_id}/`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
@@ -34,12 +34,15 @@ function Profile() {
     }
 
     function goToEventDetails(event_id) {
-        navigate(`/events/id/details/${event_id}/`);
+        navigate(`/events/details/id/${event_id}/`);
     }
 
     return (
         <div>
-            <p>Welcome, {user.username}</p>
+            <center>
+                <br></br>
+                <Typography sx={{ mb: 1 }} variant="h4">Welcome, {user.username}!</Typography>
+            </center>
             {profileEvents ? (
                 <div className="events">
                     {profileEvents.map((event, i) =>
@@ -65,7 +68,7 @@ function Profile() {
             ) : (
                 <div>
                     <br></br>
-                    <Typography id="emptyEvents" variant="h5" align="center">You did not add any events to your profile yet.</Typography>
+                    <Typography id="errors" variant="h5" align="center">You did not add any events to your profile yet.</Typography>
                 </div>
             )}
         </div>
