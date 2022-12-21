@@ -11,14 +11,19 @@ function Profile() {
     }, []);
 
     async function getProfileEvents() {
+        // const response = await fetch("http://127.0.0.1:8000/api/profile/");
         const response = await fetch("http://127.0.0.1/api/profile/");
         const data = await response.json();
         setProfileEvents(data);
     }
 
     async function deleteProfileEvent(event_id) {
+        // await fetch(`http://127.0.0.1:8000/api/profile/delete/event/id/${event_id}/`, {
         await fetch(`http://127.0.0.1/api/profile/delete/event/id/${event_id}/`, {
             method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify({
                 event_id: event_id
             })
@@ -27,7 +32,7 @@ function Profile() {
     }
 
     function goToEventDetails(event_id) {
-        navigate(`/eventDetails/id/${event_id}/`);
+        navigate(`/events/id/details/${event_id}/`);
     }
 
     return (

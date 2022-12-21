@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import AddEventButton from '../components/AddEventButton';
 
 function Events() {
     const [events, setEvents] = useState([""]);
     const navigate = useNavigate();
+
     useEffect(() => {
         getEvents();
     }, []);
 
     // async function getEvents() {
+    //   const response = await fetch("http://127.0.0.1:8000/api/events/")
     //   const response = await fetch("http://127.0.0.1/api/events/")
     //   const data = await response.json()
     //   setEvents(data)
@@ -204,7 +206,7 @@ function Events() {
     }
 
     function goToEventDetails(event_id) {
-        navigate(`/eventDetails/id/${event_id}/`);
+        navigate(`/events/id/details/${event_id}/`);
     }
 
     return (

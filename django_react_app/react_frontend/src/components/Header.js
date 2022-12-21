@@ -4,33 +4,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate, Link } from 'react-router-dom';
 
 function Header() {
-    const [buttonColorEvents, setButtonColorEvents] = useState("primary");
-    const [buttonColorProfile, setButtonColorProfile] = useState("primary");
-    const [buttonColorSearch, setButtonColorSearch] = useState("primary");
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
 
-    function changeButtonColorEvents() {
-        setButtonColorEvents("success");
-        setButtonColorProfile("primary");
-        setButtonColorSearch("primary");
-    }
-
-    function changeButtonColorProfile() {
-        setButtonColorEvents("primary");
-        setButtonColorProfile("success");
-        setButtonColorSearch("primary");
-    }
-
-    function changeButtonColorSearch() {
-        setButtonColorEvents("primary");
-        setButtonColorProfile("primary");
-        setButtonColorSearch("success");
-    }
-
     function goToSearch(event) {
         if(event.key === "Enter") {
-            changeButtonColorSearch();
             navigate({ pathname: "/search", search: `?q=${search}` });
         }
     }
@@ -39,12 +17,14 @@ function Header() {
         <div className="header">
             <AppBar position="static" sx={{ background: "gray" }}>
                 <Toolbar>
-                    <Button sx={{ margin: 'auto' }} color={buttonColorEvents} variant="contained" component={Link} to="/events" onClick={() => { changeButtonColorEvents(); }}>EVENTS</Button>
+                    <Button sx={{ margin: 'auto' }} variant="contained" component={Link} to="/events">EVENTS</Button>
                     <TextField sx={{ background: "white", width: 375, mr: 1 }} label="Search events here..." variant="filled" onChange={(event) => { setSearch(event.target.value); }} onKeyPress={(event) => { goToSearch(event); }}/>
-                    <Button color={buttonColorSearch} variant="contained" component={Link} to={{ pathname: "/search", search: `?q=${search}` }} onClick={() => { changeButtonColorSearch(); }}>
+                    <Button variant="contained" component={Link} to={{ pathname: "/search", search: `?q=${search}` }}>
                         <SearchIcon/>
                     </Button>
-                    <Button sx={{ margin: 'auto' }} color={buttonColorProfile} variant="contained" component={Link} to="/profile" onClick={() => { changeButtonColorProfile(); }}>PROFILE</Button>
+                    <Button sx={{ margin: 'auto' }} variant="contained" component={Link} to="/profile">PROFILE</Button>
+                    <Button sx={{ margin: 'auto' }} variant="contained" component={Link} to="/signup">SIGNUP</Button>
+                    <Button sx={{ margin: 'auto' }} variant="contained" component={Link} to="/login">LOGIN</Button>
                 </Toolbar>
             </AppBar>
         </div>
