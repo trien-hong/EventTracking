@@ -15,9 +15,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
 
-        # Add custom claims
         token['username'] = user.username
-        # ...
+        token['zip_code'] = user.zip_code
 
         return token
 
@@ -34,11 +33,6 @@ def getRoutes(request):
             'Endpoint': '/api/signup_user/',
             'method': 'POST',
             'description': 'Signup a user'
-        },
-        {
-            'Endpoint': '/api/events/',
-            'method': 'GET',
-            'description': 'Returns an array of events based on a default input. For example, a user zip code.'
         },
         {
             'Endpoint': '/api/events/id/<str:id>/',
@@ -82,7 +76,7 @@ def getRoutes(request):
 @api_view(["POST"])
 def signup_user(request):
     """
-    /api/signup/
+    /api/signup_user/
     """
     user_info = json.loads(request.body)
     form = forms.Signup(user_info)
@@ -92,14 +86,6 @@ def signup_user(request):
         return Response(True)
     else:
         return Response(form.errors.values())
-
-@api_view(["GET"])
-def events(request):
-    """
-    /api/events/
-    """
-    events = ticketmaster_api.getEvents("90028")
-    return Response(events)
 
 @api_view(["GET"])
 def eventsId(request, id):

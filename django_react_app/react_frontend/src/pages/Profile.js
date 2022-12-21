@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import UserAuthContext from '../contexts/UserAuthContext';
 
 function Profile() {
     const [profileEvents, setProfileEvents] = useState([""]);
+    const {userInfo} = useContext(UserAuthContext)
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         getProfileEvents();
     }, []);
@@ -37,6 +39,7 @@ function Profile() {
 
     return (
         <div>
+            <p>Welcome, {userInfo.username}</p>
             {profileEvents ? (
                 <div className="events">
                     {profileEvents.map((event, i) =>

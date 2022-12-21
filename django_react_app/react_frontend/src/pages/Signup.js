@@ -5,6 +5,7 @@ function Signup() {
 
     async function signup(e) {
         e.preventDefault();
+        // const response = await fetch('http://127.0.0.1:8000/api/signup_user/', {
         const response = await fetch('http://127.0.0.1/api/signup_user/', {
             method: "POST",
             headers: {
