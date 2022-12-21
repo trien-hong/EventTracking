@@ -1,11 +1,12 @@
 import json
-from django.shortcuts import render
+from django.contrib.auth import get_user_model
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from . models import UserEvents
 from . serializers import UserEventsSerializer
+from . import forms
 import ticketmaster_api
 # Create your views here.
 
@@ -29,6 +30,11 @@ def getRoutes(request):
     /api/ or ""
     """
     routes = [
+        {
+            'Endpoint': '/api/signup_user/',
+            'method': 'POST',
+            'description': 'Signup a user'
+        },
         {
             'Endpoint': '/api/events/',
             'method': 'GET',
@@ -72,6 +78,20 @@ def getRoutes(request):
     ]
     
     return Response(routes)
+
+@api_view(["POST"])
+def signup_user(request):
+    """
+    /api/signup/
+    """
+    user_info = json.loads(request.body)
+    form = forms.Signup(user_info)
+    if form.is_valid():
+        User = get_user_model()
+        user = User.objects.create_user(username=user_info["username"], password=user_info["password"], zip_code=user_info["zip_code"])
+        return Response(True)
+    else:
+        return Response(form.errors.values())
 
 @api_view(["GET"])
 def events(request):

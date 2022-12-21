@@ -9,6 +9,7 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path("", views.getRoutes, name="routes"),
     path("api/", views.getRoutes, name="routes"),
+    path("api/signup_user/", views.signup_user, name="signup_user"),
     path("api/events/", views.events, name="events"),
     path("api/events/id/<str:id>/", views.eventsId, name="eventId"),
     path("api/events/search/input/<str:input>/", views.eventsSearchInput, name="eventsSearchInput"),
