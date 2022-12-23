@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext } from 'react';
-import { Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { Button, Typography } from '@mui/material';
 import UserAuthContext from '../contexts/UserAuthContext';
 
 function Profile() {
     const [profileEvents, setProfileEvents] = useState([""]);
-    const {user} = useContext(UserAuthContext);
+    const {user, logout, authTokens} = useContext(UserAuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -13,18 +13,28 @@ function Profile() {
     }, []);
 
     async function getProfileEvents() {
-        // const response = await fetch(`http://127.0.0.1:8000/api/profile/username/${user.username}/`);
-        const response = await fetch(`http://127.0.0.1/api/profile/username/${user.username}/`);
+        const response = await fetch(`http://127.0.0.1:8000/api/profile/username/${user.username}/`, {
+        // const response = await fetch(`http://127.0.0.1/api/profile/username/${user.username}/`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + String(authTokens.access)
+            }
+        });
+        if (response.status != 200) {
+            logout();
+        }
         const data = await response.json();
         setProfileEvents(data);
     }
 
     async function deleteProfileEvent(event_id) {
-        // await fetch(`http://127.0.0.1:8000/api/profile/username/${user.username}/delete/event/id/${event_id}/`, {
-        await fetch(`http://127.0.0.1/api/profile/username/${user.username}/delete/event/id/${event_id}/`, {
+        // await fetch(`http://127.0.0.1:8000/api/profile/delete/event/id/`, {
+        await fetch(`http://127.0.0.1/api/profile/delete/event/id/`, {
             method: "DELETE",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + String(authTokens.access)
             },
             body: JSON.stringify({
                 event_id: event_id

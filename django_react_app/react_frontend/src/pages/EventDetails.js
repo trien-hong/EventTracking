@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Typography, Button } from '@mui/material';
-import { useParams } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useNavigate } from 'react-router-dom';
+import UserAuthContext from '../contexts/UserAuthContext';
 import AddEventButton from '../components/AddEventButton';
 
 function EventDetails() {
     const [eventDetails, setEventDetails] = useState([""]);
-    const { id } = useParams();
+    const {authTokens} = useContext(UserAuthContext);
+    const {id} = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -15,10 +16,15 @@ function EventDetails() {
     }, []);
 
     async function getEventDetails() {
-        // const response = await fetch(`http://127.0.0.1:8000/api/events/id/${id}/`);
-        const response = await fetch(`http://127.0.0.1/api/events/id/${id}/`);
+        // const response = await fetch(`http://127.0.0.1:8000/api/events/details/id/${id}/`, {
+        const response = await fetch(`http://127.0.0.1/api/events/details/id/${id}/`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + String(authTokens.access)
+            },
+        });
         const data = await response.json();
-        console.log(data);
         setEventDetails(data);
     }
     

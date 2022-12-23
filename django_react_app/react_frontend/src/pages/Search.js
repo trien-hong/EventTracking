@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
-import { Typography } from '@mui/material';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Typography } from '@mui/material';
+import UserAuthContext from '../contexts/UserAuthContext';
 import AddEventButton from '../components/AddEventButton';
 
 function Search() {
     const [searchEvents, setSearchEvents] = useState([""]);
     const [searchParams] = useSearchParams();
+    const {authTokens} = useContext(UserAuthContext);
     const search = searchParams.get("q");
     const navigate = useNavigate();
 
@@ -14,14 +16,16 @@ function Search() {
     }, [search]);
 
     async function getSearchEvents() {
-        if (search === "") {
-            setSearchEvents(false)
-        } else {
-            // const response = await fetch(`http://127.0.0.1:8000/api/events/search/input/${search}/`);
-            const response = await fetch(`http://127.0.0.1/api/events/search/input/${search}/`);
-            const data = await response.json();
-            setSearchEvents(data);
-        }
+        // const response = await fetch(`http://127.0.0.1:8000/api/events/search/input/${search}/`, {
+        const response = await fetch(`http://127.0.0.1/api/events/search/input/${search}/`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + String(authTokens.access)
+            },
+        });
+        const data = await response.json();
+        setSearchEvents(data);
     };
 
     function goToEventDetails(event_id) {
@@ -55,7 +59,7 @@ function Search() {
             ) : (
                 <div>
                     <br></br>
-                    <Typography id="errors" variant="h5" align="center">Your search of "{search}" came back empty.</Typography>   
+                    <Typography id="errors" variant="h5" align="center">Your search of "{search}" came back empty.</Typography>
                 </div>
             )}
         </div>

@@ -1,5 +1,6 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
+import UserAuthContextProvider from './contexts/UserAuthContextProvider';
 import Header from './components/Header';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -8,7 +9,6 @@ import Search from './pages/Search';
 import Profile from './pages/Profile';
 import EventDetails from './pages/EventDetails';
 import PrivateRoute from './utils/PrivateRouteUtil';
-import UserAuthContextProvider from './contexts/UserAuthContextProvider';
 
 function App() {
   return(
@@ -17,7 +17,7 @@ function App() {
         <Header>
         </Header>
         <Routes>
-          <Route path="/" element={ <Login/> }/>
+          <Route path="/" element={ <Events/> }/>
           <Route path="/login/" element={ <Login/> }/>
           <Route path="/signup/" element={ <Signup/> }/>
           <Route element={<PrivateRoute/>}>

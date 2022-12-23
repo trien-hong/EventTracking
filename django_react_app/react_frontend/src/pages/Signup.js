@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, TextField, Typography, IconButton, InputAdornment } from '@mui/material';
 import PersonIcon2 from '@mui/icons-material/Person';
 import PasswordIcon from '@mui/icons-material/Password';
 import MapIcon from '@mui/icons-material/Map';
-import { Link } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 
 function Signup() {
     const [messages, setMessages] = useState([null]);
@@ -14,8 +15,8 @@ function Signup() {
     
     async function signup(e) {
         e.preventDefault();
-        // const response = await fetch('http://127.0.0.1:8000/api/signup_user/', {
-        const response = await fetch('http://127.0.0.1/api/signup_user/', {
+        // const response = await fetch(`http://127.0.0.1:8000/api/signup_user/`, {
+        const response = await fetch(`http://127.0.0.1/api/signup_user/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -41,8 +42,8 @@ function Signup() {
                 </div>
             )
         } else {
-            alert("Account has been created!\n\nYou can now login.")
-            setMessages(["Account has been created! You can now login."])
+            alert("Account has been created!\n\nYou can now login.");
+            setMessages(["Account has been created! You can now login."]);
         }
     }
 
@@ -54,9 +55,9 @@ function Signup() {
         }
 
         if (textfieldType === "password") {
-            setIcon(<VisibilityOffIcon/>)
+            setIcon(<VisibilityOffIcon/>);
         } else {
-            setIcon(<VisibilityIcon/>)
+            setIcon(<VisibilityIcon/>);
         }
     }
 
@@ -77,7 +78,7 @@ function Signup() {
                     <MapIcon sx={{ mr: 2, mt: 2.3, color: "#077E1E" }} id="icons"/><TextField sx={{ background: "white", width: 375, mt: 0.5 }} type="text" name="zip_code" label="Enter ZIP Code" variant="filled" inputProps={{ minLength:5, maxLength: 5 }} required/>
                     <br></br>
                     <br></br>
-                    <Button type="submit" variant="contained">SUBMIT</Button>
+                    <Button type="submit" variant="contained">SUBMIT<AssignmentIndIcon sx={{ ml: 1 }}/></Button>
                     <br></br>
                     <br></br>
                     <hr></hr>
@@ -86,7 +87,7 @@ function Signup() {
                 </form>
             </center>
         </div>
-    )
+    );
 }
 
 export default Signup;

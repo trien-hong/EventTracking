@@ -1,18 +1,16 @@
-import { useContext, useState } from 'react';
-import { AppBar, Toolbar, Button, Box, Typography, TextField } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import { useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { AppBar, Toolbar, Button, Box, TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import UserAuthContext from '../contexts/UserAuthContext';
 
 function Header() {
     const {user, logout, clearLoginMessage} = useContext(UserAuthContext);
-    const [search, setSearch] = useState("");
     const navigate = useNavigate();
 
-    function goToSearch(event) {
-        if(event.key === "Enter") {
-            navigate({ pathname: "/search", search: `?q=${search}` });
-        }
+    function search(e) {
+        e.preventDefault();
+        navigate({ pathname: `/search`, search: `?q=${e.target.searchBar.value}` });
     }
 
     return (
@@ -20,23 +18,25 @@ function Header() {
             <Toolbar>
                 {user ? (
                     <>
-                        <Box sx={{ flexGrow: 1, display:"flex", alignItems:"center" }}>
+                        <Box sx={{ flexGrow: 1}}>
                             <Button sx={{ mr: 1 }} variant="contained" component={Link} to="/events">EVENTS</Button>
                             <Button sx={{ mr: 1 }} variant="contained" component={Link} to="/profile">PROFILE</Button>
                         </Box>
-                        <Box sx={{ flexGrow: 1.4, display:"flex", alignItems:"center" }}>
-                            <TextField sx={{ background: "white", width: 375, mr: 1 }} label="Search events here..." variant="filled" onChange={(event) => { setSearch(event.target.value); }} onKeyPress={(event) => { goToSearch(event); }}/>
-                            <Button sx={{ mr: 1 }} variant="contained" component={Link} to={{ pathname: "/search", search: `?q=${search}` }}>
-                                <SearchIcon/>
-                            </Button>
+                        <Box sx={{ flexGrow: 1.4 }}>
+                            <form onSubmit={search}>
+                                <TextField sx={{ background: "white", width: 375, mr: 1 }} InputLabelProps={{ required: false }} label="Search events here..." name="searchBar" variant="filled" required/>
+                                <Button sx={{ mt: 1.1 }} type="submit" variant="contained"><SearchIcon/></Button>
+                            </form>
                         </Box>
-                        <Button variant="contained" onClick={logout}>LOGOUT</Button>
+                        <Box sx={{ margin: "auto" }}>
+                            <Button variant="contained" onClick={logout}>LOGOUT</Button>
+                        </Box>
                     </>
                 ) : (
                     <>
                         <Box sx={{ margin: "auto" }}>
-                            <Button sx={{ mx: 1 }} variant="contained" component={Link} to="/signup" onClick={clearLoginMessage}>SIGNUP</Button>
-                            <Button sx={{ mx: 1 }} variant="contained" component={Link} to="/login">LOGIN</Button>
+                            <Button sx={{ mr: 1 }} variant="contained" component={Link} to="/signup" onClick={clearLoginMessage}>SIGNUP</Button>
+                            <Button sx={{ ml: 1 }} variant="contained" component={Link} to="/login">LOGIN</Button>
                         </Box>
                     </>
                 )}

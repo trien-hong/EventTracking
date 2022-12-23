@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
-import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import AddEventButton from '../components/AddEventButton';
+import { Typography } from '@mui/material';
 import UserAuthContext from '../contexts/UserAuthContext';
+import AddEventButton from '../components/AddEventButton';
 
 function Events() {
     const [events, setEvents] = useState([""]);
-    const {user} = useContext(UserAuthContext)
+    const {user, logout, authTokens} = useContext(UserAuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -14,10 +14,16 @@ function Events() {
     }, []);
 
     async function getEvents() {
-        // const response = await fetch(`http://127.0.0.1:8000/api/events/search/input/${user.zip_code}/`);
-        const response = await fetch(`http://127.0.0.1/api/events/search/input/${user.zip_code}/`);
-        const data = await response.json()
-        setEvents(data)
+        // const response = await fetch(`http://127.0.0.1:8000/api/events/`, {
+        const response = await fetch(`http://127.0.0.1/api/events/`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + String(authTokens.access)
+            },
+        });
+        const data = await response.json();
+        setEvents(data);
     }
 
     function goToEventDetails(event_id) {
