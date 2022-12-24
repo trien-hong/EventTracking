@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, TextField, Typography, InputAdornment, IconButton } from '@mui/material';
 import PersonIcon2 from '@mui/icons-material/Person';
@@ -12,6 +12,10 @@ function Login() {
     const {login, message} = useContext(UserAuthContext);
     const [textfieldType, setTextfieldType] = useState("password");
     const [icon, setIcon] = useState(<VisibilityIcon/>);
+
+    useEffect(() => {
+        document.title = "Login"
+    }, []);
 
     function showPassword() {
         if (textfieldType === "password") {

@@ -4,7 +4,7 @@ from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv())
 
-def getEvents(input):
+def getEvents(input, pageNumber):
     TICKETMASTER_API_KEY = os.getenv("TICKETMASTER_API_KEY")
 
     if len(input) == 5 and input.isnumeric():
@@ -14,6 +14,9 @@ def getEvents(input):
             + "&postalCode="
             + input
             + "&locale=*"
+            + "&size=21"
+            + "&page=" + pageNumber
+            + "&sort=name,asc"
         )
     else:
         url = (
@@ -22,6 +25,9 @@ def getEvents(input):
             + "&keyword="
             + input
             + "&locale=*"
+            + "&size=21"
+            + "&page=" + pageNumber
+            + "&sort=name,asc"
         )
 
     ticketmaster_request = requests.get(url=url)
@@ -71,6 +77,18 @@ def getEvents(input):
                 event["maxPrice"] = "TBD"
 
             events.append(event)
+        
+        try:
+            #(size * page) <= 1000 items otherwise error 400
+            #(21 * 47) <= 1000 items therefore max page is 47
+            totalPages = {}
+            if ticketmaster_response_json["page"]["totalPages"] >= 48:
+                totalPages["totalPages"] = 47
+            else:
+                totalPages["totalPages"] = ticketmaster_response_json["page"]["totalPages"]
+        except KeyError as e:
+            totalPages["totalPages"] = 0
+        events.append(totalPages)
     except KeyError as e:
         return False
 

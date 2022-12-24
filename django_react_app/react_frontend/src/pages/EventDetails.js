@@ -12,6 +12,7 @@ function EventDetails() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        document.title = `Event Details | ${id}`;
         getEventDetails();
     }, []);
 

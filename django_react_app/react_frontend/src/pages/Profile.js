@@ -5,25 +5,23 @@ import UserAuthContext from '../contexts/UserAuthContext';
 
 function Profile() {
     const [profileEvents, setProfileEvents] = useState([""]);
-    const {user, logout, authTokens} = useContext(UserAuthContext);
+    const {user, authTokens} = useContext(UserAuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
+        document.title = `Profile | ${user.username}`;
         getProfileEvents();
     }, []);
 
     async function getProfileEvents() {
-        const response = await fetch(`http://127.0.0.1:8000/api/profile/username/${user.username}/`, {
-        // const response = await fetch(`http://127.0.0.1/api/profile/username/${user.username}/`, {
+        // const response = await fetch(`http://127.0.0.1:8000/api/profile/username/${user.username}/`, {
+        const response = await fetch(`http://127.0.0.1/api/profile/username/${user.username}/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + String(authTokens.access)
             }
         });
-        if (response.status != 200) {
-            logout();
-        }
         const data = await response.json();
         setProfileEvents(data);
     }

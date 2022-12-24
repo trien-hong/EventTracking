@@ -74,14 +74,14 @@ def getRoutes(request):
         },
         {
             'Endpoint': '/api/token/',
-            'Restricted': 'N/A',
-            'Method': ['POST', 'OPTIONS'],
+            'Restricted': None,
+            'Method': ['POST'],
             'Description': 'Used for logging in and generating tokens.'
         },
         {
             'Endpoint': '/api/token/refresh/',
-            'Restricted': 'N/A',
-            'Method': ['POST', 'OPTIONS'],
+            'Restricted': None,
+            'Method': ['POST'],
             'Description': 'Used for generating new access tokens with refresh token.'
         },
     ]
@@ -103,12 +103,13 @@ def signup_user(request):
         return Response(form.errors.values())
 
 @api_view(["GET"])
-def events(request):
+@permission_classes([IsAuthenticated])
+def events(request, page):
     """
-    /api/events/
+    /api/events/page/<str:page>/
     """
     user = request.user
-    events = ticketmaster_api.getEvents(user.zip_code)
+    events = ticketmaster_api.getEvents(user.zip_code, page)
     return Response(events)
 
 @api_view(["GET"])
@@ -122,11 +123,11 @@ def eventsId(request, id):
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def eventsSearchInput(request, input):
+def eventsSearchInput(request, input, page):
     """
-    /api/events/search/input/<str:input>/
+    /api/events/search/input/<str:input>/page/<str:page>
     """
-    events = ticketmaster_api.getEvents(input)
+    events = ticketmaster_api.getEvents(input, page)
     return Response(events)
 
 @api_view(["GET"])

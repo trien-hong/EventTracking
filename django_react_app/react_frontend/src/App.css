@@ -13,6 +13,30 @@
   transform: scale(1.5);
 }
 
+#leftArrow {
+  cursor: pointer;
+}
+
+#rightArrow {
+  cursor: pointer;
+}
+
+#leftArrow:hover {
+  color: #3074d4;
+}
+
+#rightArrow:hover {
+  color: #3074d4;
+}
+
+#page_number_border {
+  background-color: white;
+  border-style: solid;
+  display: inline-block;
+  padding-right: 1%;
+  padding-left: 1%;
+}
+
 #search:hover {
   border-style: solid;
   cursor: pointer;
@@ -32,9 +56,9 @@
 
 .events {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr); 
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
   gap: 20px;
-  width: 85%;
+  width: 70%;
   padding: 10px;
   margin: 0 auto;
 }

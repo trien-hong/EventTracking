@@ -12,6 +12,7 @@ function Search() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        document.title = `Search | ${search}`
         getSearchEvents();
     }, [search]);
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, TextField, Typography, IconButton, InputAdornment } from '@mui/material';
 import PersonIcon2 from '@mui/icons-material/Person';
@@ -13,6 +13,10 @@ function Signup() {
     const [textfieldType, setTextfieldType] = useState("password");
     const [icon, setIcon] = useState(<VisibilityIcon/>);
     
+    useEffect(() => {
+        document.title = "Signup";
+    }, []);
+
     async function signup(e) {
         e.preventDefault();
         // const response = await fetch(`http://127.0.0.1:8000/api/signup_user/`, {

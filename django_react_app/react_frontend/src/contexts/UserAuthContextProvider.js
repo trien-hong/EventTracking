@@ -20,7 +20,7 @@ function UserAuthContextProvider({children}) {
            if(authTokens) {
                 updateToken();
            }
-        }, 5000);
+        }, nineMinutes);
         return (() => clearInterval(interval));
     }, [authTokens, loading]);
 
@@ -61,7 +61,6 @@ function UserAuthContextProvider({children}) {
     }
 
     async function updateToken() {
-        console.log("update token");
         // const response = await fetch(`http://127.0.0.1:8000/api/token/refresh/`, {
         const response = await fetch(`http://127.0.0.1/api/token/refresh/`, {
             method: "POST",
