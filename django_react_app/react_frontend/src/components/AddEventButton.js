@@ -28,7 +28,7 @@ function AddEventButton(props) {
 
     return (
         <div>
-            <Button variant="contained" onClick={() => { addEvent() }}>ADD EVENT</Button>
+            <Button variant="contained" onClick={() => { addEvent(); }}>ADD EVENT</Button>
         </div>
     );
 }

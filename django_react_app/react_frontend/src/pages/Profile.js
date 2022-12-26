@@ -52,9 +52,9 @@ function Profile() {
                 <Typography sx={{ mb: 1 }} variant="h4">Welcome, {user.username}!</Typography>
             </center>
             {profileEvents ? (
-                <div className="events">
+                <div id="events">
                     {profileEvents.map((event, i) =>
-                        <div className={event.event_id} id="event_border" key={i}>
+                        <div id="eventBorder" key={i}>
                             <center>
                                 <br></br>
                                 <Typography><b>{event.title}</b></Typography>
@@ -66,7 +66,7 @@ function Profile() {
                                 <br></br>
                                 <Typography>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
                                 <br></br>
-                                <Button variant="contained" id={event.id} onClick={() => { deleteProfileEvent(event.event_id); }}>DELETE EVENT</Button>
+                                <Button variant="contained" onClick={() => { deleteProfileEvent(event.event_id); }}>DELETE EVENT</Button>
                                 <br></br>
                                 <br></br>
                             </center>

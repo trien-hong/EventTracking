@@ -25,7 +25,7 @@ def getEvents(input, pageNumber):
             + "&keyword="
             + input
             + "&locale=*"
-            + "&size=21"
+            + "&size=12"
             + "&page=" + pageNumber
             + "&sort=name,asc"
         )
@@ -36,6 +36,7 @@ def getEvents(input, pageNumber):
 
     events = []
     event = {}
+    totalPages = {}
 
     try:
         for x in ticketmaster_response_json["_embedded"]["events"]:
@@ -80,15 +81,15 @@ def getEvents(input, pageNumber):
         
         try:
             #(size * page) <= 1000 items otherwise error 400
-            #(21 * 47) <= 1000 items therefore max page is 47
-            totalPages = {}
-            if ticketmaster_response_json["page"]["totalPages"] >= 48:
-                totalPages["totalPages"] = 47
+            #(12 * 83) <= 1000 items therefore max page is 83
+            if ticketmaster_response_json["page"]["totalPages"] >= 84:
+                totalPages["totalPages"] = 83
             else:
-                totalPages["totalPages"] = ticketmaster_response_json["page"]["totalPages"]
+                totalPages["totalPages"] = int(ticketmaster_response_json["page"]["totalPages"]) - 1
+            events.append(totalPages)
         except KeyError as e:
             totalPages["totalPages"] = 0
-        events.append(totalPages)
+            events.append(totalPages)
     except KeyError as e:
         return False
 

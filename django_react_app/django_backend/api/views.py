@@ -32,56 +32,56 @@ def getRoutes(request):
     routes = [
         {
             'Endpoint': '/api/signup_user/',
-            'Restricted': False,
             'Method': ['POST'],
+            'Restricted': False,
             'Description': 'Signup a user'
         },
         {
             'Endpoint': '/api/events/',
-            'Restricted': True,
             'Method': ['GET'],
+            'Restricted': True,
             'Description': 'Returns an array of events based on the current logged in user zip code.'
         },
         {
             'Endpoint': '/api/events/details/id/<str:id>/',
-            'Restricted': True,
             'Method': ['GET'],
+            'Restricted': True,
             'Description': 'Returns a single event with even more details about it.'
         },
         {
-            'Endpoint': '/api/events/search/input/<str:input>/',
-            'Restricted': True,
+            'Endpoint': '/api/events/search/input/<str:input>/page/<str:page>/',
             'Method': ['GET'],
+            'Restricted': True,
             'Description': 'Returns an array of events based on input for searching events.'
         },
         {
             'Endpoint': '/api/profile/username/<str:username>/',
-            'Restricted': True,
             'Method': ['GET'],
+            'Restricted': True,
             'Description': 'Returns an array of events from which the user have added/saved'
         },
         {
             'Endpoint': '/api/profile/save/event/id/',
-            'Restricted': True,
             'Method': ['POST'],
+            'Restricted': True,
             'Description': 'Saves an event with data sent in post request'
         },
         {
             'Endpoint': '/api/profile/delete/event/id/',
-            'Restricted': True,
             'Method': ['DELETE'],
+            'Restricted': True,
             'Description': 'Deletes an event from profile'
         },
         {
             'Endpoint': '/api/token/',
-            'Restricted': None,
             'Method': ['POST'],
+            'Restricted': None,
             'Description': 'Used for logging in and generating tokens.'
         },
         {
             'Endpoint': '/api/token/refresh/',
-            'Restricted': None,
             'Method': ['POST'],
+            'Restricted': None,
             'Description': 'Used for generating new access tokens with refresh token.'
         },
     ]
@@ -125,7 +125,7 @@ def eventsId(request, id):
 @permission_classes([IsAuthenticated])
 def eventsSearchInput(request, input, page):
     """
-    /api/events/search/input/<str:input>/page/<str:page>
+    /api/events/search/input/<str:input>/page/<str:page>/
     """
     events = ticketmaster_api.getEvents(input, page)
     return Response(events)

@@ -37,8 +37,8 @@ function EventDetails() {
         <div>
             <br></br>
             <center>
-                <div className={eventDetails.event_id} id="event_border">
-                    <Typography variant="h5"><Button id="backArrow" variant="contained" onClick={() => { goBack(); }}><ArrowBackIcon/></Button> | <b><u>Event Details</u></b></Typography>
+                <div id="eventBorder">
+                    <Typography variant="h5"><Button variant="contained" onClick={() => { goBack(); }}><ArrowBackIcon/></Button> | <b><u>Event Details</u></b></Typography>
                     <br></br>
                     <Typography variant="h5"><b>{eventDetails.title}</b></Typography>
                     <br></br>

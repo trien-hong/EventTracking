@@ -6,6 +6,7 @@ import UserAuthContext from '../contexts/UserAuthContext';
 
 function Header() {
     const {user, logout, clearLoginMessage} = useContext(UserAuthContext);
+
     const navigate = useNavigate();
 
     function search(e) {
@@ -14,14 +15,14 @@ function Header() {
     }
 
     return (
-        <AppBar position="static" sx={{ background: "gray"}}>
+        <AppBar position="static" sx={{ background: "gray" }}>
             <Toolbar>
                 {user ? (
                     <>
                         <Box sx={{ flexGrow: 1}}>
                             <Button sx={{ mr: 1 }} variant="contained" component={Link} to="/events">EVENTS</Button>
                         </Box>
-                        <Box sx={{ flexGrow: .7 }}>
+                        <Box sx={{ flexGrow: .72 }}>
                             <form onSubmit={search}>
                                 <TextField sx={{ background: "white", width: 375, mr: 1 }} InputLabelProps={{ required: false }} label="Search events here..." name="searchBar" variant="filled" required/>
                                 <Button sx={{ mt: 1.1 }} type="submit" variant="contained"><SearchIcon/></Button>
@@ -29,13 +30,13 @@ function Header() {
                         </Box>
                         <Box sx={{ margin: "auto" }}>
                             <Button sx={{ mr: 1 }} variant="contained" component={Link} to="/profile">PROFILE</Button>
-                            <Button variant="contained" onClick={logout}>LOGOUT</Button>
+                            <Button variant="contained" onClick={() => { logout(); }}>LOGOUT</Button>
                         </Box>
                     </>
                 ) : (
                     <>
                         <Box sx={{ margin: "auto" }}>
-                            <Button sx={{ mr: 1 }} variant="contained" component={Link} to="/signup" onClick={clearLoginMessage}>SIGNUP</Button>
+                            <Button sx={{ mr: 1 }} variant="contained" component={Link} to="/signup" onClick={() => { clearLoginMessage(); }}>SIGNUP</Button>
                             <Button sx={{ ml: 1 }} variant="contained" component={Link} to="/login">LOGIN</Button>
                         </Box>
                     </>

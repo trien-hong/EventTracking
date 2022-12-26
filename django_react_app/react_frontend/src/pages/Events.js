@@ -10,8 +10,8 @@ function Events() {
     const [events, setEvents] = useState([""]);
     const [totalPages, setTotalPages] = useState("");
     const [currentPage, setCurrentPage] = useState(0);
-    const [leftArrowIcon, setLeftArrowIcon] = useState(<ArrowBackIosNewIcon sx={{ mr: 1.5, mt: 0.5 }} onClick={() => {decreasePageNumber()}}/>);
-    const [rightArrowIcon, setRightArrowIcon] = useState(<ArrowForwardIosIcon sx={{ ml: 1.5, mt: 0.5 }} onClick={() => {increasePageNumber()}}/>);
+    const [leftArrowIcon, setLeftArrowIcon] = useState(null);
+    const [rightArrowIcon, setRightArrowIcon] = useState(null);
     const {user, authTokens} = useContext(UserAuthContext);
     const navigate = useNavigate();
 
@@ -39,13 +39,13 @@ function Events() {
         if(currentPage === 0) {
             setLeftArrowIcon(null);
         } else {
-            setLeftArrowIcon(<ArrowBackIosNewIcon sx={{ mr: 1.5, mt: 0.5 }} onClick={() => {decreasePageNumber()}}/>);
+            setLeftArrowIcon(<ArrowBackIosNewIcon sx={{ mr: 1.5, mt: 0.5 }} onClick={() => { decreasePageNumber(); }}/>);
         }
 
         if(currentPage === totalPages) {
             setRightArrowIcon(null);
         } else {
-            setRightArrowIcon(<ArrowForwardIosIcon sx={{ ml: 1.5, mt: 0.5 }} onClick={() => {increasePageNumber()}}/>);
+            setRightArrowIcon(<ArrowForwardIosIcon sx={{ ml: 1.5, mt: 0.5 }} onClick={() => { increasePageNumber(); }}/>);
         }
     }
 
@@ -64,10 +64,10 @@ function Events() {
     return (
         <div>
             {events ? (
-                <div className="content">
-                    <div className="events">
+                <div id="content">
+                    <div id="events">
                         {events.map((event, i) =>
-                            <div className={event.event_id} id="event_border" key={i}>
+                            <div id="eventBorder" key={i}>
                                 <center>
                                     <br></br>
                                     <Typography><b>{event.title}</b></Typography>
@@ -86,11 +86,11 @@ function Events() {
                         )}
                     </div>
                     <Box sx={{ mb: 2}} m={1} display="flex" justifyContent="center" alignItems="center">
-                        <div id="leftArrow">
+                        <div id="decreasePageNumberArrow">
                             {leftArrowIcon}
                         </div>
-                        <Typography id="page_number_border" variant="h6" >Page #{currentPage}</Typography>
-                        <div id="rightArrow">
+                        <Typography id="pageNumberBorder" variant="h6" >Page #<u>{currentPage}</u></Typography>
+                        <div id="increasePageNumberArrow">
                             {rightArrowIcon}
                         </div>
                     </Box>
