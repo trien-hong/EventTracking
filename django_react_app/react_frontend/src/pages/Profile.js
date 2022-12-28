@@ -1,7 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import UserAuthContext from '../contexts/UserAuthContext';
+import DeleteEventButton from '../components/DeleteEventButton';
 
 function Profile() {
     const [profileEvents, setProfileEvents] = useState([""]);
@@ -26,21 +27,6 @@ function Profile() {
         setProfileEvents(data);
     }
 
-    async function deleteProfileEvent(event_id) {
-        // await fetch(`http://127.0.0.1:8000/api/profile/delete/event/id/`, {
-        await fetch(`http://127.0.0.1/api/profile/delete/event/id/`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + String(authTokens.access)
-            },
-            body: JSON.stringify({
-                event_id: event_id
-            })
-        });
-        getProfileEvents();
-    }
-
     function goToEventDetails(event_id) {
         navigate(`/events/details/id/${event_id}/`);
     }
@@ -49,12 +35,12 @@ function Profile() {
         <div>
             <center>
                 <br></br>
-                <Typography sx={{ mb: 1 }} variant="h4">Welcome, {user.username}!</Typography>
+                <Typography variant="h4">Welcome, {user.username}!</Typography>
             </center>
             {profileEvents ? (
                 <div id="events">
                     {profileEvents.map((event, i) =>
-                        <div id="eventBorder" key={i}>
+                        <div id="eventBorder" className={event.event_id} key={i}>
                             <center>
                                 <br></br>
                                 <Typography><b>{event.title}</b></Typography>
@@ -66,8 +52,7 @@ function Profile() {
                                 <br></br>
                                 <Typography>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
                                 <br></br>
-                                <Button variant="contained" onClick={() => { deleteProfileEvent(event.event_id); }}>DELETE EVENT</Button>
-                                <br></br>
+                                <DeleteEventButton event={event} setProfileEvents={setProfileEvents}/>
                                 <br></br>
                             </center>
                         </div>

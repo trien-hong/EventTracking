@@ -14,7 +14,7 @@ def getEvents(input, pageNumber):
             + "&postalCode="
             + input
             + "&locale=*"
-            + "&size=21"
+            + "&size=12"
             + "&page=" + pageNumber
             + "&sort=name,asc"
         )

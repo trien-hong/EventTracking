@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, AppBar, Toolbar } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import UserAuthContext from '../contexts/UserAuthContext';
@@ -94,15 +94,19 @@ function Search() {
                             </div>
                         )}
                     </div>
-                    <Box sx={{ mb: 2}} m={1} display="flex" justifyContent="center" alignItems="center">
-                        <div id="decreasePageNumberArrow">
-                            {leftArrowIcon}
-                        </div>
-                        <Typography id="pageNumberBorder" variant="h6" >Page #<u>{currentPage}</u></Typography>
-                        <div id="increasePageNumberArrow">
-                            {rightArrowIcon}
-                        </div>
-                    </Box>
+                    <AppBar position="static" sx={{ alignItems: "center", color: "black", background: "lightgray", position: 'fixed', bottom: 0 }}>
+                        <Toolbar style={{ minHeight: 35 }}>
+                            <Box sx={{ margin: "auto", display:"flex", alignItems:"center" }}>
+                                <div id="decreasePageNumberArrow">
+                                    {leftArrowIcon}
+                                </div>
+                                <Typography id="pageNumberBorder" variant="h6" >Page #<u>{currentPage}</u></Typography>
+                                <div id="increasePageNumberArrow">
+                                    {rightArrowIcon}
+                                </div>
+                            </Box>
+                        </Toolbar>
+                    </AppBar>
                 </div>
             ) : (
                 <div>

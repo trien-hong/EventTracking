@@ -2,6 +2,14 @@
   margin: 0;
 }
 
+#errors {
+  color: red;
+}
+
+#success {
+  color: green;
+}
+
 #loginSignupForm {
   background-color: #DFDFDF;
   border-style: solid;
@@ -13,11 +21,35 @@
   transform: scale(1.5);
 }
 
+#events {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  width: 70%;
+  padding-top: 23px;
+  padding-bottom: 58px;
+  margin: 0 auto;
+}
+
+#eventBorder {
+  background-color: #E6E6E6;
+  border-style: solid;
+  border-radius: 10px;
+  display: inline-block;
+  padding: 1%;
+}
+
+#eventBorder > center > img:hover {
+  border-style: double;
+  cursor: pointer;
+  border-width: 5px;
+}
+
 #pageNumberBorder {
   background-color: white;
   border-style: solid;
-  padding-right: 1%;
-  padding-left: 1%;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 #decreasePageNumberArrow {
@@ -39,31 +71,4 @@
 #search:hover {
   border-style: solid;
   cursor: pointer;
-}
-
-#errors {
-  color: red;
-}
-
-#eventBorder {
-  background-color: #E6E6E6;
-  border-style: solid;
-  border-radius: 10px;
-  display: inline-block;
-  padding: 1%;
-}
-
-#events {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-  gap: 20px;
-  width: 70%;
-  padding: 10px;
-  margin: 0 auto;
-}
-
-#eventBorder > center > img:hover {
-  border-style: double;
-  cursor: pointer;
-  border-width: 5px;
 }

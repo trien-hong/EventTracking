@@ -47,7 +47,12 @@ function Signup() {
             )
         } else {
             alert("Account has been created!\n\nYou can now login.");
-            setMessages(["Account has been created! You can now login."]);
+            setMessages(
+                <div id="success">
+                    Account has been created! You can now login.
+                    <hr></hr>
+                </div>
+            );
         }
     }
 
