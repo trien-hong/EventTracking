@@ -16,7 +16,7 @@ function Events() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        document.title = "Events"
+        document.title = `Events | Page #${currentPage}`
         getEvents();
     }, [currentPage]);
 
@@ -73,7 +73,7 @@ function Events() {
                             <div id="eventBorder" key={i}>
                                 <center>
                                     <br></br>
-                                    <Typography><b>{event.title}</b></Typography>
+                                    <Typography><b><i>{event.title}</i></b></Typography>
                                     <br></br>
                                     <Typography>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
                                     <br></br>

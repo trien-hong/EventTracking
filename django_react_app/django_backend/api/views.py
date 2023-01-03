@@ -6,7 +6,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from . models import UserEvents
+from . models import UserReviews
 from . serializers import UserEventsSerializer
+from . serializers import GetReviewsSerializer
 from . import forms
 import ticketmaster_api
 # Create your views here.
@@ -37,10 +39,16 @@ def getRoutes(request):
             'Description': 'Signup a user'
         },
         {
-            'Endpoint': '/api/events/',
+            'Endpoint': '/api/events/page/<str:page>/',
             'Method': ['GET'],
             'Restricted': True,
             'Description': 'Returns an array of events based on the current logged in user zip code.'
+        },
+        {
+            'Endpoint': '/api/events/search/input/<str:input>/page/<str:page>/',
+            'Method': ['GET'],
+            'Restricted': True,
+            'Description': 'Returns an array of events based on input for searching events.'
         },
         {
             'Endpoint': '/api/events/details/id/<str:id>/',
@@ -49,10 +57,16 @@ def getRoutes(request):
             'Description': 'Returns a single event with even more details about it.'
         },
         {
-            'Endpoint': '/api/events/search/input/<str:input>/page/<str:page>/',
+            'Endpoint': '/api/user/review/add/',
+            'Method': ['POST'],
+            'Restricted': True,
+            'Description': 'Add review left by the user'
+        },
+        {
+            'Endpoint': '/api/reviews/get/event_id/<str:event_id>/',
             'Method': ['GET'],
             'Restricted': True,
-            'Description': 'Returns an array of events based on input for searching events.'
+            'Description': 'Get the reviews left by all users for that specific event'
         },
         {
             'Endpoint': '/api/profile/username/<str:username>/',
@@ -114,21 +128,47 @@ def events(request, page):
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def eventsId(request, id):
-    """
-    /api/events/details/id/<str:id>/
-    """
-    events = ticketmaster_api.getEventDetails(id)
-    return Response(events)
-
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
 def eventsSearchInput(request, input, page):
     """
     /api/events/search/input/<str:input>/page/<str:page>/
     """
     events = ticketmaster_api.getEvents(input, page)
     return Response(events)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def eventsId(request, id):
+    """
+    /api/events/details/id/<str:id>/
+    """
+    events = ticketmaster_api.getEventDetails(id)
+    return Response(events)
+    
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def addUserReview(request):
+    """
+    /api/user/review/add/
+    """
+    user = request.user
+    data = json.loads(request.body)
+    review = UserReviews(event_id=data["event_id"], title=data["title"], userName=user, userRating=data["userRating"], userComment=data["userComment"])
+    review.save()
+    return Response(True)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def getAllReviews(request, event_id):
+    """
+    /api/reviews/get/event_id/<str:event_id>/
+    """
+    reviews = UserReviews.objects.all().filter(event_id=event_id)
+    serializer = GetReviewsSerializer(reviews, many=True)
+    if serializer.data == []:
+        return Response(False)
+    else:
+        return Response(serializer.data)
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { Button } from '@mui/material';
 import UserAuthContext from '../contexts/UserAuthContext';
 
@@ -6,8 +6,8 @@ function DeleteEventButton({event, setProfileEvents}) {
     const {user, authTokens} = useContext(UserAuthContext);
 
     async function getProfileEvents() {
-        const response = await fetch(`http://127.0.0.1:8000/api/profile/username/${user.username}/`, {
-        // const response = await fetch(`http://127.0.0.1/api/profile/username/${user.username}/`, {
+        // const response = await fetch(`http://127.0.0.1:8000/api/profile/username/${user.username}/`, {
+        const response = await fetch(`http://127.0.0.1/api/profile/username/${user.username}/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -32,7 +32,8 @@ function DeleteEventButton({event, setProfileEvents}) {
         });
         getProfileEvents();
 
-        // doesn't seem to work and i have no idea why
+        // this doesn't seem to work and i have no idea why
+        // if i were to guess it would have to do with objects not being the "same" in js
         // const array = profileEvents;
         // const index = array.indexOf(event);
         // if (index !== -1) {

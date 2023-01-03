@@ -2,9 +2,8 @@ import { useContext } from 'react';
 import { Button } from '@mui/material';
 import UserAuthContext from '../contexts/UserAuthContext';
 
-function AddEventButton(props) {
+function AddEventButton({event}) {
     const {authTokens} = useContext(UserAuthContext);
-    const {event} = props;
 
     async function addEvent() {
         // await fetch(`http://127.0.0.1:8000/api/profile/save/event/id/`, {

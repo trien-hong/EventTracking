@@ -9,9 +9,9 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import UserAuthContext from '../contexts/UserAuthContext';
 
 function Login() {
-    const {login, message} = useContext(UserAuthContext);
     const [textfieldType, setTextfieldType] = useState("password");
     const [icon, setIcon] = useState(<VisibilityIcon/>);
+    const {login, message} = useContext(UserAuthContext);
 
     useEffect(() => {
         document.title = "Login"

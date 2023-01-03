@@ -24,7 +24,7 @@ function Search() {
     useEffect(() => {
         document.title = `${search} | Page #${currentPage}`
         getSearchEvents();
-    }, [currentPage]);
+    }, [currentPage, search]);
 
     async function getSearchEvents() {
         // const response = await fetch(`http://127.0.0.1:8000/api/events/search/input/${search}/page/${currentPage}/`, {
@@ -79,7 +79,7 @@ function Search() {
                             <div id="eventBorder" key={i}>
                                 <center>
                                     <br></br>
-                                    <Typography><b>{event.title}</b></Typography>
+                                    <Typography><b><i>{event.title}</i></b></Typography>
                                     <br></br>
                                     <Typography>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
                                     <br></br>

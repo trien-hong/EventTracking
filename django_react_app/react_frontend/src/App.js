@@ -17,7 +17,9 @@ function App() {
         <Header>
         </Header>
         <Routes>
-          <Route path="/" element={<Events/>}/>
+          <Route element={<PrivateRoute/>}>
+            <Route path="/" element={<Events/>}/>
+          </Route>
           <Route path="/login/" element={<Login/>}/>
           <Route path="/signup/" element={<Signup/>}/>
           <Route element={<PrivateRoute/>}>

@@ -39,6 +39,22 @@
   padding: 1%;
 }
 
+#reviewBorder {
+  width: 500px;
+  background-color: #E6E6E6;
+  border-style: solid;
+  border-radius: 10px;
+  display: inline-block;
+  padding: 1%;
+}
+
+#review {
+  border-style: solid;
+  background: linear-gradient(225deg, #CFB722 25px, #FFEE85 25px);
+  overflow-wrap: break-word;
+  width: 500px;
+}
+
 #eventBorder > center > img:hover {
   border-style: double;
   cursor: pointer;
