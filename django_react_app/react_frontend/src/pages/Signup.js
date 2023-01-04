@@ -44,7 +44,7 @@ function Signup() {
                     )}
                     <hr></hr>
                 </div>
-            )
+            );
         } else {
             alert("Account has been created!\n\nYou can now login.");
             setMessages(

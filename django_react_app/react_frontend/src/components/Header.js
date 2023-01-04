@@ -6,7 +6,6 @@ import UserAuthContext from '../contexts/UserAuthContext';
 
 function Header() {
     const {user, logout, clearLoginMessage} = useContext(UserAuthContext);
-
     const navigate = useNavigate();
 
     function search(e) {

@@ -5,7 +5,6 @@ import UserAuthContext from '../contexts/UserAuthContext';
 function UsersReviews({event}) {
     const [value, setValue] = useState("");
     const [reviews, setReviews] = useState(null);
-    // const [isLoading, setIsLoading] = useState(true);
     const {authTokens} = useContext(UserAuthContext);
 
     useEffect(() => {
@@ -83,8 +82,8 @@ function UsersReviews({event}) {
                     <Typography variant="h4">User's Reviews</Typography>
                     <br></br>
                     {reviews.map((review, i) =>
-                        <div>
-                            <div id="review" key={i}>
+                        <div key={i}>
+                            <div id="review">
                                 <center>
                                     <br></br>
                                     <Typography><b>{review.userName}</b></Typography>
@@ -105,7 +104,7 @@ function UsersReviews({event}) {
                 </div>
             )}
         </div>
-    )
+    );
 }
 
 export default UsersReviews;

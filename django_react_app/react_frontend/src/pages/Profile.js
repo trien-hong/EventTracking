@@ -36,18 +36,19 @@ function Profile() {
             <center>
                 <br></br>
                 <Typography variant="h4">Welcome, {user.username}!</Typography>
+                <br></br>
             </center>
             {profileEvents ? (
-                <div id="events">
+                <div id="profile">
                     {profileEvents.map((event, i) =>
                         <div id="eventBorder" className={event.event_id} key={i}>
                             <center>
                                 <br></br>
-                                <Typography><b>{event.title}</b></Typography>
+                                <Typography><b><i>{event.title}</i></b></Typography>
                                 <br></br>
                                 <Typography>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
                                 <br></br>
-                                <img src={event.imageUrl} alt="image not found" width={225} height={126} onClick={() => { goToEventDetails(event.event_id); }}/>
+                                <img src={event.imageUrl} alt="image not found" onClick={() => { goToEventDetails(event.event_id); }}/>
                                 <br></br>
                                 <br></br>
                                 <Typography>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
@@ -55,13 +56,13 @@ function Profile() {
                                 <DeleteEventButton event={event} setProfileEvents={setProfileEvents}/>
                                 <br></br>
                             </center>
+                            <div id="map"></div>
                         </div>
                     )}
                 </div>
             ) : (
                 <div>
-                    <br></br>
-                    <Typography id="errors" variant="h5" align="center">You did not add any events to your profile yet.</Typography>
+                    <Typography id="errors" variant="h5" align="center">Your profile does not contain any events. Try adding some events in.</Typography>
                 </div>
             )}
         </div>

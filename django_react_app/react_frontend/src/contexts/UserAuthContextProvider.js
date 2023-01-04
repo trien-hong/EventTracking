@@ -28,7 +28,7 @@ function UserAuthContextProvider({children}) {
         setMessage(null);
     }
 
-    async function login(e){
+    async function login(e) {
         e.preventDefault();
         // const response = await fetch(`http://127.0.0.1:8000/api/token/`, {
         const response = await fetch(`http://127.0.0.1:/api/token/`, {

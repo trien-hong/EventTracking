@@ -31,6 +31,7 @@ function DeleteEventButton({event, setProfileEvents}) {
             })
         });
         getProfileEvents();
+        alert("Event titled \"" + event.title + "\" has been deleted from your profile.");
 
         // this doesn't seem to work and i have no idea why
         // if i were to guess it would have to do with objects not being the "same" in js

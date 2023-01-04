@@ -172,8 +172,8 @@ def getEventDetails(eventId):
             address = "TBD"
 
     try:
-        latitude = ticketmaster_response_json["_embedded"]["venues"][0]["location"]["latitude"]
-        longitude = ticketmaster_response_json["_embedded"]["venues"][0]["location"]["longitude"]
+        latitude = float(ticketmaster_response_json["_embedded"]["venues"][0]["location"]["latitude"])
+        longitude = float(ticketmaster_response_json["_embedded"]["venues"][0]["location"]["longitude"])
     except KeyError as e:
         latitude = "TBD"
         longitude = "TBD"

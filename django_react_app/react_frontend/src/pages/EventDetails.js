@@ -5,6 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import UserAuthContext from '../contexts/UserAuthContext';
 import AddEventButton from '../components/AddEventButton';
 import UsersReviews from '../components/UsersReviews';
+import Map from '../components/Map';
 
 function EventDetails() {
     const [eventDetails, setEventDetails] = useState([""]);
@@ -53,13 +54,15 @@ function EventDetails() {
                         <UsersReviews event={eventDetails}/>
                     </div>
                 ) : (
-                    <div id="eventBorder">
+                    <div id="eventDetailsBorder">
                         <Typography variant="h5"><Button variant="contained" onClick={() => { goBack(); }}><ArrowBackIcon/></Button>&nbsp; | &nbsp;<b><u>Event Details</u></b>&nbsp; | &nbsp;<Button variant="contained" onClick={() => { show(); }}>Show Reviews</Button></Typography>
                         <br></br>
                         <Typography variant="h4"><b><i>{eventDetails.title}</i></b></Typography>
                         <br></br>
-                        <img src={eventDetails.imageUrl} alt="image not found" width={700} height={393}/>
+                        <img src={eventDetails.imageUrl} alt="image not found"/>
                         <br></br>
+                        <br></br>
+                        <hr></hr>
                         <br></br>
                         <Typography variant="h6"><b>Date:</b> {eventDetails.date}</Typography>
                         <Typography variant="h6"><b>Genre:</b> {eventDetails.genre}</Typography>
@@ -69,6 +72,9 @@ function EventDetails() {
                         <br></br>
                         <AddEventButton event={eventDetails}/>
                         <br></br>
+                        <hr></hr>
+                        <br></br>
+                        <Map latitude={eventDetails.latitude} longitude={eventDetails.longitude}/>
                     </div>
                 )}
             </center>
