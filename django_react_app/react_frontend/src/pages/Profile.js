@@ -48,7 +48,7 @@ function Profile() {
                                 <br></br>
                                 <Typography>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
                                 <br></br>
-                                <img src={event.imageUrl} alt="image not found" onClick={() => { goToEventDetails(event.event_id); }}/>
+                                <img src={event.imageUrl} alt="not found" onClick={() => { goToEventDetails(event.event_id); }}/>
                                 <br></br>
                                 <br></br>
                                 <Typography>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>

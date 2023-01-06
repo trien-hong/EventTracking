@@ -6,7 +6,7 @@ function AddEventButton({event}) {
     const {authTokens} = useContext(UserAuthContext);
 
     async function addEvent() {
-        // await fetch(`http://127.0.0.1:8000/api/profile/save/event/id/`, {
+        // const response = await fetch(`http://127.0.0.1:8000/api/profile/save/event/id/`, {
         const response = await fetch(`http://127.0.0.1/api/profile/save/event/id/`, {
             method: "POST",
             headers: {

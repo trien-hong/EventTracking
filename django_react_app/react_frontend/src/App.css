@@ -88,6 +88,11 @@ img {
   height: auto;
 }
 
+#eventDetailsBorder > img {
+  width: 100%;
+  height: auto;
+}
+
 #pageNumberBorder {
   background-color: white;
   border-style: solid;
@@ -135,4 +140,8 @@ img {
 .map-container {
   width: 100%;
   height: 50vh;
+}
+
+.gm-err-icon {
+  width: 25%;
 }

@@ -59,7 +59,7 @@ function EventDetails() {
                         <br></br>
                         <Typography variant="h4"><b><i>{eventDetails.title}</i></b></Typography>
                         <br></br>
-                        <img src={eventDetails.imageUrl} alt="image not found"/>
+                        <img src={eventDetails.imageUrl} alt="not found"/>
                         <br></br>
                         <br></br>
                         <hr></hr>

@@ -93,7 +93,7 @@ function Events() {
                                     <br></br>
                                     <Typography>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
                                     <br></br>
-                                    <img src={event.imageUrl} alt="image not found" onClick={() => { goToEventDetails(event.event_id); }}/>
+                                    <img src={event.imageUrl} alt="not found" onClick={() => { goToEventDetails(event.event_id); }}/>
                                     <br></br>
                                     <br></br>
                                     <Typography>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
@@ -104,7 +104,7 @@ function Events() {
                             </div>
                         )}
                     </div>
-                    <AppBar position="static" sx={{ alignItems: "center", color: "black", background: "lightgray", position: 'fixed', bottom: 0 }}>
+                    <AppBar position="static" sx={{ alignItems: "center", color: "black", background: "lightgray", position: "fixed", bottom: 0 }}>
                         <Toolbar style={{ minHeight: 35 }}>
                             <Box sx={{ margin: "auto", display:"flex", alignItems:"center" }}>
                                 <div id="firstPageDoubleArrow">
