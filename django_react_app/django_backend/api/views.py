@@ -11,6 +11,7 @@ from . serializers import UserEventsSerializer
 from . serializers import GetReviewsSerializer
 from . import forms
 import ticketmaster_api
+import openweathermap_api
 # Create your views here.
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -55,6 +56,12 @@ def getRoutes(request):
             'Method': ['GET'],
             'Restricted': True,
             'Description': 'Returns a single event with even more details about it.'
+        },
+        {
+            'Endpoint': '/api/events/weather/latitude/<str:latitude>/longitude/<str:longitude>/',
+            'Method': ['GET'],
+            'Restricted': True,
+            'Description': 'Returns a dictionary of weather details for events.'
         },
         {
             'Endpoint': '/api/user/review/add/',
@@ -137,13 +144,21 @@ def eventsSearchInput(request, input, page):
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def eventsId(request, id):
+def eventsDetails(request, id):
     """
     /api/events/details/id/<str:id>/
     """
-    events = ticketmaster_api.getEventDetails(id)
+    events = ticketmaster_api.getEventsDetails(id)
     return Response(events)
-    
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def eventsWeather(request, latitude, longitude):
+    """
+    /api/events/weather/latitude/<str:latitude>/longitude/<str:longitude>/
+    """
+    events = openweathermap_api.getEventsWeather(latitude, longitude)
+    return Response(events)
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])

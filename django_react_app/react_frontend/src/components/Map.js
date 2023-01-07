@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
-import { Typography, CircularProgress } from '@mui/material';
+import { Typography } from '@mui/material';
+import Loading from './Loading';
 import atm_icon from '../assets/atm_icon.png';
 import center_icon from '../assets/center_icon.png';
 import parking_icon from '../assets/parking_icon.png';
@@ -11,15 +12,6 @@ function Map({latitude, longitude}) {
     const [atmCoordinates, setAtmCoordinates] = useState([]);
     const [parkingCoordinates, setParkingCoordinates] = useState([]);
     // const [hotelCoordinates, setHotelCoordinates] = useState([]);
-    const [loading] = useState(
-        <div>
-            <Typography variant="h5">Loading Maps...</Typography>
-            <br></br>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-                <CircularProgress/>
-            </div>
-        </div>
-    );
     const [libraries] = useState(["places"]);
     const {isLoaded} = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API,
@@ -95,7 +87,7 @@ function Map({latitude, longitude}) {
                 <div>
                     {isLoaded ? (
                         <div>
-                            <Typography sx={{}} variant="h5">
+                            <Typography variant="h5">
                                 <img style={{ width: "4%", verticalAlign: "middle" }} src={atm_icon} alt="not found"/> = ATM &nbsp;|&nbsp;
                                 <img style={{ width: "4%", verticalAlign: "middle" }} src={center_icon} alt="not found"/> = VENUE &nbsp;|&nbsp;
                                 <img style={{ width: "4%", verticalAlign: "middle" }} src={parking_icon} alt="not found"/> = PARKING
@@ -116,13 +108,13 @@ function Map({latitude, longitude}) {
                         </div>
                     ) : (
                         <div>
-                            {loading}
+                            <Loading/>
                         </div>
                     )}
                 </div>
             ) : (
                 <div>
-                    {loading}
+                    <Loading/>
                 </div>
             )}
         </div>

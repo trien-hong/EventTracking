@@ -15,7 +15,8 @@ def getEvents(input, pageNumber):
             + input
             + "&locale=*"
             + "&size=12"
-            + "&page=" + pageNumber
+            + "&page="
+            + pageNumber
             + "&sort=name,asc"
         )
     else:
@@ -26,7 +27,8 @@ def getEvents(input, pageNumber):
             + input
             + "&locale=*"
             + "&size=12"
-            + "&page=" + pageNumber
+            + "&page="
+            + pageNumber
             + "&sort=name,asc"
         )
 
@@ -95,7 +97,7 @@ def getEvents(input, pageNumber):
 
     return events
 
-def getEventDetails(eventId):
+def getEventsDetails(eventId):
     TICKETMASTER_API_KEY = os.getenv("TICKETMASTER_API_KEY")
 
     url = (
@@ -131,10 +133,15 @@ def getEventDetails(eventId):
         date = "TBD"
 
     try:
+        startTime = ticketmaster_response_json["dates"]["start"]["localTime"]
+    except KeyError as e:
+        startTime = "TBD"
+
+    try:
         genre = ticketmaster_response_json["classifications"][0]["genre"]["name"]
     except KeyError as e:
         genre = "TBD/NA"
-    
+
     try:
         minPrice = "$" + str(ticketmaster_response_json["priceRanges"][0]["min"])
     except KeyError as e:
@@ -183,6 +190,7 @@ def getEventDetails(eventId):
         "title": title,
         "imageUrl": imageUrl,
         "date": date,
+        "startTime": startTime,
         "genre": genre,
         "minPrice": minPrice,
         "maxPrice": maxPrice,

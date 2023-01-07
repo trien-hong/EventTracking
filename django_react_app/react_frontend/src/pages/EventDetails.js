@@ -1,10 +1,11 @@
 import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Typography, Button } from '@mui/material';
+import { Typography, Button, Stack, Divider, Box } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import UserAuthContext from '../contexts/UserAuthContext';
 import AddEventButton from '../components/AddEventButton';
 import UsersReviews from '../components/UsersReviews';
+import Weather from '../components/Weather';
 import Map from '../components/Map';
 
 function EventDetails() {
@@ -20,8 +21,8 @@ function EventDetails() {
     }, []);
 
     async function getEventDetails() {
-        // const response = await fetch(`http://127.0.0.1:8000/api/events/details/id/${id}/`, {
-        const response = await fetch(`http://127.0.0.1/api/events/details/id/${id}/`, {
+        const response = await fetch(`http://127.0.0.1:8000/api/events/details/id/${id}/`, {
+        // const response = await fetch(`http://127.0.0.1/api/events/details/id/${id}/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -64,13 +65,25 @@ function EventDetails() {
                         <br></br>
                         <hr></hr>
                         <br></br>
-                        <Typography variant="h6"><b>Date:</b> {eventDetails.date}</Typography>
-                        <Typography variant="h6"><b>Genre:</b> {eventDetails.genre}</Typography>
-                        <Typography variant="h6"><b>Venue:</b> {eventDetails.venu}</Typography>
-                        <Typography variant="h6"><b>Address:</b> {eventDetails.address}</Typography>
-                        <Typography variant="h6"><b>Price:</b> {eventDetails.minPrice} &nbsp;-&nbsp; {eventDetails.maxPrice}</Typography>
-                        <br></br>
-                        <AddEventButton event={eventDetails}/>
+                        <Stack direction="row" justifyContent="center" divider={<Divider orientation="vertical" flexItem/>} spacing={4}>
+                            <div>
+                                <Typography variant="h6"><b>Date:</b> {eventDetails.date}</Typography>
+                                <Typography variant="h6"><b>Start Time:</b> {eventDetails.time} Local Time</Typography>
+                                <Typography variant="h6"><b>Genre:</b> {eventDetails.genre}</Typography>
+                                <Typography variant="h6"><b>Venue:</b> {eventDetails.venu}</Typography>
+                                <Typography variant="h6"><b>Address:</b> {eventDetails.address}</Typography>
+                                <Typography variant="h6" sx={{ mb: 1 }}><b>Price:</b> {eventDetails.minPrice} &nbsp;-&nbsp; {eventDetails.maxPrice}</Typography>
+                                <AddEventButton event={eventDetails}/>
+                            </div>
+                            {/* <div>
+                                <Weather latitude={eventDetails.latitude} longitude={eventDetails.longitude}/>
+                            </div> */}
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
+                                <center>
+                                    <Weather latitude={eventDetails.latitude} longitude={eventDetails.longitude}/>
+                                </center>
+                            </Box>
+                        </Stack>
                         <br></br>
                         <hr></hr>
                         <br></br>
