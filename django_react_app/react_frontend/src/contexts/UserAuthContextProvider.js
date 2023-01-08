@@ -7,11 +7,11 @@ function UserAuthContextProvider({children}) {
     const [user, setUser] = useState(() => localStorage.getItem("authTokens") ? jwt_decode(localStorage.getItem("authTokens")) : null);
     const [authTokens, setAuthTokens] = useState(() => localStorage.getItem("authTokens") ? JSON.parse(localStorage.getItem("authTokens")) : null);
     const [message, setMessage] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(loading) {
+        if(isLoading) {
             updateToken();
         }
 
@@ -22,7 +22,7 @@ function UserAuthContextProvider({children}) {
            }
         }, nineMinutes);
         return (() => clearInterval(interval));
-    }, [authTokens, loading]);
+    }, [authTokens, isLoading]);
 
     function clearLoginMessage() {
         setMessage(null);
@@ -81,8 +81,8 @@ function UserAuthContextProvider({children}) {
             logout();
         }
 
-        if(loading) {
-            setLoading(false);
+        if(isLoading) {
+            setIsLoading(false);
         }
     }
 
@@ -104,7 +104,7 @@ function UserAuthContextProvider({children}) {
 
     return (
         <UserAuthContext.Provider value={data}>
-            {loading ? null : children}
+            {isLoading ? null : children}
         </UserAuthContext.Provider>
     );
 }
