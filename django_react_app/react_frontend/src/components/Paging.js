@@ -1,7 +1,9 @@
 import { useEffect, useState, useContext } from "react";
-import { Box, AppBar, Toolbar, Pagination } from '@mui/material';
+import { Box, AppBar, Toolbar, Pagination, Tooltip } from '@mui/material';
 import { useLocation, useSearchParams } from "react-router-dom";
 import UserAuthContext from '../contexts/UserAuthContext';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 function Paging({setEvents, setSearchEvents, setIsLoading}) {
     const [totalPages, setTotalPages] = useState(0);
@@ -73,16 +75,28 @@ function Paging({setEvents, setSearchEvents, setIsLoading}) {
         setCurrentPage(value);
     }
 
+    function scrollUp() {
+        window.scrollTo(0, 0);
+    }
+
+    function scrollDown() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
     return (
-        <div>
-            <AppBar position="static" sx={{ alignItems: "center", color: "black", background: "lightgray", position: "fixed", bottom: 0 }}>
-                <Toolbar style={{ pt: 3, minHeight: 40 }}>
-                    <Box sx={{ margin: "auto", display:"flex", alignItems:"center" }}>
-                        <Pagination count={totalPages + 1} onChange={changePage} color="primary" />
-                    </Box>
-                </Toolbar>
-            </AppBar>
-        </div>
+        <AppBar position="static" sx={{ position: "fixed", bottom: 0, color: "black", background: "lightgray" }}>
+            <Toolbar style={{ pt: 3, minHeight: 40 }}>
+                <Box sx={{ margin: "auto", display:"flex", alignItems:"center" }}>
+                <Pagination count={totalPages + 1} page={currentPage} onChange={changePage} color="primary" />
+                <Tooltip title="Scroll to Top">
+                    <ArrowUpwardIcon sx={{ background: "white", position: "fixed", bottom: 8, right: 15 }} id="scrollUp" onClick={() => { scrollUp(); }}/>
+                </Tooltip>
+                <Tooltip title="Scroll to Bottom">
+                    <ArrowDownwardIcon sx={{ background: "white", position: "fixed", bottom: 8, right: 50}} id="scrollDown" onClick={() => { scrollDown(); }}/>
+                </Tooltip>
+                </Box>
+            </Toolbar>
+        </AppBar>
     );
 }
 

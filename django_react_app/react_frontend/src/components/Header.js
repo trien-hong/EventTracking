@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { AppBar, Toolbar, Button, Box, TextField } from '@mui/material';
+import { AppBar, Toolbar, Button, Box, TextField, InputAdornment, IconButton, Tooltip } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import UserAuthContext from '../contexts/UserAuthContext';
 
@@ -21,10 +21,9 @@ function Header() {
                         <Box sx={{ flexGrow: 1}}>
                             <Button sx={{ mr: 1 }} variant="contained" component={Link} to="/events">EVENTS</Button>
                         </Box>
-                        <Box sx={{ flexGrow: .72 }}>
+                        <Box sx={{ flexGrow: .766 }}>
                             <form onSubmit={search}>
-                                <TextField sx={{ background: "white", width: 375, mr: 1 }} InputLabelProps={{ required: false }} label="Search events here..." name="searchBar" variant="filled" required/>
-                                <Button sx={{ mt: 1.1 }} type="submit" variant="contained"><SearchIcon/></Button>
+                                <TextField sx={{ background: "white", width: 375, mr: 1 }} label="Search events here..." name="searchBar" variant="filled" required InputLabelProps={{ required: false }} InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title="Search"><IconButton type="submit"><SearchIcon sx={{ color: "black" }}/></IconButton></Tooltip></InputAdornment>)}}/>
                             </form>
                         </Box>
                         <Box sx={{ margin: "auto" }}>

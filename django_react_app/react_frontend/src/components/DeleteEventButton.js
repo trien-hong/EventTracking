@@ -45,7 +45,7 @@ function DeleteEventButton({event, setProfileEvents}) {
 
     return (
         <div>
-            <Button variant="contained" onClick={() => { deleteProfileEvent(); }}>DELETE EVENT</Button>
+            <Button sx={{ mb: 3 }} variant="contained" onClick={() => { deleteProfileEvent(); }}>DELETE EVENT</Button>
         </div>
     );
 }

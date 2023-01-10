@@ -87,12 +87,11 @@ function Map({latitude, longitude}) {
                 <div>
                     {isLoaded ? (
                         <div>
-                            <Typography variant="h5">
+                            <Typography sx={{ my: 2 }} variant="h5">
                                 <img style={{ width: "4%", verticalAlign: "middle" }} src={atm_icon} alt="not found"/> = ATM &nbsp;|&nbsp;
                                 <img style={{ width: "4%", verticalAlign: "middle" }} src={center_icon} alt="not found"/> = VENUE &nbsp;|&nbsp;
                                 <img style={{ width: "4%", verticalAlign: "middle" }} src={parking_icon} alt="not found"/> = PARKING
                             </Typography>
-                            <br></br>
                             <GoogleMap zoom={15} center={center} onLoad={(map) => { getNearByServices(map); }} mapContainerClassName="map-container">
                                 <MarkerF position={center} icon={center_icon}/>
                                 {atmCoordinates.map((coordinates, i) =>

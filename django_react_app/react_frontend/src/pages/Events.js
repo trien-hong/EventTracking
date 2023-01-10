@@ -12,7 +12,7 @@ function Events() {
     const [events, setEvents] = useState([""]);
     const {user} = useContext(UserAuthContext);
     const navigate = useNavigate();
-
+    
     function goToEventDetails(event_id) {
         navigate(`/events/details/id/${event_id}/`);
     }
@@ -21,7 +21,6 @@ function Events() {
         <div>
             {isLoading ? (
                 <div>
-                    <br></br>
                     <Loading/>
                 </div>
             ) : (
@@ -32,18 +31,11 @@ function Events() {
                                 {events.map((event, i) =>
                                     <div id="eventBorder" key={i}>
                                         <center>
-                                            <br></br>
-                                            <Typography><b><i>{event.title}</i></b></Typography>
-                                            <br></br>
-                                            <Typography>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
-                                            <br></br>
+                                            <Typography sx={{ mt: 2.5 }}><b><i>{event.title}</i></b></Typography>
+                                            <Typography sx={{ my: 2.5 }}>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
                                             <img src={event.imageUrl} alt="not found" onClick={() => { goToEventDetails(event.event_id); }}/>
-                                            <br></br>
-                                            <br></br>
-                                            <Typography>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
-                                            <br></br>
-                                            <AddEventButton event={event}/>
-                                            <br></br>
+                                            <Typography sx={{ my: 2.5 }}>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
+                                            <AddEventButton event={event} margin={2.5}/>
                                         </center>
                                     </div>
                                 )}
@@ -52,13 +44,15 @@ function Events() {
                     ) : (
                         <div>
                             <center>
-                                <ErrorOutlineIcon sx={{ mt: 5, mb: 5 }}id="errorIcon"/>
+                                <ErrorOutlineIcon sx={{ mt: 5, mb: 5 }} id="errorIcon"/>
                             </center>
                             <Typography id="errors" variant="h5" align="center">Your ZIP code of "{user.zip_code}" did not have any events.</Typography>
                         </div>
                     )}
                 </div>
             )}
+            <br></br>
+            <br></br>
             <Paging setEvents={setEvents} setIsLoading={setIsLoading}/>
         </div>
     );

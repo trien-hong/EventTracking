@@ -4,9 +4,8 @@ function Loading() {
     return (
         <div>
             <center>
-                <Typography variant="h5">Loading...</Typography>
+                <Typography sx={{ my: 3 }} variant="h5">Loading...</Typography>
             </center>
-            <br></br>
             <div style={{ display: "flex", justifyContent: "center" }}>
                 <CircularProgress/>
             </div>

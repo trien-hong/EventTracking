@@ -21,7 +21,6 @@ function Search() {
         <div>
             {isLoading ? (
                 <div>
-                    <br></br>
                     <Loading/>
                 </div>
             ) : (
@@ -32,18 +31,11 @@ function Search() {
                                 {searchEvents.map((event, i) =>
                                     <div id="eventBorder" key={i}>
                                         <center>
-                                            <br></br>
-                                            <Typography><b><i>{event.title}</i></b></Typography>
-                                            <br></br>
-                                            <Typography>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
-                                            <br></br>
+                                            <Typography sx={{ mt: 2.5 }}><b><i>{event.title}</i></b></Typography>
+                                            <Typography sx={{ my: 2.5 }}>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
                                             <img src={event.imageUrl} alt="not found" onClick={() => { goToEventDetails(event.event_id); }}/>
-                                            <br></br>
-                                            <br></br>
-                                            <Typography>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
-                                            <br></br>
-                                            <AddEventButton event={event}/>
-                                            <br></br>
+                                            <Typography sx={{ my: 2.5 }}>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
+                                            <AddEventButton event={event} margin={2.5}/>
                                         </center>
                                     </div>
                                 )}
@@ -59,6 +51,8 @@ function Search() {
                     )}
                 </div>
             )}
+            <br></br>
+            <br></br>
             <Paging setSearchEvents={setSearchEvents} setIsLoading={setIsLoading}/>
         </div>
     );

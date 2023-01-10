@@ -66,32 +66,27 @@ function EventDetails() {
                         ) : (
                             <div id="eventDetailsBorder">
                                 <Typography variant="h5"><Button variant="contained" onClick={() => { goBack(); }}><ArrowBackIcon/></Button>&nbsp; | &nbsp;<b><u>Event Details</u></b>&nbsp; | &nbsp;<Button variant="contained" onClick={() => { show(); }}>Show Reviews</Button></Typography>
-                                <br></br>
-                                <Typography variant="h4"><b><i>{eventDetails.title}</i></b></Typography>
-                                <br></br>
+                                <Typography sx={{ my: 1.5 }} variant="h4"><b><i>{eventDetails.title}</i></b></Typography>
                                 <img src={eventDetails.imageUrl} alt="not found"/>
                                 <br></br>
                                 <br></br>
                                 <hr></hr>
-                                <br></br>
-                                <Stack direction="row" justifyContent="center" divider={<Divider orientation="vertical" flexItem/>} spacing={4}>
+                                <Stack sx={{ my: 2}} direction="row" justifyContent="center" divider={<Divider orientation="vertical" flexItem/>} spacing={4}>
                                     <Box>
                                         <Typography variant="h6"><b>Date:</b> {eventDetails.date}</Typography>
                                         <Typography variant="h6"><b>Genre:</b> {eventDetails.genre}</Typography>
                                         <Typography variant="h6"><b>Venue:</b> {eventDetails.venu}</Typography>
                                         <Typography variant="h6"><b>Address:</b> {eventDetails.address}</Typography>
-                                        <Typography variant="h6" sx={{ mb: 1 }}><b>Price:</b> {eventDetails.minPrice} &nbsp;-&nbsp; {eventDetails.maxPrice}</Typography>
-                                        <AddEventButton event={eventDetails}/>
+                                        <Typography sx={{ mb: 1 }} variant="h6"><b>Price:</b> {eventDetails.minPrice} &nbsp;-&nbsp; {eventDetails.maxPrice}</Typography>
+                                        <AddEventButton event={eventDetails} margin={0}/>
                                     </Box>
-                                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                                    <Box>
                                         <center>
                                             <Weather latitude={eventDetails.latitude} longitude={eventDetails.longitude}/>
                                         </center>
                                     </Box>
                                 </Stack>
-                                <br></br>
                                 <hr></hr>
-                                <br></br>
                                 <Map latitude={eventDetails.latitude} longitude={eventDetails.longitude}/>
                             </div>
                         )}

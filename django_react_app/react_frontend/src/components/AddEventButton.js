@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Button } from '@mui/material';
 import UserAuthContext from '../contexts/UserAuthContext';
 
-function AddEventButton({event}) {
+function AddEventButton({event, margin}) {
     const {authTokens} = useContext(UserAuthContext);
 
     async function addEvent() {
@@ -33,7 +33,7 @@ function AddEventButton({event}) {
 
     return (
         <div>
-            <Button variant="contained" onClick={() => { addEvent(); }}>ADD EVENT</Button>
+            <Button sx={{ mb: margin }} variant="contained" onClick={() => { addEvent(); }}>ADD EVENT</Button>
         </div>
     );
 }

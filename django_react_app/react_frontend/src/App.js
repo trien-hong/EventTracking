@@ -8,6 +8,7 @@ import Events from './pages/Events';
 import Search from './pages/Search';
 import Profile from './pages/Profile';
 import EventDetails from './pages/EventDetails';
+import PageNotFound from './pages/PageNotFound';
 import PrivateRoute from './utils/PrivateRouteUtil';
 
 function App() {
@@ -33,6 +34,9 @@ function App() {
           </Route>
           <Route element={<PrivateRoute/>}>
             <Route path="/events/details/id/:id/" element={<EventDetails/>}/>
+          </Route>
+          <Route element={<PrivateRoute/>}>
+            <Route path="*" element={<PageNotFound/>}/>
           </Route>
         </Routes>
       </UserAuthContextProvider>
