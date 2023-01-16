@@ -12,7 +12,6 @@ from . serializers import GetReviewsSerializer
 from . import forms
 import ticketmaster_api
 import openweathermap_api
-# Create your views here.
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -30,80 +29,78 @@ class MyTokenObtainPairView(TokenObtainPairView):
 @api_view(["GET"])
 def getRoutes(request):
     """
-    /api/ or ""
+    Endpoint: /api/ or ""
     """
     routes = [
         {
             'Endpoint': '/api/signup_user/',
             'Method': ['POST'],
             'Restricted': False,
-            'Description': 'Signup a user'
+            'Description': {'POST': 'Signup a user and save their information inside the database'}
         },
         {
             'Endpoint': '/api/events/page/<str:page>/',
             'Method': ['GET'],
             'Restricted': True,
-            'Description': 'Returns an array of events based on the current logged in user zip code.'
+            'Description': {'GET': 'Returns an array of events based on the current logged in user zip code'}
         },
         {
             'Endpoint': '/api/events/search/input/<str:input>/page/<str:page>/',
             'Method': ['GET'],
             'Restricted': True,
-            'Description': 'Returns an array of events based on input for searching events.'
+            'Description': {'GET': 'Returns an array of events based on the input for searching events'}
         },
         {
             'Endpoint': '/api/events/details/id/<str:id>/',
             'Method': ['GET'],
             'Restricted': True,
-            'Description': 'Returns a single event with even more details about it.'
+            'Description': {'GET': 'Returns a single event with even more details about it'}
         },
         {
             'Endpoint': '/api/events/weather/latitude/<str:latitude>/longitude/<str:longitude>/',
             'Method': ['GET'],
             'Restricted': True,
-            'Description': 'Returns a dictionary of weather details for events.'
+            'Description': {'GET': 'Returns a dictionary of weather details for events'}
         },
         {
-            'Endpoint': '/api/user/review/add/',
-            'Method': ['POST'],
+            'Endpoint': '/api/user/reviews/',
+            'Method': ['POST', 'PUT', 'DELETE'],
             'Restricted': True,
-            'Description': 'Add review left by the user'
+            'Description': {'POST': 'Saves reviews left by the users to the database',
+                            'PUT': 'Updates the specific review left by a user',
+                            'DELETE': 'Deletes the specific review left by the user'}
         },
         {
             'Endpoint': '/api/reviews/get/event_id/<str:event_id>/',
             'Method': ['GET'],
             'Restricted': True,
-            'Description': 'Get the reviews left by all users for that specific event'
+            'Description': {'GET': 'Get the reviews left by all users for that specific event'}
         },
         {
-            'Endpoint': '/api/profile/username/<str:username>/',
+            'Endpoint': '/api/profile/',
+            'Method': ['GET', 'POST', 'DELETE'],
+            'Restricted': True,
+            'Description': {'GET': 'Returns an array of events from which the user have save',
+                            'POST': 'Saves an event to the user\'s profile',
+                            'DELETE': 'Deletes an event from the user\'s profile'}
+        },
+        {
+            'Endpoint': '/api/profile/reviews/',
             'Method': ['GET'],
             'Restricted': True,
-            'Description': 'Returns an array of events from which the user have added/saved'
-        },
-        {
-            'Endpoint': '/api/profile/save/event/id/',
-            'Method': ['POST'],
-            'Restricted': True,
-            'Description': 'Saves an event with data sent in post request'
-        },
-        {
-            'Endpoint': '/api/profile/delete/event/id/',
-            'Method': ['DELETE'],
-            'Restricted': True,
-            'Description': 'Deletes an event from profile'
+            'Description': {'GET': 'Returns an array of reviews from which the user have left'}
         },
         {
             'Endpoint': '/api/token/',
             'Method': ['POST'],
             'Restricted': None,
-            'Description': 'Used for logging in and generating tokens.'
+            'Description': {'POST': 'Used for logging in and generating tokens'}
         },
         {
             'Endpoint': '/api/token/refresh/',
             'Method': ['POST'],
             'Restricted': None,
-            'Description': 'Used for generating new access tokens with refresh token.'
+            'Description': {'POST': 'Used for generating new access tokens with refresh token'}
         },
     ]
     
@@ -112,7 +109,7 @@ def getRoutes(request):
 @api_view(["POST"])
 def signup_user(request):
     """
-    /api/signup_user/
+    Endpoint: /api/signup_user/
     """
     user_info = json.loads(request.body)
     form = forms.Signup(user_info)
@@ -127,7 +124,7 @@ def signup_user(request):
 @permission_classes([IsAuthenticated])
 def events(request, page):
     """
-    /api/events/page/<str:page>/
+    Endpoint: /api/events/page/<str:page>/
     """
     user = request.user
     events = ticketmaster_api.getEvents(user.zip_code, page)
@@ -137,7 +134,7 @@ def events(request, page):
 @permission_classes([IsAuthenticated])
 def eventsSearchInput(request, input, page):
     """
-    /api/events/search/input/<str:input>/page/<str:page>/
+    Endpoint: /api/events/search/input/<str:input>/page/<str:page>/
     """
     events = ticketmaster_api.getEvents(input, page)
     return Response(events)
@@ -146,7 +143,7 @@ def eventsSearchInput(request, input, page):
 @permission_classes([IsAuthenticated])
 def eventsDetails(request, id):
     """
-    /api/events/details/id/<str:id>/
+    Endpoint: /api/events/details/id/<str:id>/
     """
     events = ticketmaster_api.getEventsDetails(id)
     return Response(events)
@@ -155,75 +152,97 @@ def eventsDetails(request, id):
 @permission_classes([IsAuthenticated])
 def eventsWeather(request, latitude, longitude):
     """
-    /api/events/weather/latitude/<str:latitude>/longitude/<str:longitude>/
+    Endpoint: /api/events/weather/latitude/<str:latitude>/longitude/<str:longitude>/
     """
     events = openweathermap_api.getEventsWeather(latitude, longitude)
     return Response(events)
 
-@api_view(["POST"])
+@api_view(["POST", "PUT", "DELETE"])
 @permission_classes([IsAuthenticated])
-def addUserReview(request):
+def userReviews(request):
     """
-    /api/user/review/add/
+    Endpoint: /api/user/reviews/
     """
-    user = request.user
-    data = json.loads(request.body)
-    review = UserReviews(event_id=data["event_id"], title=data["title"], userName=user, userRating=data["userRating"], userComment=data["userComment"])
-    review.save()
-    return Response(True)
+    if request.method == "POST":
+        user = request.user
+        data = json.loads(request.body)
+        review = UserReviews(event_id=data["event_id"], title=data["title"], username=user, userRating=data["userRating"], userComment=data["userComment"])
+        review.save()
+        return Response(True)
+    
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        review = UserReviews.objects.get(id=data["id"])
+        review.userRating = data["userRating"]
+        review.userComment = data["userComment"]
+        review.save()
+        return Response(True)
+
+    if request.method == "DELETE":
+        data = json.loads(request.body)
+        review = UserReviews.objects.all().filter(id=data["review_id"])
+        review.delete()
+        return Response(True)
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def getAllReviews(request, event_id):
     """
-    /api/reviews/get/event_id/<str:event_id>/
+    Endpoint: /api/reviews/get/event_id/<str:event_id>/
     """
-    reviews = UserReviews.objects.all().filter(event_id=event_id)
+    reviews = UserReviews.objects.all().filter(event_id=event_id).order_by("id")
     serializer = GetReviewsSerializer(reviews, many=True)
     if serializer.data == []:
         return Response(False)
     else:
         return Response(serializer.data)
 
+@api_view(["GET", "POST", "DELETE"])
+@permission_classes([IsAuthenticated])
+def profile(request):
+    """
+    Endpoint: /api/profile/
+    """
+    if request.method == "GET":
+        user = request.user
+        data = UserEvents.objects.all().filter(username=user.username)
+        serializer = UserEventsSerializer(data, many=True)
+        if serializer.data == []:
+            return Response(False)
+        else:
+            return Response(serializer.data)
+
+    if request.method == "POST":
+        user = request.user
+        data = json.loads(request.body)
+        if UserEvents.objects.all().filter(username=user.username, event_id=data["event_id"]).exists() == False:
+            event = UserEvents(event_id=data["event_id"], title=data["title"], date=data["date"], city=data["city"], imageUrl=data["imageUrl"], minPrice=data["minPrice"], maxPrice=data["maxPrice"], username=user.username)
+            event.save()
+            return Response(True)
+        else:
+            return Response(False)
+    
+    if request.method == "DELETE":
+        user = request.user
+        data = json.loads(request.body)
+        if UserEvents.objects.all().filter(username=user.username, event_id=data["event_id"]).exists():
+            event = UserEvents.objects.get(username=user.username, event_id=data["event_id"])
+            event.delete()
+            return Response(True)
+        else:
+            return Response(False)
+
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def profile(request, username):
+def profileReview(request):
     """
-    /api/profile/username/<str:username>/
+    Endpoint: /api/profile/reviews/
     """
-    data = UserEvents.objects.all().filter(username=username)
-    serializer = UserEventsSerializer(data, many=True)
-    if serializer.data == []:
-        return Response(False)
-    else:
-        return Response(serializer.data)
-
-@api_view(["POST"])
-@permission_classes([IsAuthenticated])
-def profileSaveEventId(request):
-    """
-    /api/profile/save/event/id/
-    """
-    user = request.user
-    data = json.loads(request.body)
-    if UserEvents.objects.all().filter(username=user.username, event_id=data["event_id"]).exists() == False:
-        event = UserEvents(event_id=data["event_id"], title=data["title"], date=data["date"], city=data["city"], imageUrl=data["imageUrl"], minPrice=data["minPrice"], maxPrice=data["maxPrice"], username=user.username)
-        event.save()
-        return Response(True)
-    else:
-        return Response(False)
-
-@api_view(["DELETE"])
-@permission_classes([IsAuthenticated])
-def profileDeleteEventId(request):
-    """
-    /api/profile/delete/event/id/
-    """
-    user = request.user
-    data = json.loads(request.body)
-    if UserEvents.objects.all().filter(username=user.username, event_id=data["event_id"]).exists():
-        event = UserEvents.objects.get(username=user.username, event_id=data["event_id"])
-        event.delete()
-        return Response(True)
-    else:
-        return Response(False)
+    if request.method == "GET":
+        user = request.user
+        reviews = UserReviews.objects.all().filter(username=user.username).order_by("id")
+        serializer = GetReviewsSerializer(reviews, many=True)
+        if serializer.data == []:
+            return Response(False)
+        else:
+            return Response(serializer.data)

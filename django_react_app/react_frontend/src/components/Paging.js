@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Box, AppBar, Toolbar, Pagination, Tooltip } from '@mui/material';
+import { AppBar, Box, Pagination, Toolbar, Tooltip } from '@mui/material';
 import { useLocation, useSearchParams } from "react-router-dom";
 import UserAuthContext from '../contexts/UserAuthContext';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -20,6 +20,19 @@ function Paging({setEvents, setSearchEvents, setIsLoading}) {
         }
     }, [currentPage]);
 
+    useEffect(() => {
+        if (location.pathname === "/search" || location.pathname === "/search/") {
+            setCurrentPage(1);
+        }
+    }, [search]);
+    
+    useEffect(() => {
+        if (location.pathname === "/search" || location.pathname === "/search/") {
+            document.title = `${search} | Page #${currentPage}`;
+            getSearchEvents();
+        }
+    }, [currentPage, search]);
+
     async function getEvents() {
         // const response = await fetch(`http://127.0.0.1:8000/api/events/page/${currentPage - 1}/`, {
         const response = await fetch(`http://127.0.0.1/api/events/page/${currentPage - 1}/`, {
@@ -37,19 +50,6 @@ function Paging({setEvents, setSearchEvents, setIsLoading}) {
         setEvents(data);
         setIsLoading(false);
     }
-
-    useEffect(() => {
-        if (location.pathname === "/search" || location.pathname === "/search/") {
-            setCurrentPage(1);
-        }
-    }, [search]);
-
-    useEffect(() => {
-        if (location.pathname === "/search" || location.pathname === "/search/") {
-            document.title = `${search} | Page #${currentPage}`;
-            getSearchEvents();
-        }
-    }, [currentPage, search]);
 
     async function getSearchEvents() {
         // const response = await fetch(`http://127.0.0.1:8000/api/events/search/input/${search}/page/${currentPage - 1}/`, {
@@ -76,27 +76,29 @@ function Paging({setEvents, setSearchEvents, setIsLoading}) {
     }
 
     function scrollUp() {
-        window.scrollTo(0, 0);
+        window.scrollTo({top: 0, behavior: "smooth" })
     }
 
     function scrollDown() {
-        window.scrollTo(0, document.body.scrollHeight);
+        window.scrollTo({top: document.body.scrollHeight, behavior: "smooth" })
     }
 
     return (
-        <AppBar position="static" sx={{ position: "fixed", bottom: 0, color: "black", background: "lightgray" }}>
-            <Toolbar style={{ pt: 3, minHeight: 40 }}>
-                <Box sx={{ margin: "auto", display:"flex", alignItems:"center" }}>
-                <Pagination count={totalPages + 1} page={currentPage} onChange={changePage} color="primary" />
-                <Tooltip title="Scroll to Top">
-                    <ArrowUpwardIcon sx={{ background: "white", position: "fixed", bottom: 8, right: 15 }} id="scrollUp" onClick={() => { scrollUp(); }}/>
-                </Tooltip>
-                <Tooltip title="Scroll to Bottom">
-                    <ArrowDownwardIcon sx={{ background: "white", position: "fixed", bottom: 8, right: 50}} id="scrollDown" onClick={() => { scrollDown(); }}/>
-                </Tooltip>
-                </Box>
-            </Toolbar>
-        </AppBar>
+        <div>
+            <AppBar position="static" sx={{ position: "fixed", bottom: 0, color: "black", background: "lightgray" }}>
+                <Toolbar style={{ pt: 3, minHeight: 40 }}>
+                    <Box sx={{ margin: "auto", display:"flex", alignItems:"center" }}>
+                    <Pagination count={totalPages + 1} page={currentPage} onChange={changePage} color="primary" />
+                    <Tooltip title="Scroll to Top">
+                        <ArrowUpwardIcon sx={{ background: "white", position: "fixed", bottom: 8, right: 15 }} id="scroll" onClick={() => { scrollUp(); }}/>
+                    </Tooltip>
+                    <Tooltip title="Scroll to Bottom">
+                        <ArrowDownwardIcon sx={{ background: "white", position: "fixed", bottom: 8, right: 50}} id="scroll" onClick={() => { scrollDown(); }}/>
+                    </Tooltip>
+                    </Box>
+                </Toolbar>
+            </AppBar>
+        </div>
     );
 }
 

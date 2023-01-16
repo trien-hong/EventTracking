@@ -1,6 +1,6 @@
 import { useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, TextField, Typography, InputAdornment, IconButton, Tooltip } from '@mui/material';
+import { Button, IconButton, InputAdornment, TextField, Tooltip, Typography } from '@mui/material';
 import PersonIcon2 from '@mui/icons-material/Person';
 import PasswordIcon from '@mui/icons-material/Password';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
@@ -26,7 +26,7 @@ function Login() {
         } else {
             setIcon(<VisibilityIcon/>);
             setTextfieldType("password");
-            setTooltipText("Show Password");        
+            setTooltipText("Show Password");
         }
     }
 

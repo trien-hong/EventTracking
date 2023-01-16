@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { AppBar, Toolbar, Button, Box, TextField, InputAdornment, IconButton, Tooltip } from '@mui/material';
+import { AppBar, Button, Grid, IconButton, InputAdornment, TextField, Toolbar, Tooltip } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import UserAuthContext from '../contexts/UserAuthContext';
 
@@ -18,25 +18,25 @@ function Header() {
             <Toolbar>
                 {user ? (
                     <>
-                        <Box sx={{ flexGrow: 1}}>
-                            <Button sx={{ mr: 1 }} variant="contained" component={Link} to="/events">EVENTS</Button>
-                        </Box>
-                        <Box sx={{ flexGrow: .766 }}>
+                        <Grid container justifyContent="flex-start">
+                            <Button variant="contained" component={Link} to="/events">EVENTS</Button>
+                        </Grid>
+                        <Grid container justifyContent="center">
                             <form onSubmit={search}>
-                                <TextField sx={{ background: "white", width: 375, mr: 1 }} label="Search events here..." name="searchBar" variant="filled" required InputLabelProps={{ required: false }} InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title="Search"><IconButton type="submit"><SearchIcon sx={{ color: "black" }}/></IconButton></Tooltip></InputAdornment>)}}/>
+                                <TextField sx={{ background: "white", width: 375 }} label="Search events here..." name="searchBar" variant="filled" required InputLabelProps={{ required: false }} InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title="Search"><IconButton type="submit"><SearchIcon sx={{ color: "black" }}/></IconButton></Tooltip></InputAdornment>)}}/>
                             </form>
-                        </Box>
-                        <Box sx={{ margin: "auto" }}>
+                        </Grid>
+                        <Grid container justifyContent="flex-end">
                             <Button sx={{ mr: 1 }} variant="contained" component={Link} to="/profile">PROFILE</Button>
                             <Button variant="contained" onClick={() => { logout(); }}>LOGOUT</Button>
-                        </Box>
+                        </Grid>
                     </>
                 ) : (
                     <>
-                        <Box sx={{ margin: "auto" }}>
+                        <Grid container justifyContent="center">
                             <Button sx={{ mr: 1 }} variant="contained" component={Link} to="/signup" onClick={() => { clearLoginMessage(); }}>SIGNUP</Button>
                             <Button sx={{ ml: 1 }} variant="contained" component={Link} to="/login">LOGIN</Button>
-                        </Box>
+                        </Grid>
                     </>
                 )}
             </Toolbar>

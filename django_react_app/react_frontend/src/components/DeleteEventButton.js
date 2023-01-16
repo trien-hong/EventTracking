@@ -3,11 +3,11 @@ import { Button } from '@mui/material';
 import UserAuthContext from '../contexts/UserAuthContext';
 
 function DeleteEventButton({event, setProfileEvents}) {
-    const {user, authTokens} = useContext(UserAuthContext);
+    const {authTokens} = useContext(UserAuthContext);
 
     async function getProfileEvents() {
-        // const response = await fetch(`http://127.0.0.1:8000/api/profile/username/${user.username}/`, {
-        const response = await fetch(`http://127.0.0.1/api/profile/username/${user.username}/`, {
+        // const response = await fetch(`http://127.0.0.1:8000/api/profile/`, {
+        const response = await fetch(`http://127.0.0.1/api/profile/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -19,8 +19,8 @@ function DeleteEventButton({event, setProfileEvents}) {
     }
 
     async function deleteProfileEvent() {
-        // await fetch(`http://127.0.0.1:8000/api/profile/delete/event/id/`, {
-        await fetch(`http://127.0.0.1/api/profile/delete/event/id/`, {
+        // await fetch(`http://127.0.0.1:8000/api/profile/`, {
+        await fetch(`http://127.0.0.1/api/profile/`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -32,15 +32,6 @@ function DeleteEventButton({event, setProfileEvents}) {
         });
         getProfileEvents();
         alert("Event titled \"" + event.title + "\" has been deleted from your profile.");
-
-        // this doesn't seem to work and i have no idea why
-        // if i were to guess it would have to do with objects not being the "same" in js
-        // const array = profileEvents;
-        // const index = array.indexOf(event);
-        // if (index !== -1) {
-        //     array.splice(index, 1);
-        //     setProfileEvents(array);
-        // }
     }
 
     return (

@@ -16,7 +16,7 @@ class UserEvents(models.Model):
 class UserReviews(models.Model):
     event_id = models.TextField()
     title = models.TextField()
-    userName = models.TextField()
+    username = models.TextField()
     userRating = models.TextField()
     userComment = models.TextField()
     dateAdded = models.DateField(auto_now_add=True)

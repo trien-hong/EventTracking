@@ -2,12 +2,12 @@ import { useContext } from 'react';
 import { Button } from '@mui/material';
 import UserAuthContext from '../contexts/UserAuthContext';
 
-function AddEventButton({event, margin}) {
+function SaveEventButton({event, margin}) {
     const {authTokens} = useContext(UserAuthContext);
 
-    async function addEvent() {
-        // const response = await fetch(`http://127.0.0.1:8000/api/profile/save/event/id/`, {
-        const response = await fetch(`http://127.0.0.1/api/profile/save/event/id/`, {
+    async function saveEvent() {
+        // const response = await fetch(`http://127.0.0.1:8000/api/profile/`, {
+        const response = await fetch(`http://127.0.0.1/api/profile/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -33,9 +33,9 @@ function AddEventButton({event, margin}) {
 
     return (
         <div>
-            <Button sx={{ mb: margin }} variant="contained" onClick={() => { addEvent(); }}>ADD EVENT</Button>
+            <Button sx={{ mb: margin }} variant="contained" onClick={() => { saveEvent(); }}>SAVE EVENT</Button>
         </div>
     );
 }
 
-export default AddEventButton;
+export default SaveEventButton;

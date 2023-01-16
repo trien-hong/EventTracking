@@ -26,14 +26,26 @@
   vertical-align: middle;
 }
 
-#scrollUp:hover {
+#scroll {
+  background-color: white;
   border-style: solid;
+  border-color: black;
   cursor: pointer;
 }
 
-#scrollDown:hover {
+#scroll:hover {
+  border-color: gray;
+}
+
+#userReviewIcon {
+  background-color: white;
   border-style: solid;
+  border-color: black;
   cursor: pointer;
+}
+
+#userReviewIcon:hover {
+  border-color: gray;
 }
 
 #events {
@@ -87,19 +99,22 @@
 }
 
 #reviewBorder {
-  width: 500px;
+  margin: auto;
+  width: 40%;
   background-color: #E6E6E6;
   border-style: solid;
   border-radius: 10px;
+  overflow-wrap: break-word;
   display: inline-block;
   padding: 1%;
 }
 
 #review {
   border-style: solid;
-  background: linear-gradient(225deg, #CFB722 49px, #FFEE85 49px);
+  background-color: #FFEE85;
+  /* background: linear-gradient(225deg, #CFB722 49px, #FFEE85 49px); */
   overflow-wrap: break-word;
-  width: 500px;
+  width: 100%;
 }
 
 #eventBorder > center > img:hover {

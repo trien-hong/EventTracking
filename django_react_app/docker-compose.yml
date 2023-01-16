@@ -1,3 +1,6 @@
+# There are three .env files you'll need to add
+# More information on what to include in the .env files can be found in the README.md
+
 services:
   django_backend:
     build:
@@ -5,6 +8,8 @@ services:
     command: gunicorn django_backend.wsgi --bind 0.0.0.0:8000
     ports:
       - "8000:8000"
+    env_file: # One in django_backend folder
+      - django_backend/.env
     depends_on:
       - migrations
       - database
@@ -13,6 +18,8 @@ services:
       context: ./react_frontend
     volumes:
       - react_build:/react_frontend/build
+    env_file: # One in react_frontend folder
+      - react_frontend/.env
   migrations:
     image: django_react_app-django_backend
     command: sh -c "python3 manage.py makemigrations && python3 manage.py migrate"
@@ -22,10 +29,8 @@ services:
     image: postgres:latest
     volumes:
       - ./database:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    env_file: # One in django_react_app folder
+      - .env
   nginx:
     image: nginx:latest
     ports:

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 import { Typography } from '@mui/material';
 import Loading from './Loading';
@@ -14,7 +14,7 @@ function Map({latitude, longitude}) {
     // const [hotelCoordinates, setHotelCoordinates] = useState([]);
     const [libraries] = useState(["places"]);
     const {isLoaded} = useLoadScript({
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API,
+        googleMapsApiKey: process.env.REACT_APP_GOOGLEMAP_API_KEY,
         libraries
     });
 

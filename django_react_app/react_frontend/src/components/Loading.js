@@ -1,4 +1,4 @@
-import { Typography, CircularProgress } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 
 function Loading() {
     return (

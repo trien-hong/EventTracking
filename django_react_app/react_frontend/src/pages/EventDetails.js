@@ -1,18 +1,18 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Typography, Button, Stack, Divider, Box } from '@mui/material';
+import { Box, Button, Divider, Stack, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import UserAuthContext from '../contexts/UserAuthContext';
-import AddEventButton from '../components/AddEventButton';
-import UsersReviews from '../components/UsersReviews';
+import SaveEventButton from '../components/SaveEventButton';
+import EventReviews from '../components/EventReviews';
 import Weather from '../components/Weather';
 import Map from '../components/Map';
 import Loading from '../components/Loading';
 
 function EventDetails() {
     const [isLoading, setIsLoading] = useState(true);
-    const [eventDetails, setEventDetails] = useState([""]);
     const [showReviews, setShowReviews] = useState(false);
+    const [eventDetails, setEventDetails] = useState([""]);
     const {authTokens} = useContext(UserAuthContext);
     const {id} = useParams();
     const navigate = useNavigate();
@@ -61,7 +61,7 @@ function EventDetails() {
                         {showReviews ? (
                             <div id="reviewBorder">
                                 <Typography variant="h5"><Button variant="contained" onClick={() => { goBack(); }}><ArrowBackIcon/></Button>&nbsp; | &nbsp;<b><u>User's Reviews</u></b>&nbsp; | &nbsp;<Button variant="contained" onClick={() => { hide(); }}>Show Event Details</Button></Typography>
-                                <UsersReviews event={eventDetails}/>
+                                <EventReviews event={eventDetails}/>
                             </div>
                         ) : (
                             <div id="eventDetailsBorder">
@@ -78,7 +78,7 @@ function EventDetails() {
                                         <Typography variant="h6"><b>Venue:</b> {eventDetails.venu}</Typography>
                                         <Typography variant="h6"><b>Address:</b> {eventDetails.address}</Typography>
                                         <Typography sx={{ mb: 1 }} variant="h6"><b>Price:</b> {eventDetails.minPrice} &nbsp;-&nbsp; {eventDetails.maxPrice}</Typography>
-                                        <AddEventButton event={eventDetails} margin={0}/>
+                                        <SaveEventButton event={eventDetails} margin={0}/>
                                     </Box>
                                     <Box>
                                         <center>
