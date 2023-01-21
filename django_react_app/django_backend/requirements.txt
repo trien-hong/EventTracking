@@ -6,6 +6,7 @@ Django
 django-cors-headers
 djangorestframework
 djangorestframework-simplejwt
+Pillow
 pytz
 sqlparse
 psycopg2-binary

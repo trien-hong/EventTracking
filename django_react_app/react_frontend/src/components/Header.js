@@ -1,11 +1,13 @@
 import { useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { AppBar, Button, Grid, IconButton, InputAdornment, TextField, Toolbar, Tooltip } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+import { AppBar, Avatar, Button, Grid, IconButton, InputAdornment, TextField, Toolbar, Tooltip } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import UserAuthContext from '../contexts/UserAuthContext';
+import ProfilePictureContext from '../contexts/ProfilePictureContext';
 
 function Header() {
     const {user, logout, clearLoginMessage} = useContext(UserAuthContext);
+    const {profilePictureLocation} = useContext(ProfilePictureContext);
     const navigate = useNavigate();
 
     function search(e) {
@@ -30,6 +32,13 @@ function Header() {
                             <Button sx={{ mr: 1 }} variant="contained" component={Link} to="/profile">PROFILE</Button>
                             <Button variant="contained" onClick={() => { logout(); }}>LOGOUT</Button>
                         </Grid>
+                        <div>
+                            { profilePictureLocation ? (
+                                <Avatar sx={{ ml: 1, borderStyle: "solid", borderColor: "white", borderWidth: "1px" }} src={"http://localhost:8000" + profilePictureLocation.profile_picture} alt={user.username}/>
+                            ) : (
+                                <Avatar sx={{ ml: 1, borderStyle: "solid", borderColor: "white" }}>{user.username}</Avatar>
+                            )}
+                        </div>
                     </>
                 ) : (
                     <>

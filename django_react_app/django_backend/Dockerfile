@@ -1,4 +1,4 @@
-FROM python:3.8.10
+FROM python:latest
 ENV PYTHONUNBUFFERED=1
 WORKDIR /django_backend
 COPY requirements.txt requirements.txt

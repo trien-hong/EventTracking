@@ -10,7 +10,7 @@ function Loading() {
                 <CircularProgress/>
             </div>
         </div>
-    )
+    );
 }
 
 export default Loading;

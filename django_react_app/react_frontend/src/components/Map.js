@@ -30,19 +30,19 @@ function Map({latitude, longitude}) {
             location: center,
             radius: 1000,
             types: ["atm"]
-        }
+        };
 
         const parking = {
             location: center,
             radius: 1000,
             types: ["parking"]
-        }
+        };
 
         // const hotel = {
         //     location: center,
         //     radius: 1000,
         //     types: ["hotel"]
-        // }
+        // };
 
         var service = new window.google.maps.places.PlacesService(map);
         

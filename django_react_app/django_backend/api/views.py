@@ -5,19 +5,23 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from PIL import Image
 from . models import UserEvents
 from . models import UserReviews
 from . serializers import UserEventsSerializer
 from . serializers import GetReviewsSerializer
+from . serializers import GetProfilePictureSerializer
 from . import forms
 import ticketmaster_api
 import openweathermap_api
+User = get_user_model()
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
 
+        token['id'] = user.id
         token['username'] = user.username
         token['zip_code'] = user.zip_code
 
@@ -91,6 +95,13 @@ def getRoutes(request):
             'Description': {'GET': 'Returns an array of reviews from which the user have left'}
         },
         {
+            'Endpoint': '/api/profile/picture/',
+            'Method': ['GET', 'PUT'],
+            'Restricted': True,
+            'Description': {'GET': 'Returns a location of the user\'s profile',
+                            'PUT': 'Updates the user\'s profile picture'}
+        },
+        {
             'Endpoint': '/api/token/',
             'Method': ['POST'],
             'Restricted': None,
@@ -114,8 +125,7 @@ def signup_user(request):
     user_info = json.loads(request.body)
     form = forms.Signup(user_info)
     if form.is_valid():
-        User = get_user_model()
-        user = User.objects.create_user(username=user_info["username"], password=user_info["password"], zip_code=user_info["zip_code"])
+        user = User.objects.create_user(username=form.cleaned_data["username"], password=form.cleaned_data["password"], zip_code=form.cleaned_data["zip_code"])
         return Response(True)
     else:
         return Response(form.errors.values())
@@ -238,11 +248,37 @@ def profileReview(request):
     """
     Endpoint: /api/profile/reviews/
     """
+    user = request.user
+    reviews = UserReviews.objects.all().filter(username=user.username).order_by("id")
+    serializer = GetReviewsSerializer(reviews, many=True)
+    if serializer.data == []:
+        return Response(False)
+    else:
+        return Response(serializer.data)
+
+@api_view(["GET", "PUT"])
+@permission_classes([IsAuthenticated])
+def profilePicture(request):
+    """
+    Endpoint: /api/profile/picture/
+    """
     if request.method == "GET":
-        user = request.user
-        reviews = UserReviews.objects.all().filter(username=user.username).order_by("id")
-        serializer = GetReviewsSerializer(reviews, many=True)
+        user = User.objects.get(username=request.user)
+        serializer = GetProfilePictureSerializer(user, many=False)
         if serializer.data == []:
             return Response(False)
         else:
             return Response(serializer.data)
+        
+    if request.method == "PUT":
+        file = request.data["file"]
+        file.name = str(request.user) + "." + file.name.split(".")[-1]
+        try:
+            Image.open(file)
+            user = User.objects.get(username=request.user)
+            user.profile_picture.delete()
+            user.profile_picture = file
+            user.save()
+            return Response(True)
+        except:
+            return Response(False)

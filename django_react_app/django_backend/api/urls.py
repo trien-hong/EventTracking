@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 from . import views
 from . views import MyTokenObtainPairView
@@ -18,6 +20,9 @@ urlpatterns = [
     path("api/reviews/get/event_id/<str:event_id>/", views.getAllReviews, name="getAllReviews"),
     path("api/profile/", views.profile, name="profile"),
     path("api/profile/reviews/", views.profileReview, name="profileReview"),
+    path("api/profile/picture/", views.profilePicture, name="profilePicture"),
     path("api/token/", MyTokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh")
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

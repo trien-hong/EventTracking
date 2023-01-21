@@ -30,7 +30,6 @@ function EventReviews({event}) {
             },
         });
         const data = await response.json();
-        console.log(data);
         setReviews(data);
         setIsLoading(false);
     }

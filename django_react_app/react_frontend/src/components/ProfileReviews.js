@@ -8,9 +8,10 @@ import EditReview from './EditReview';
 function ProfileReviews() {
     const [isLoading, setIsLoading] = useState(true);
     const [reviews, setReviews] = useState(null);
-    const {authTokens} = useContext(UserAuthContext);
+    const {user, authTokens} = useContext(UserAuthContext);
 
     useEffect(() => {
+        document.title = `Profile Reviews | ${user.username}`;
         getProfileReviews();
     }, []);
 
@@ -24,7 +25,6 @@ function ProfileReviews() {
             },
         });
         const data = await response.json();
-        console.log(data);
         setReviews(data);
         setIsLoading(false);
     }
@@ -53,11 +53,12 @@ function ProfileReviews() {
             ) : (
                 <div>
                     {reviews ? (
+                        <div>
                             <div id="reviewBorder">
-                                <Typography sx={{ my: 2 }} variant="h4">All Reviews You've Left</Typography>
+                                <Typography sx={{ mb: 2 }}variant="h4">All Reviews You've Left</Typography>
                                 {reviews.map((review, i) =>
-                                    <div>
-                                        <div id="review" key={i}>
+                                    <div key={i}>
+                                        <div id="review">
                                             <Tooltip title="Delete Review">
                                                 <DeleteIcon sx={{ mx: 0.5, mt: 0.5, float: "right" }} id="userReviewIcon" onClick={() => { deleteReview(review.id); }}/>
                                             </Tooltip>
@@ -74,6 +75,11 @@ function ProfileReviews() {
                                     </div>
                                 )}
                             </div>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                        </div>
                     ) : (
                         <div>
                             <Typography id="errors" variant="h5" align="center">You have not added any reviews yet.</Typography>

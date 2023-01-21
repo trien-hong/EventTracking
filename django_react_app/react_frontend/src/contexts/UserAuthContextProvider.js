@@ -4,10 +4,10 @@ import jwt_decode from 'jwt-decode';
 import UserAuthContext from './UserAuthContext';
 
 function UserAuthContextProvider({children}) {
+    const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState(() => localStorage.getItem("authTokens") ? jwt_decode(localStorage.getItem("authTokens")) : null);
     const [authTokens, setAuthTokens] = useState(() => localStorage.getItem("authTokens") ? JSON.parse(localStorage.getItem("authTokens")) : null);
     const [message, setMessage] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -100,7 +100,7 @@ function UserAuthContextProvider({children}) {
         clearLoginMessage: clearLoginMessage,
         login: login,
         logout: logout
-    }
+    };
 
     return (
         <UserAuthContext.Provider value={data}>

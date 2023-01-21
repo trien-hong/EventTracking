@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { Button } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import UserAuthContext from '../contexts/UserAuthContext';
 
 function DeleteEventButton({event, setProfileEvents}) {
@@ -36,7 +37,7 @@ function DeleteEventButton({event, setProfileEvents}) {
 
     return (
         <div>
-            <Button sx={{ mb: 3 }} variant="contained" onClick={() => { deleteProfileEvent(); }}>DELETE EVENT</Button>
+            <Button sx={{ mb: 3 }} variant="contained" onClick={() => { deleteProfileEvent(); }}>DELETE EVENT<DeleteIcon sx={{ ml: 1 }}/></Button>
         </div>
     );
 }

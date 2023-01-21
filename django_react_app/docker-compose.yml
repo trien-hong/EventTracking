@@ -11,8 +11,8 @@ services:
     env_file: # One in django_backend folder
       - django_backend/.env
     depends_on:
-      - migrations
       - database
+      - migrations
   react_frontend:
     build:
       context: ./react_frontend
@@ -20,17 +20,17 @@ services:
       - react_build:/react_frontend/build
     env_file: # One in react_frontend folder
       - react_frontend/.env
-  migrations:
-    image: django_react_app-django_backend
-    command: sh -c "python3 manage.py makemigrations && python3 manage.py migrate"
-    depends_on:
-      - database
   database:
     image: postgres:latest
     volumes:
       - ./database:/var/lib/postgresql/data
     env_file: # One in django_react_app folder
       - .env
+  migrations:
+    image: django_react_app-django_backend
+    command: sh -c "python3 manage.py makemigrations && python3 manage.py migrate"
+    depends_on:
+      - database
   nginx:
     image: nginx:latest
     ports:

@@ -69,18 +69,18 @@ function Paging({setEvents, setSearchEvents, setIsLoading}) {
         }
         setSearchEvents(data);
         setIsLoading(false);
-    };
+    }
 
     function changePage(event, value) {
         setCurrentPage(value);
     }
 
     function scrollUp() {
-        window.scrollTo({top: 0, behavior: "smooth" })
+        window.scrollTo({top: 0, behavior: "smooth" });
     }
 
     function scrollDown() {
-        window.scrollTo({top: document.body.scrollHeight, behavior: "smooth" })
+        window.scrollTo({top: document.body.scrollHeight, behavior: "smooth" });
     }
 
     return (
@@ -90,10 +90,10 @@ function Paging({setEvents, setSearchEvents, setIsLoading}) {
                     <Box sx={{ margin: "auto", display:"flex", alignItems:"center" }}>
                     <Pagination count={totalPages + 1} page={currentPage} onChange={changePage} color="primary" />
                     <Tooltip title="Scroll to Top">
-                        <ArrowUpwardIcon sx={{ background: "white", position: "fixed", bottom: 8, right: 15 }} id="scroll" onClick={() => { scrollUp(); }}/>
+                        <ArrowUpwardIcon sx={{ background: "white", position: "fixed", right: 10 }} id="scroll" onClick={() => { scrollUp(); }}/>
                     </Tooltip>
                     <Tooltip title="Scroll to Bottom">
-                        <ArrowDownwardIcon sx={{ background: "white", position: "fixed", bottom: 8, right: 50}} id="scroll" onClick={() => { scrollDown(); }}/>
+                        <ArrowDownwardIcon sx={{ background: "white", position: "fixed", right: 45 }} id="scroll" onClick={() => { scrollDown(); }}/>
                     </Tooltip>
                     </Box>
                 </Toolbar>

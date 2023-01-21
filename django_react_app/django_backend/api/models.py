@@ -13,6 +13,10 @@ class UserEvents(models.Model):
     maxPrice = models.TextField()
     username = models.TextField()
 
+class User(AbstractUser):
+    zip_code = models.CharField(max_length=5)
+    profile_picture = models.ImageField(upload_to="profile_pictures", null=True, blank=True)
+
 class UserReviews(models.Model):
     event_id = models.TextField()
     title = models.TextField()
@@ -20,6 +24,3 @@ class UserReviews(models.Model):
     userRating = models.TextField()
     userComment = models.TextField()
     dateAdded = models.DateField(auto_now_add=True)
-
-class User(AbstractUser):
-    zip_code = models.CharField(max_length=5)

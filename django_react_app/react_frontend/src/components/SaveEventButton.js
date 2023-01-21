@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { Button } from '@mui/material';
+import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import UserAuthContext from '../contexts/UserAuthContext';
 
 function SaveEventButton({event, margin}) {
@@ -33,7 +34,7 @@ function SaveEventButton({event, margin}) {
 
     return (
         <div>
-            <Button sx={{ mb: margin }} variant="contained" onClick={() => { saveEvent(); }}>SAVE EVENT</Button>
+            <Button sx={{ mb: margin }} variant="contained" onClick={() => { saveEvent(); }}>SAVE EVENT<SaveAltIcon sx={{ ml: 1 }}/></Button>
         </div>
     );
 }
