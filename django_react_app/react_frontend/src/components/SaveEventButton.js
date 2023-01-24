@@ -26,7 +26,7 @@ function SaveEventButton({event, margin}) {
         });
         const data = await response.json();
         if (data === true) {
-            alert("Event titled \"" + event.title + "\" has been added to your profile.");
+            alert("Event titled \"" + event.title + "\" has been saved to your profile.");
         } else {
             alert("You already have this event in your profile.");
         }

@@ -46,7 +46,7 @@ function Events() {
                             <center>
                                 <ErrorOutlineIcon sx={{ mt: 5, mb: 5 }} id="errorIcon"/>
                             </center>
-                            <Typography id="errors" variant="h5" align="center">Your ZIP code of "{user.zip_code}" did not have any events.</Typography>
+                            <Typography id="errors" variant="h5" align="center">Your ZIP code of "{user.zip_code}" did not have any events. <br></br> Try Searching for events instead.</Typography>
                         </div>
                     )}
                 </div>

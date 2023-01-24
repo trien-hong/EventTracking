@@ -3,18 +3,21 @@ import ProfilePictureContext from './ProfilePictureContext';
 import UserAuthContext from './UserAuthContext';
 
 function ProfilePictureContextProvider({children}) {
+    const [isProfilePictureLoaded, setIsProfilePictureLoaded] = useState(false)
     const [profilePictureLocation, setProfilePictureLocation] = useState(null);
     const {user, authTokens} = useContext(UserAuthContext);
 
     useEffect(() => {
         if (user === null) {
             clearProfilePicture();
+            setIsProfilePictureLoaded(false);
         }
     }, [user]);
 
     useEffect(() => {
-        if (user !== null) {
+        if (user !== null && isProfilePictureLoaded === false) {
             getProfilePicture();
+            setIsProfilePictureLoaded(true);
         }
     }, [user]);
 
@@ -36,6 +39,7 @@ function ProfilePictureContextProvider({children}) {
     }
 
     const data = {
+        setIsProfilePictureLoaded: setIsProfilePictureLoaded,
         profilePictureLocation: profilePictureLocation,
         getProfilePicture: getProfilePicture,
         clearProfilePicture: clearProfilePicture

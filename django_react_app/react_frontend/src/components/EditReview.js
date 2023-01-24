@@ -66,14 +66,14 @@ function EditReview({review, setReviews}) {
     return (
         <div>
             <Tooltip title="Edit Review">
-                <ModeEditIcon sx={{ mt: 0.5, float: "right" }} id="userReviewIcon" onClick={() => { handleOpen(); }}/>
+                <ModeEditIcon id="userReviewIcon" onClick={() => { handleOpen(); }}/>
             </Tooltip>
             <Dialog open={open} onClose={() => { handleCancle(); }}>
-                <DialogTitle align="center"><Typography variant="h5"><b><u>Edit Your Review</u></b></Typography></DialogTitle>
+                <DialogTitle align="center"><b><u>Edit Your Review</u></b></DialogTitle>
                 <DialogContent>
                     <Typography variant="h6"><b>Event Title:</b> <i>{review.title}</i></Typography>
                     <form onSubmit={editReview}>
-                        <Textarea sx={{ mt: 2, background: "white" }}  minRows={4} maxRows={4} value={comment} onChange={changeComment} endDecorator={ <Typography level="body3" sx={{ ml: 'auto' }}> {comment.length} character(s)</Typography>} inputprops={{ maxLength: 12 }} required/>
+                        <Textarea sx={{ mt: 2, background: "white" }}  minRows={4} maxRows={4} value={comment} onChange={changeComment} endDecorator={ <Typography level="body3" sx={{ ml: 'auto' }} variant="body1"><b><u>{comment.length}</u> character(s)</b></Typography> } inputprops={{ maxLength: 12 }} required/>
                         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                             <FormControl sx={{ my: 2.5, minWidth: 175 }} variant="filled">
                                 <InputLabel>Rating</InputLabel>
@@ -86,7 +86,7 @@ function EditReview({review, setReviews}) {
                                     <MenuItem value={"5"}>5 | (Masterpiece)</MenuItem>
                                 </Select>
                             </FormControl>
-                            <Rating sx={{ mx: 4, fontSize: "1.70rem" }} value={rating} readOnly/>
+                            <Rating sx={{ mx: 4, fontSize: "1.70rem" }} value={parseInt(rating)} readOnly/>
                             <Button type="submit" variant="contained">UPDATE &nbsp;<RateReviewIcon/></Button>
                         </Box>
                     </form>

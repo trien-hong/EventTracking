@@ -60,7 +60,7 @@ function Profile() {
                 <div>
                     { isProfilePictureLoaded ? (
                         <div>
-                            <Avatar sx={{ ml: 1, mb: 2, height: "175px", width: "175px", borderStyle: "solid", borderColor: "white", borderWidth: "5px"  }} src={"http://localhost:8000" + profilePictureLocation.profile_picture} alt={user.username}/>
+                            <Avatar sx={{ ml: 1, mb: 2, height: "175px", width: "175px", borderStyle: "solid", borderColor: "gray", borderWidth: "5px"  }} src={"http://localhost:8000" + profilePictureLocation.profile_picture} alt={user.username}/>
                         </div>
                     ) : (
                         <div>
@@ -73,7 +73,7 @@ function Profile() {
                 {display}
                 <AppBar position="static" sx={{ position: "fixed", bottom: 0, color: "black", background: "lightgray" }}>
                     <Toolbar style={{ pt: 3, minHeight: 40 }}>
-                        <Box sx={{ margin: "auto", display:"flex", alignItems:"center" }}>
+                        <Box sx={{ margin: "auto", display: "flex", alignItems: "center" }}>
                             <Tooltip title="Scroll to Top">
                                 <ArrowUpwardIcon sx={{ mr: 1, background: "white" }} id="scroll" onClick={() => { scrollUp(); }}/>
                             </Tooltip>

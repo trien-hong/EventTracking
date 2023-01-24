@@ -1,4 +1,5 @@
 import json
+import uuid
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -21,7 +22,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
 
-        token['id'] = user.id
         token['username'] = user.username
         token['zip_code'] = user.zip_code
 
@@ -176,7 +176,7 @@ def userReviews(request):
     if request.method == "POST":
         user = request.user
         data = json.loads(request.body)
-        review = UserReviews(event_id=data["event_id"], title=data["title"], username=user, userRating=data["userRating"], userComment=data["userComment"])
+        review = UserReviews(event_id=data["event_id"], title=data["title"], username=user, userRating=data["userRating"], userComment=data["userComment"], profilePictureLocation=data["profilePictureLocation"]["profile_picture"])
         review.save()
         return Response(True)
     
@@ -272,13 +272,21 @@ def profilePicture(request):
         
     if request.method == "PUT":
         file = request.data["file"]
-        file.name = str(request.user) + "." + file.name.split(".")[-1]
+        file.name = str(request.user) + "_id_" + str(uuid.uuid4())[:8] + "." + file.name.split(".")[-1]
         try:
             Image.open(file)
             user = User.objects.get(username=request.user)
             user.profile_picture.delete()
             user.profile_picture = file
             user.save()
+
+            # I will find a better solution to this later. Possibly adding foregin key.
+            # I know looping through and saving is not ideal.
+            if UserReviews.objects.all().filter(username=request.user).exists():
+                reviews = UserReviews.objects.all().filter(username=request.user)
+                for review in reviews:
+                    review.profilePictureLocation = "/media/profile_pictures/" + file.name
+                    review.save()
             return Response(True)
         except:
             return Response(False)

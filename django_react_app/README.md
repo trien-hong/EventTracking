@@ -43,3 +43,29 @@ Within your browser, go to `localhost` and you should see a login page. If the f
 Ticketmaster API: [developer.ticketmaster.com](https://developer.ticketmaster.com) <br>
 OpenWeatherMap API: [openweathermap.org/api](https://openweathermap.org/api) <br>
 Google Maps API: [developers.google.com/maps](https://developers.google.com/maps)
+
+# Images
+<details>
+    <summary>Click to view images</summary>
+    <br></br>
+    ![images#1](https://i.imgur.com/9tluYhW.png)
+    ![images#2](https://i.imgur.com/CZRIkWi.png)
+    ![images#3](https://i.imgur.com/j5MpiQc.png)
+    ![images#4]((https://i.imgur.com/geNwlrc.png)
+    ![images#5]((https://i.imgur.com/I6LbfxV.png)
+    ![images#6]((https://i.imgur.com/IvqNobW.png)
+    ![images#7](https://i.imgur.com/bMoTlSZ.png)
+    ![images#8](https://i.imgur.com/UQyS59B.png)
+    ![images#9](https://i.imgur.com/ELF6b2Q.png)
+    ![images#10](https://i.imgur.com/z6xgX4D.png)
+    ![images#11](https://i.imgur.com/9Cg9kxJ.png)
+    ![images#12]((https://i.imgur.com/DWpHx4W.png)
+    ![images#13](https://i.imgur.com/anJuA4j.png)
+    ![images#14](https://i.imgur.com/yEaJFSz.png)
+    ![images#15](https://i.imgur.com/knGYwwY.png)
+    ![images#16](https://i.imgur.com/uow4ZVH.png)
+    ![images#17](https://i.imgur.com/aZR9KgR.png)
+    ![images#18](https://i.imgur.com/if4tPvA.png)
+    ![images#19](https://i.imgur.com/eFaakJt.png)
+    ![images#20](https://i.imgur.com/kYjao53.png)
+</details>

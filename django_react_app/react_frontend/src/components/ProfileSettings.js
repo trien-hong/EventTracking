@@ -1,11 +1,13 @@
 import { useEffect, useState, useContext } from 'react';
 import { Button, Input, Typography } from '@mui/material';
 import UserAuthContext from '../contexts/UserAuthContext';
+import ProfilePictureContext from '../contexts/ProfilePictureContext';
 
 function ProfileSettings() {
     const [profilePicture, setProfilePicture] = useState(null);
     const [message, setMessage] = useState(null);
     const {user, authTokens} = useContext(UserAuthContext);
+    const {getProfilePicture} = useContext(ProfilePictureContext);
     
     useEffect(() => {
         document.title = `Profile Settings | ${user.username}`;
@@ -33,9 +35,9 @@ function ProfileSettings() {
             if (data === true) {
                 alert("Profile picture successfully uploaded. \n\nPage will reload when you click ok.");
                 setMessage(null);
-                window.location.reload();
+                getProfilePicture();
             } else {
-                alert("Sorry, the file doesn't seem to be a vlid image.");
+                alert("Sorry, the file doesn't seem to be a valid image.");
                 setMessage(
                     <Typography id="errors" variant="h5">Sorry, the file doesn't seem to be a valid image.</Typography>
                 );

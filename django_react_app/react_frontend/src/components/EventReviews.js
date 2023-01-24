@@ -1,9 +1,10 @@
 import { useEffect, useState, useContext } from 'react';
-import { Box, Button, FormControl, InputLabel, MenuItem, Rating, Select, Tooltip, Typography } from '@mui/material';
+import { Avatar, Box, Button, FormControl, InputLabel, MenuItem, Rating, Stack, Grid, Select, Tooltip, Typography } from '@mui/material';
 import Textarea from '@mui/joy/Textarea';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import UserAuthContext from '../contexts/UserAuthContext';
+import ProfilePictureContext from '../contexts/ProfilePictureContext';
 import EditReview from './EditReview';
 import Loading from './Loading';
 
@@ -13,6 +14,7 @@ function EventReviews({event}) {
     const [rating, setRating] = useState("");
     const [comment, setComment] = useState("");
     const {user, authTokens} = useContext(UserAuthContext);
+    const {profilePictureLocation} = useContext(ProfilePictureContext);
 
     useEffect(() => {
         if (event !== undefined) {
@@ -47,7 +49,8 @@ function EventReviews({event}) {
                 event_id: event.event_id,
                 title: event.title,
                 userRating: rating,
-                userComment: comment
+                userComment: comment,
+                profilePictureLocation: profilePictureLocation
             })
         });
         getEventReviews();
@@ -65,6 +68,7 @@ function EventReviews({event}) {
                 review_id: review_id,
             })
         });
+        setReviews(null); // Not idea. Will need to fix later.
         getEventReviews();
     }
 
@@ -87,7 +91,7 @@ function EventReviews({event}) {
                     <Typography sx={{ my: 2 }} variant="h4"><b>Add Your Review</b></Typography>
                     <Typography variant="h6"><b>Event Title:</b> <i>{event.title}</i></Typography>
                     <form onSubmit={addReview}>
-                        <Textarea sx={{ mt: 2, background: "white" }} minRows={4} maxRows={4} placeholder="Leave your comment here..." value={comment} onChange={changeComment} endDecorator={ <Typography level="body3" sx={{ ml: 'auto' }}> {comment.length} character(s)</Typography>} inputprops={{ maxLength: 12 }} required/>
+                        <Textarea sx={{ mt: 2, background: "white" }} minRows={4} maxRows={4} placeholder="Leave your comment here..." value={comment} onChange={changeComment} endDecorator={ <Typography level="body3" sx={{ ml: 'auto' }} variant="body1"><b><u>{comment.length}</u> character(s)</b></Typography> } inputprops={{ maxLength: 12 }} required/>
                         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                             <FormControl sx={{ my: 2.5, minWidth: 175 }} variant="filled">
                                 <InputLabel>Rating</InputLabel>
@@ -100,7 +104,7 @@ function EventReviews({event}) {
                                     <MenuItem value={"5"}>5 | (Masterpiece)</MenuItem>
                                 </Select>
                             </FormControl>
-                            <Rating sx={{ mx: 4, fontSize: "1.70rem" }} value={rating} readOnly/>
+                            <Rating sx={{ mx: 4, fontSize: "1.70rem" }} value={parseInt(rating)} readOnly/>
                             <Button type="submit" variant="contained">SUBMIT &nbsp;<RateReviewIcon/></Button>
                         </Box>
                     </form>
@@ -115,11 +119,25 @@ function EventReviews({event}) {
                                             return (
                                                 <div>
                                                     <div id="review">
-                                                        <Box sx={{ ml: 1.25, textAlign: "left" }}>
-                                                            <Typography sx={{ mt: 1.5 }}><b>{review.username}</b></Typography>
-                                                            <Typography><b>Reviewed On: </b>{review.dateAdded}</Typography>
-                                                            <Typography><b>Rating: </b>{review.userRating}/5</Typography>
-                                                            <Typography sx={{ mb: 1.5 }}><b>Comment: </b>{review.userComment}</Typography>
+                                                        <Box sx={{ mx: 1.25, textAlign: "left" }}>
+                                                            <Stack sx={{ mt: 1.5, mb: 1.3 }} direction="row" alignItems="center" spacing={1.25}>
+                                                                <Grid>
+                                                                    <Avatar sx={{ height: "60px", width: "60px", borderStyle: "solid", borderColor: "gray", borderWidth: "1px" }} src={"http://localhost:8000" + review.profilePictureLocation} alt={review.username}>{review.username.charAt(0)}</Avatar>
+                                                                </Grid>
+                                                                <Grid>
+                                                                    <Typography variant="body2"><b>{review.username}</b></Typography>
+                                                                </Grid>
+                                                            </Stack>
+                                                            <hr></hr>
+                                                            <Typography sx={{ mt: 1 }} variant="body2"><b>Reviewed On: </b>{review.dateAdded}</Typography>
+                                                            <Typography variant="body2"><b>Event Title: </b>{review.title}</Typography>
+                                                            <Stack alignItems="center" direction="row">
+                                                                <Typography variant="body2">
+                                                                    <b>Rating: </b>
+                                                                </Typography>
+                                                                <Rating sx={{ ml: 0.5, fontSize: 20 }} value={parseInt(review.userRating)} readOnly/>
+                                                            </Stack>
+                                                            <Typography sx={{ mb: 1.5 }} variant="body2"><b>Comment: </b>{review.userComment}</Typography>
                                                         </Box>
                                                     </div>
                                                     <br></br>
@@ -129,15 +147,31 @@ function EventReviews({event}) {
                                             return (
                                                 <div>
                                                     <div id="review">
-                                                        <Tooltip title="Delete Review">
-                                                            <DeleteIcon sx={{ mx: 0.5, mt: 0.5, float: "right" }} id="userReviewIcon" onClick={() => { deleteReview(review.id); }}/>
-                                                        </Tooltip>
-                                                        <EditReview title={event.title} review={review} setReviews={setReviews}/>
-                                                        <Box sx={{ ml: 1.25, alignItems: "center", textAlign: "left" }}>
-                                                            <Typography sx={{ mt: 1.5 }}><b>{review.username}</b></Typography>
-                                                            <Typography><b>Reviewed On: </b>{review.dateAdded}</Typography>
-                                                            <Typography><b>Rating: </b><Rating sx={{ fontSize: "1.1rem" }} value={review.userRating} readOnly/></Typography>
-                                                            <Typography sx={{ mb: 1.5 }}><b>Comment: </b>{review.userComment}</Typography>
+                                                        <Box sx={{ mx: 1.25, textAlign: "left" }}>
+                                                            <Stack sx={{ mt: 1.5, mb: 1.3 }} direction="row" alignItems="center" spacing={1.25}>
+                                                                <Grid>
+                                                                    <Avatar sx={{ height: "60px", width: "60px", borderStyle: "solid", borderColor: "gray", borderWidth: "1px" }} src={"http://localhost:8000" + profilePictureLocation.profile_picture} alt={user.username}>{review.username.charAt(0)}</Avatar>
+                                                                </Grid>
+                                                                <Grid>
+                                                                    <Typography variant="body2"><b>{review.username}</b></Typography>
+                                                                </Grid>
+                                                                <Grid container justifyContent="flex-end">
+                                                                    <EditReview review={review} setReviews={setReviews}/>
+                                                                    <Tooltip title="Delete Review">
+                                                                        <DeleteIcon sx={{ ml: 0.5 }} id="userReviewIcon" onClick={() => { deleteReview(review.id); }}/>
+                                                                    </Tooltip>
+                                                                </Grid>
+                                                            </Stack>
+                                                            <hr></hr>
+                                                            <Typography sx={{ mt: 1 }} variant="body2"><b>Reviewed On: </b>{review.dateAdded}</Typography>
+                                                            <Typography variant="body2"><b>Event Title: </b>{review.title}</Typography>
+                                                            <Stack alignItems="center" direction="row">
+                                                                <Typography variant="body2">
+                                                                    <b>Rating: </b>
+                                                                </Typography>
+                                                                <Rating sx={{ ml: 0.5, fontSize: 20 }} value={parseInt(review.userRating)} readOnly/>
+                                                            </Stack>
+                                                            <Typography sx={{ mb: 1.5 }} variant="body2"><b>Comment: </b>{review.userComment}</Typography>
                                                         </Box>
                                                     </div>
                                                     <br></br>
