@@ -3,23 +3,14 @@ import { Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UserAuthContext from '../contexts/UserAuthContext';
 
-function DeleteEventButton({event, setProfileEvents}) {
+function DeleteEventButton({event, profileEvents, setProfileEvents}) {
     const {authTokens} = useContext(UserAuthContext);
 
-    async function getProfileEvents() {
-        // const response = await fetch(`http://127.0.0.1:8000/api/profile/`, {
-        const response = await fetch(`http://127.0.0.1/api/profile/`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + String(authTokens.access)
-            }
-        });
-        const data = await response.json();
-        setProfileEvents(data);
-    }
-
     async function deleteProfileEvent() {
+        setProfileEvents((events) => events.filter((profileEvents) => profileEvents !== event));
+        if(profileEvents.length - 1 === 0) {
+            setProfileEvents(null);
+        }
         // await fetch(`http://127.0.0.1:8000/api/profile/`, {
         await fetch(`http://127.0.0.1/api/profile/`, {
             method: "DELETE",
@@ -31,7 +22,6 @@ function DeleteEventButton({event, setProfileEvents}) {
                 event_id: event.event_id
             })
         });
-        getProfileEvents();
         alert("Event titled \"" + event.title + "\" has been deleted from your profile.");
     }
 

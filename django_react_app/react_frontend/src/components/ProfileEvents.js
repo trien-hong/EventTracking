@@ -52,7 +52,7 @@ function ProfileEvents() {
                                             <Typography sx={{ my: 2.5 }}>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
                                             <img src={event.imageUrl} alt="not found" onClick={() => { goToEventDetails(event.event_id); }}/>
                                             <Typography sx={{ my: 2.5 }}>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
-                                            <DeleteEventButton event={event} setProfileEvents={setProfileEvents}/>
+                                            <DeleteEventButton event={event} profileEvents={profileEvents} setProfileEvents={setProfileEvents}/>
                                         </center>
                                         <div id="map"></div>
                                     </div>

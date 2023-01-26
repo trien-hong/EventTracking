@@ -1,29 +1,20 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Rating, Select, Tooltip, Typography } from '@mui/material';
 import Textarea from '@mui/joy/Textarea';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import UserAuthContext from '../contexts/UserAuthContext';
 
-function EditReview({review, setReviews}) {
+function EditReview({reviews, review, setReviews}) {
     const [open, setOpen] = useState(false);
     const [comment, setComment] = useState(review.userComment);
     const [rating, setRating] = useState(review.userRating);
     const {authTokens} = useContext(UserAuthContext);
 
-    async function getReviews() {
-        // const response = await fetch(`http://127.0.0.1:8000/api/reviews/get/event_id/${review.event_id}/`, {
-        const response = await fetch(`http://127.0.0.1/api/reviews/get/event_id/${review.event_id}/`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + String(authTokens.access)
-            },
-        });
-        const data = await response.json();
-        setReviews(data);
-        setOpen(false);
-    }
+    useEffect(() => {
+        setComment(review.userComment);
+        setRating(review.userRating);
+    }, [review]);
 
     async function editReview(e) {
         e.preventDefault();
@@ -42,7 +33,18 @@ function EditReview({review, setReviews}) {
                 userComment: comment
             })
         });
-        getReviews();
+        const editiedReview = reviews.map((obj) => {
+            if (obj.id === review.id) {
+                const update = ({...obj});
+                update["userRating"] = rating;
+                update["userComment"] = comment;
+                return update;
+            }
+            return obj;
+        });
+        setReviews(editiedReview);
+        alert("Review has been successfully updated/edited.");
+        setOpen(false);
     }
 
     function handleOpen() {

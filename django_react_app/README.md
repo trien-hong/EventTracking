@@ -4,7 +4,7 @@ This version is using Django (specfially as an API using Django's REST framework
 # Setting Up
 Ensure you are in the django_react_app folder/version. There are three .env files you will need to add.
 
-One in the django_react_app folder (where docker-compose.yml is located), one in django_backend folder (where Dockerfile is located), and one in react_frontend (where Dockerfile is located). A total of 11 variables are needed.
+One in the django_react_app folder (where docker-compose.yml is located), one in django_backend folder (where Dockerfile is located), and one in react_frontend (where Dockerfile is located). A total of 12 environment variables are needed.
 
 ## django_react_app folder .env
 There are 3 total variables you'll need to add in this .env file. We can just use the default settings for now.
@@ -13,9 +13,10 @@ There are 3 total variables you'll need to add in this .env file. We can just us
 * `POSTGRES_PASSWORD="postgres"`
 
 ## django_backend folder .env
-There are 7 total variables you'll need to add in this .env file. We can just use the default database of PostgreSQL for now.
+There are 8 total variables you'll need to add in this .env file. We can just use the default database of PostgreSQL for now.
 * `TICKETMASTER_API_KEY="ENTER YOUR TICKETMASTER API KEY HERE"`
 * `OPENWEATHERMAP_API_KEY="ENTER YOUR OPENWEATHERMAP API KEY HERE"`
+* `SECRET_KEY="ENTER YOUR SECRET KEY HERE (you can make this up)"`
 * `DB_NAME="postgres"`
 * `DB_USER="postgres"`
 * `DB_PASSWORD="postgres"`
