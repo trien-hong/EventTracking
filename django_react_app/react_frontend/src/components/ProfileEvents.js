@@ -61,7 +61,7 @@ function ProfileEvents() {
                         </div>
                     ) : (
                         <div>
-                            <Typography id="errors" variant="h5" align="center">Your profile does not contain any events. Try adding some events in.</Typography>
+                            <Typography id="errors" variant="h5" align="center">Your profile does not contain any events. <br></br>Try saving some events in.</Typography>
                         </div>
                     )}
                     <br></br>

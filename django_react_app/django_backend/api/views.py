@@ -22,6 +22,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
 
+        token['id'] = user.id
         token['username'] = user.username
         token['zip_code'] = user.zip_code
 
@@ -98,7 +99,7 @@ def getRoutes(request):
             'Endpoint': '/api/profile/picture/',
             'Method': ['GET', 'PUT'],
             'Restricted': True,
-            'Description': {'GET': 'Returns a location of the user\'s profile',
+            'Description': {'GET': 'Returns a location of the user\'s profile picture',
                             'PUT': 'Updates the user\'s profile picture'}
         },
         {
@@ -174,17 +175,17 @@ def userReviews(request):
     Endpoint: /api/user/reviews/
     """
     if request.method == "POST":
-        user = request.user
+        user = User.objects.get(id=request.user.id)
         data = json.loads(request.body)
-        review = UserReviews(event_id=data["event_id"], title=data["title"], username=user, userRating=data["userRating"], userComment=data["userComment"], profilePictureLocation=data["profilePictureLocation"]["profile_picture"])
+        review = UserReviews(event_id=data["event_id"], title=data["title"], userRating=data["userRating"], userComment=data["userComment"], user=user)
         review.save()
         return Response(True)
     
     if request.method == "PUT":
         data = json.loads(request.body)
         review = UserReviews.objects.get(id=data["id"])
-        review.userRating = data["userRating"]
         review.userComment = data["userComment"]
+        review.userRating = data["userRating"]
         review.save()
         return Response(True)
 
@@ -215,7 +216,7 @@ def profile(request):
     """
     if request.method == "GET":
         user = request.user
-        data = UserEvents.objects.all().filter(username=user.username)
+        data = UserEvents.objects.all().filter(user=user.id)
         serializer = UserEventsSerializer(data, many=True)
         if serializer.data == []:
             return Response(False)
@@ -223,10 +224,10 @@ def profile(request):
             return Response(serializer.data)
 
     if request.method == "POST":
-        user = request.user
+        user = User.objects.get(id=request.user.id)
         data = json.loads(request.body)
-        if UserEvents.objects.all().filter(username=user.username, event_id=data["event_id"]).exists() == False:
-            event = UserEvents(event_id=data["event_id"], title=data["title"], date=data["date"], city=data["city"], imageUrl=data["imageUrl"], minPrice=data["minPrice"], maxPrice=data["maxPrice"], username=user.username)
+        if UserEvents.objects.all().filter(user=user.id, event_id=data["event_id"]).exists() == False:
+            event = UserEvents(event_id=data["event_id"], title=data["title"], date=data["date"], city=data["city"], imageUrl=data["imageUrl"], minPrice=data["minPrice"], maxPrice=data["maxPrice"], user=user)
             event.save()
             return Response(True)
         else:
@@ -235,8 +236,8 @@ def profile(request):
     if request.method == "DELETE":
         user = request.user
         data = json.loads(request.body)
-        if UserEvents.objects.all().filter(username=user.username, event_id=data["event_id"]).exists():
-            event = UserEvents.objects.get(username=user.username, event_id=data["event_id"])
+        if UserEvents.objects.all().filter(user=user.id, event_id=data["event_id"]).exists():
+            event = UserEvents.objects.get(user=user.id, event_id=data["event_id"])
             event.delete()
             return Response(True)
         else:
@@ -249,7 +250,7 @@ def profileReview(request):
     Endpoint: /api/profile/reviews/
     """
     user = request.user
-    reviews = UserReviews.objects.all().filter(username=user.username).order_by("id")
+    reviews = UserReviews.objects.all().filter(user=user.id).order_by("id")
     serializer = GetReviewsSerializer(reviews, many=True)
     if serializer.data == []:
         return Response(False)
@@ -279,14 +280,6 @@ def profilePicture(request):
             user.profile_picture.delete()
             user.profile_picture = file
             user.save()
-
-            # I will find a better solution to this later. Possibly adding foregin key.
-            # I know looping through and saving is not ideal.
-            if UserReviews.objects.all().filter(username=request.user).exists():
-                reviews = UserReviews.objects.all().filter(username=request.user)
-                for review in reviews:
-                    review.profilePictureLocation = "/media/profile_pictures/" + file.name
-                    review.save()
             return Response(True)
         except:
             return Response(False)

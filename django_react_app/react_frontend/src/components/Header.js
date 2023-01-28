@@ -36,7 +36,7 @@ function Header() {
                             { profilePictureLocation ? (
                                 <Avatar sx={{ ml: 1, borderStyle: "solid", borderColor: "white", borderWidth: "1px" }} src={"http://localhost:8000" + profilePictureLocation.profile_picture} alt={user.username}/>
                             ) : (
-                                <Avatar sx={{ ml: 1, borderStyle: "solid", borderColor: "white" }}>{user.username}</Avatar>
+                                <Avatar sx={{ ml: 1, borderStyle: "solid", borderColor: "white", borderWidth: "1px" }}>{user.username.charAt(0)}</Avatar>
                             )}
                         </div>
                     </>

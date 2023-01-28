@@ -16,9 +16,9 @@ function ProfileSettings() {
     async function uploadProfilePicture(e) {
         e.preventDefault();
         if(profilePicture.size / 1024 > 5120) {
-            alert("File size is larger than 5 MB (5120 KB). Please upload a smaller file size.")
+            alert("File size is larger than 5 MB (5120 KB). \n\nPlease upload a smaller file size.")
             setMessage(
-                <Typography id="errors" variant="h5">File size is larger than 5 MB (5120 KB). Please upload a smaller file size.</Typography>
+                <Typography id="errors" variant="h5">File size is larger than 5 MB (5120 KB). <br></br>Please upload a smaller file size.</Typography>
             );
         } else {
             const formData = new FormData();

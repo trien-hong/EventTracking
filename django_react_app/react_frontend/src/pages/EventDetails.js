@@ -6,7 +6,7 @@ import UserAuthContext from '../contexts/UserAuthContext';
 import SaveEventButton from '../components/SaveEventButton';
 import EventReviews from '../components/EventReviews';
 import Weather from '../components/Weather';
-import Map from '../components/Map';
+// import Map from '../components/Map';
 import Loading from '../components/Loading';
 
 function EventDetails() {
@@ -87,7 +87,7 @@ function EventDetails() {
                                     </Box>
                                 </Stack>
                                 <hr></hr>
-                                <Map latitude={eventDetails.latitude} longitude={eventDetails.longitude}/>
+                                {/* <Map latitude={eventDetails.latitude} longitude={eventDetails.longitude}/> */}
                             </div>
                         )}
                     </div>

@@ -1,12 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import get_user_model
 
 # Create your models here.
 
-# I know... this isn't the "best" model
-# I would like to add ForeignKeys to help minimize similar data across different tables
-# Mainly username and profile picture
-
+class User(AbstractUser):
+    zip_code = models.CharField(max_length=5)
+    profile_picture = models.ImageField(upload_to="profile_pictures", null=True, blank=True)
+    
 class UserEvents(models.Model):
     event_id = models.TextField()
     title = models.TextField()
@@ -15,17 +16,12 @@ class UserEvents(models.Model):
     imageUrl = models.TextField()
     minPrice = models.TextField()
     maxPrice = models.TextField()
-    username = models.TextField()
-
-class User(AbstractUser):
-    zip_code = models.CharField(max_length=5)
-    profile_picture = models.ImageField(upload_to="profile_pictures", null=True, blank=True)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, default=None)
 
 class UserReviews(models.Model):
     event_id = models.TextField()
     title = models.TextField()
-    username = models.TextField()
-    userRating = models.TextField()
     userComment = models.TextField()
-    profilePictureLocation = models.TextField(null=True, blank=True)
+    userRating = models.TextField()
     dateAdded = models.DateField(auto_now_add=True)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, default=None)

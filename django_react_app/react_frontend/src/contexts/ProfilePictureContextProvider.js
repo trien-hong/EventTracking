@@ -31,7 +31,9 @@ function ProfilePictureContextProvider({children}) {
             }
         });
         const data = await response.json();
-        setProfilePictureLocation(data);
+        if (data.profile_picture !== null) {
+            setProfilePictureLocation(data);
+        }
     }
 
     function clearProfilePicture() {

@@ -3,7 +3,6 @@ import { Box, Button, FormControl, InputLabel, MenuItem, Rating, Select, Typogra
 import Textarea from '@mui/joy/Textarea';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import UserAuthContext from '../contexts/UserAuthContext';
-import ProfilePictureContext from '../contexts/ProfilePictureContext';
 import OtherUsersReviews from './OtherUsersReviews';
 import UserReviews from './UserReviews';
 import Loading from './Loading';
@@ -14,7 +13,6 @@ function EventReviews({event}) {
     const [rating, setRating] = useState("");
     const [comment, setComment] = useState("");
     const {user, authTokens} = useContext(UserAuthContext);
-    const {profilePictureLocation} = useContext(ProfilePictureContext);
 
     useEffect(() => {
         if (event !== undefined) {
@@ -48,20 +46,19 @@ function EventReviews({event}) {
             body: JSON.stringify({
                 event_id: event.event_id,
                 title: event.title,
-                userRating: rating,
                 userComment: comment,
-                profilePictureLocation: profilePictureLocation
+                userRating: rating,
             })
         });
         getEventReviews();
     }
 
-    function changeRating(e) {
-        setRating(e.target.value);
-    }
-
     function changeComment(e) {
         setComment(e.target.value);
+    }
+
+    function changeRating(e) {
+        setRating(e.target.value);
     }
 
     return (
@@ -75,7 +72,7 @@ function EventReviews({event}) {
                     <Typography sx={{ my: 2 }} variant="h4"><b>Add Your Review</b></Typography>
                     <Typography variant="h6"><b>Event Title:</b> <i>{event.title}</i></Typography>
                     <form onSubmit={addReview}>
-                        <Textarea sx={{ mt: 2, background: "white" }} minRows={4} maxRows={4} placeholder="Leave your comment here..." value={comment} onChange={changeComment} endDecorator={ <Typography level="body3" sx={{ ml: 'auto' }} variant="body1"><b><u>{comment.length}</u> character(s)</b></Typography> } inputprops={{ maxLength: 12 }} required/>
+                        <Textarea sx={{ mt: 2, background: "white" }} minRows={4} maxRows={4} variant="outlined" size="lg" placeholder="Leave your comment here..." value={comment} onChange={changeComment} endDecorator={ <Typography level="body3" sx={{ ml: 'auto' }} variant="body1"><b><u>{comment.length}</u> character(s)</b></Typography> } inputprops={{ maxLength: 12 }} required/>
                         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                             <FormControl sx={{ my: 2.5, minWidth: 175 }} variant="filled">
                                 <InputLabel>Rating</InputLabel>

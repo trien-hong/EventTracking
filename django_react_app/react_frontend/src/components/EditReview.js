@@ -75,7 +75,7 @@ function EditReview({reviews, review, setReviews}) {
                 <DialogContent>
                     <Typography variant="h6"><b>Event Title:</b> <i>{review.title}</i></Typography>
                     <form onSubmit={editReview}>
-                        <Textarea sx={{ mt: 2, background: "white" }}  minRows={4} maxRows={4} value={comment} onChange={changeComment} endDecorator={ <Typography level="body3" sx={{ ml: 'auto' }} variant="body1"><b><u>{comment.length}</u> character(s)</b></Typography> } inputprops={{ maxLength: 12 }} required/>
+                        <Textarea sx={{ mt: 2, background: "white" }} minRows={4} maxRows={4} placeholder="Edit your comment here..." value={comment} onChange={changeComment} endDecorator={ <Typography level="body3" sx={{ ml: 'auto' }} variant="body1"><b><u>{comment.length}</u> character(s)</b></Typography> } inputprops={{ maxLength: 12 }} required/>
                         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                             <FormControl sx={{ my: 2.5, minWidth: 175 }} variant="filled">
                                 <InputLabel>Rating</InputLabel>

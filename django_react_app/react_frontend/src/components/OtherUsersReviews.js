@@ -1,11 +1,24 @@
+import { useEffect, useState } from 'react';
 import { Avatar, Box, Rating, Stack, Grid, Typography } from '@mui/material';
 
 function OtherUsersReviews({review}) {
+    const [containsProfilePicture, setContainsProfilePicture] = useState(false);
+
+    useEffect(() => {
+        if(review.profile_picture !== "") {
+            setContainsProfilePicture(true);
+        }
+    }, [review]);
+
     return (
         <Box sx={{ mx: 1.25, textAlign: "left" }}>
             <Stack sx={{ mt: 1.5, mb: 1.3 }} direction="row" alignItems="center" spacing={1.25}>
                 <Grid>
-                    <Avatar sx={{ height: "60px", width: "60px", borderStyle: "solid", borderColor: "gray", borderWidth: "1px" }} src={"http://localhost:8000" + review.profilePictureLocation} alt={review.username}>{review.username.charAt(0)}</Avatar>
+                    {containsProfilePicture ? (
+                        <Avatar sx={{ height: "60px", width: "60px", borderStyle: "solid", borderColor: "gray", borderWidth: "1px" }} src={"http://localhost:8000/media/" + review.profile_picture} alt={review.username}>{review.username.charAt(0)}</Avatar>
+                    ) : (
+                        <Avatar sx={{ height: "60px", width: "60px", borderStyle: "solid", borderColor: "gray", borderWidth: "1px" }}>{review.username.charAt(0)}</Avatar>
+                    )}
                 </Grid>
                 <Grid>
                     <Typography variant="body2"><b>{review.username}</b></Typography>
@@ -22,7 +35,7 @@ function OtherUsersReviews({review}) {
             </Stack>
             <Typography sx={{ mb: 1.5 }} variant="body2"><b>Comment: </b>{review.userComment}</Typography>
         </Box>
-    )
+    );
 }
 
 export default OtherUsersReviews;

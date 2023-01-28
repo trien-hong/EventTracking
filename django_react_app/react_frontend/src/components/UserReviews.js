@@ -1,24 +1,33 @@
-import { useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { Avatar, Box, Rating, Stack, Grid, Typography } from '@mui/material';
-import ProfilePictureContext from '../contexts/ProfilePictureContext';
 import EditReview from './EditReview';
 import DeleteReview from './DeleteReview';
 
 function UserReviews({reviews, review, setReviews}) {
-    const {profilePictureLocation} = useContext(ProfilePictureContext);
+    const [containsProfilePicture, setContainsProfilePicture] = useState(false);
+
+    useEffect(() => {
+        if(review.profile_picture !== "") {
+            setContainsProfilePicture(true);
+        }
+    }, [review]);
 
     return (
         <Box sx={{ mx: 1.25, textAlign: "left" }}>
             <Stack sx={{ mt: 1.5, mb: 1.3 }} direction="row" alignItems="center" spacing={1.25}>
                 <Grid>
-                    <Avatar sx={{ height: "60px", width: "60px", borderStyle: "solid", borderColor: "gray", borderWidth: "1px" }} src={"http://localhost:8000" + profilePictureLocation.profile_picture} alt={review.username}>{review.username.charAt(0)}</Avatar>
+                    {containsProfilePicture ? (
+                        <Avatar sx={{ height: "60px", width: "60px", borderStyle: "solid", borderColor: "gray", borderWidth: "1px" }} src={"http://localhost:8000/media/" + review.profile_picture} alt={review.username}>{review.username.charAt(0)}</Avatar>
+                    ) : (
+                        <Avatar sx={{ height: "60px", width: "60px", borderStyle: "solid", borderColor: "gray", borderWidth: "1px" }}>{review.username.charAt(0)}</Avatar>
+                    )}
                 </Grid>
                 <Grid>
                     <Typography variant="body2"><b>{review.username}</b></Typography>
                 </Grid>
                 <Grid container justifyContent="flex-end">
-                    <EditReview id={"review_id=" + review.id} reviews={reviews} review={review} setReviews={setReviews}/>
-                    <DeleteReview reviews={reviews} review={review} setReviews={setReviews} onClick={() => { document.getElementById("review_id=" + review.id).remove(); }}/>
+                    <EditReview reviews={reviews} review={review} setReviews={setReviews}/>
+                    <DeleteReview reviews={reviews} review={review} setReviews={setReviews}/>
                 </Grid>
             </Stack>
             <hr></hr>
