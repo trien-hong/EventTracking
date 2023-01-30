@@ -9,7 +9,7 @@ import Loading from './Loading';
 
 function EventReviews({event}) {
     const [isLoading, setIsLoading] = useState(true);
-    const [reviews, setReviews] = useState([""]);
+    const [reviews, setReviews] = useState(null);
     const [rating, setRating] = useState("");
     const [comment, setComment] = useState("");
     const {user, authTokens} = useContext(UserAuthContext);
@@ -29,15 +29,19 @@ function EventReviews({event}) {
                 "Authorization": "Bearer " + String(authTokens.access)
             },
         });
-        const data = await response.json();
-        setReviews(data);
-        setIsLoading(false);
+        if (response.status === 201) {
+            const data = await response.json();
+            setReviews(data);
+            setIsLoading(false);
+        } else {
+            setIsLoading(false);
+        }
     }
 
     async function addReview(e) {
         e.preventDefault();
-        // await fetch(`http://127.0.0.1:8000/api/user/reviews/`, {
-        await fetch(`http://127.0.0.1/api/user/reviews/`, {
+        // const response = await fetch(`http://127.0.0.1:8000/api/user/reviews/`, {
+        const response = await fetch(`http://127.0.0.1/api/user/reviews/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -50,7 +54,12 @@ function EventReviews({event}) {
                 userRating: rating,
             })
         });
-        getEventReviews();
+        if (response.status === 200) {
+            alert("Review has been added to this event.");
+            getEventReviews();
+        } else {
+            alert("There seems to be an issue adding your review for this event.")
+        }
     }
 
     function changeComment(e) {

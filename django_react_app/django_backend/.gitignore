@@ -3,5 +3,6 @@
 *.pyo
 /database
 /media
+/static
 api/migrations/*
 !api/migrations/__init__.py

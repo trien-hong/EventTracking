@@ -26,9 +26,13 @@ function ProfileReviews() {
                 "Authorization": "Bearer " + String(authTokens.access)
             },
         });
-        const data = await response.json();
-        setReviews(data);
-        setIsLoading(false);
+        if (response.status === 200) {
+            const data = await response.json();
+            setReviews(data);
+            setIsLoading(false);
+        } else {
+            setIsLoading(false);
+        }
     }
 
     return (

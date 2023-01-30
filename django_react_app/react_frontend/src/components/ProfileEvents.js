@@ -7,7 +7,7 @@ import Loading from '../components/Loading';
 
 function ProfileEvents() {
     const [isLoading, setIsLoading] = useState(true);
-    const [profileEvents, setProfileEvents] = useState([""]);
+    const [profileEvents, setProfileEvents] = useState(null);
     const {user, authTokens} = useContext(UserAuthContext);
     const navigate = useNavigate();
 
@@ -17,17 +17,21 @@ function ProfileEvents() {
     }, []);
 
     async function getProfileEvents() {
-        // const response = await fetch(`http://127.0.0.1:8000/api/profile/`, {
-        const response = await fetch(`http://127.0.0.1/api/profile/`, {
+        // const response = await fetch(`http://127.0.0.1:8000/api/profile/events/`, {
+        const response = await fetch(`http://127.0.0.1/api/profile/events/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + String(authTokens.access)
             }
         });
-        const data = await response.json();
-        setProfileEvents(data);
-        setIsLoading(false);
+        if (response.status === 200) {
+            const data = await response.json();
+            setProfileEvents(data);
+            setIsLoading(false);
+        } else {
+            setIsLoading(false);
+        }
     }
 
     function goToEventDetails(event_id) {

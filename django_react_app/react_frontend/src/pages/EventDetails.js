@@ -7,6 +7,8 @@ import SaveEventButton from '../components/SaveEventButton';
 import EventReviews from '../components/EventReviews';
 import Weather from '../components/Weather';
 // import Map from '../components/Map';
+// If you would like to see Maps you should uncomment the line above this.
+// Since there is a quota on free use (before they start charging) I commented this out so it won't load
 import Loading from '../components/Loading';
 
 function EventDetails() {
@@ -31,9 +33,11 @@ function EventDetails() {
                 "Authorization": "Bearer " + String(authTokens.access)
             },
         });
-        const data = await response.json();
-        setEventDetails(data);
-        setIsLoading(false);
+        if (response.status === 200) {
+            const data = await response.json();
+            setEventDetails(data);
+            setIsLoading(false);
+        }
     }
     
     function goBack() {
@@ -88,6 +92,8 @@ function EventDetails() {
                                 </Stack>
                                 <hr></hr>
                                 {/* <Map latitude={eventDetails.latitude} longitude={eventDetails.longitude}/> */}
+                                {/* If you would like to see Maps you should uncomment the line above this.
+                                Since there is a quota on free use (before they start charging) I commented this out so it won't load */}
                             </div>
                         )}
                     </div>

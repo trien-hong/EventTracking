@@ -23,9 +23,11 @@ function Weather({latitude, longitude}) {
                 "Authorization": "Bearer " + String(authTokens.access)
             },
         });
-        const data = await response.json();
-        setWeather(data);
-        setLatitudeLongitudeLoaded(true);
+        if (response.status === 200) {
+            const data = await response.json();
+            setWeather(data);
+            setLatitudeLongitudeLoaded(true);
+        }
     }
 
     return (

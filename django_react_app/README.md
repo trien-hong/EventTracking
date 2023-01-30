@@ -45,6 +45,10 @@ Ticketmaster API: [developer.ticketmaster.com](https://developer.ticketmaster.co
 OpenWeatherMap API: [openweathermap.org/api](https://openweathermap.org/api) <br>
 Google Maps API: [developers.google.com/maps](https://developers.google.com/maps)
 
+## NOTE:
+I commented out two specific lines in EventDetails.js to prevent the map from loading. This is because while you do get $200 worth of free credit every month (before they start charing), it can add up. That's 4878 dynamic maps (at 0.007 cents per load) plus 9756 places search (at 0.017 per search) for a total of $199.998 for free. <br>
+If you would like to see the maps, simply uncomment the two lines in EventDetails.js and the map should start loading.
+
 # Images
 <details>
     <summary>Click to view images</summary>

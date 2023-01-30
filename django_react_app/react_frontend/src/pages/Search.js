@@ -12,7 +12,6 @@ function Search() {
     const [searchParams] = useSearchParams();
     const search = searchParams.get("q");
     const navigate = useNavigate();
-    
     function goToEventDetails(event_id) {
         navigate(`/events/details/id/${event_id}/`);
     }

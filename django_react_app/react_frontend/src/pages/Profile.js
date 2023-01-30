@@ -60,10 +60,11 @@ function Profile() {
                 <div>
                     { isProfilePictureLoaded ? (
                         <div>
-                            <Avatar sx={{ ml: 1, mb: 2, height: "175px", width: "175px", borderStyle: "solid", borderColor: "gray", borderWidth: "5px"  }} src={"http://localhost:8000" + profilePictureLocation.profile_picture} alt={user.username}/>
+                            <Avatar sx={{ ml: 1, mb: 2, height: "175px", width: "175px", borderStyle: "solid", borderColor: "gray", borderWidth: "5px"  }} src={"http://localhost:8000" + profilePictureLocation} alt={user.username}/>
                         </div>
                     ) : (
                         <div>
+                            <Avatar sx={{ ml: 1, mb: 2, height: "175px", width: "175px", borderStyle: "solid", borderColor: "gray", borderWidth: "5px"  }}>{user.username.charAt(0)}</Avatar>
                         </div>
                     )}
                 </div>

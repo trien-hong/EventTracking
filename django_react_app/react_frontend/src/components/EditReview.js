@@ -18,8 +18,8 @@ function EditReview({reviews, review, setReviews}) {
 
     async function editReview(e) {
         e.preventDefault();
-        // await fetch(`http://127.0.0.1:8000/api/user/reviews/`, {
-        await fetch(`http://127.0.0.1/api/user/reviews/`, {
+        // const response = await fetch(`http://127.0.0.1:8000/api/user/reviews/`, {
+        const response = await fetch(`http://127.0.0.1/api/user/reviews/`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -42,9 +42,13 @@ function EditReview({reviews, review, setReviews}) {
             }
             return obj;
         });
-        setReviews(editiedReview);
-        alert("Review has been successfully updated/edited.");
-        setOpen(false);
+        if (response.status === 200) {
+            setReviews(editiedReview);
+            alert("Review has been successfully updated/edited for this event.");
+            setOpen(false);
+        } else {
+            alert("There seems to be an issue in updating/editing your review.");
+        }
     }
 
     function handleOpen() {

@@ -11,8 +11,8 @@ function DeleteEventButton({event, profileEvents, setProfileEvents}) {
         if(profileEvents.length - 1 === 0) {
             setProfileEvents(null);
         }
-        // await fetch(`http://127.0.0.1:8000/api/profile/`, {
-        await fetch(`http://127.0.0.1/api/profile/`, {
+        // const response = await fetch(`http://127.0.0.1:8000/api/profile/events/`, {
+        const response = await fetch(`http://127.0.0.1/api/profile/events/`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -22,7 +22,11 @@ function DeleteEventButton({event, profileEvents, setProfileEvents}) {
                 event_id: event.event_id
             })
         });
-        alert("Event titled \"" + event.title + "\" has been deleted from your profile.");
+        if (response.status === 200) {
+            alert("Event titled \"" + event.title + "\" has been deleted from your profile.");
+        } else {
+            alert("There seems to be an issue in deleting your event from your profile.");
+        }
     }
 
     return (

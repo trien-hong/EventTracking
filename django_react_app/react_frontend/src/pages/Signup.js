@@ -15,12 +15,12 @@ function Signup() {
     const [icon, setIcon] = useState(<VisibilityIcon/>);
     
     useEffect(() => {
-        document.title = "Signup";
+        document.title = "Event Tracking | Signup";
     }, []);
 
     async function signup(e) {
         e.preventDefault();
-        // const response = await fetch(`http://127.0.0.1:8000/api/signup_user/`, {
+        // const response = await fetch(`http://127.0.0.1:8000/api/signup/`, {
         const response = await fetch(`http://127.0.0.1/api/signup_user/`, {
             method: "POST",
             headers: {
@@ -33,24 +33,31 @@ function Signup() {
                 "zip_code": e.target.zip_code.value
             })
         });
-        const data = await response.json();
-        if (data !== true) {
-            setMessages(
-                <div id="errors">
-                    ERROR(S):
-                    {data.map((error, i) =>
-                        <div key={i}>
-                            <p>{error}</p>
-                        </div>
-                    )}
-                    <hr></hr>
-                </div>
-            );
-        } else {
+        if (response.status === 201) {
             alert("Account has been created!\n\nYou can now login.");
             setMessages(
                 <div id="success">
                     Account has been created! You can now login.
+                    <hr></hr>
+                </div>
+            );
+        } else {
+            const data = await response.json();
+            alert("There seems to be error(s) in creating your account");
+            setMessages(
+                <div id="errors">
+                    ERROR(S):
+                    {data["non_field_errors"].map(errors => (
+                        <div>
+                            {Object.entries(errors).map(([key, val]) => {
+                            return (
+                                <p>
+                                    {val}
+                                </p>
+                            )
+                            })}
+                        </div>
+                    ))}
                     <hr></hr>
                 </div>
             );

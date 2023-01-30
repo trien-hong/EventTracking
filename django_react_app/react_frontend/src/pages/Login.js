@@ -15,7 +15,7 @@ function Login() {
     const {login, message} = useContext(UserAuthContext);
 
     useEffect(() => {
-        document.title = "Login";
+        document.title = "Event Tracking | Login";
     }, []);
 
     function showPassword() {

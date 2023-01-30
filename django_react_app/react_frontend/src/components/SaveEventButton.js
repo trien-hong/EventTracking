@@ -7,8 +7,8 @@ function SaveEventButton({event, margin}) {
     const {authTokens} = useContext(UserAuthContext);
 
     async function saveEvent() {
-        // const response = await fetch(`http://127.0.0.1:8000/api/profile/`, {
-        const response = await fetch(`http://127.0.0.1/api/profile/`, {
+        // const response = await fetch(`http://127.0.0.1:8000/api/profile/events/`, {
+        const response = await fetch(`http://127.0.0.1/api/profile/events/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -24,8 +24,7 @@ function SaveEventButton({event, margin}) {
                 maxPrice: event.maxPrice
             })
         });
-        const data = await response.json();
-        if (data === true) {
+        if (response.status === 201) {
             alert("Event titled \"" + event.title + "\" has been saved to your profile.");
         } else {
             alert("You already have this event in your profile.");

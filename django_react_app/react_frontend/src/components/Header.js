@@ -34,7 +34,7 @@ function Header() {
                         </Grid>
                         <div>
                             { profilePictureLocation ? (
-                                <Avatar sx={{ ml: 1, borderStyle: "solid", borderColor: "white", borderWidth: "1px" }} src={"http://localhost:8000" + profilePictureLocation.profile_picture} alt={user.username}/>
+                                <Avatar sx={{ ml: 1, borderStyle: "solid", borderColor: "white", borderWidth: "1px" }} src={"http://localhost:8000" + profilePictureLocation} alt={user.username}/>
                             ) : (
                                 <Avatar sx={{ ml: 1, borderStyle: "solid", borderColor: "white", borderWidth: "1px" }}>{user.username.charAt(0)}</Avatar>
                             )}

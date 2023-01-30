@@ -11,8 +11,8 @@ function DeleteReview({reviews, review, setReviews}) {
         if (reviews.length - 1 === 0) {
             setReviews(null);
         }
-        // await fetch(`http://127.0.0.1:8000/api/user/reviews/`, {
-        await fetch(`http://127.0.0.1/api/user/reviews/`, {
+        // const response = await fetch(`http://127.0.0.1:8000/api/user/reviews/`, {
+        const response = await fetch(`http://127.0.0.1/api/user/reviews/`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -22,7 +22,11 @@ function DeleteReview({reviews, review, setReviews}) {
                 review_id: review.id,
             })
         });
-        alert("Review has been successfully deleted.");
+        if (response.status === 200) {
+            alert("Review has been successfully deleted from this event.");
+        } else {
+            alert("There seems to be an issue in deleting your review.");
+        }
     }
 
     return (

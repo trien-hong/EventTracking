@@ -42,13 +42,15 @@ function Paging({setEvents, setSearchEvents, setIsLoading}) {
                 "Authorization": "Bearer " + String(authTokens.access)
             },
         });
-        const data = await response.json();
-        if (data !== false) {
-            setTotalPages(data.at(-1)["totalPages"]);
-            data.pop();
+        if (response.status === 200) {
+            const data = await response.json();
+            if (data !== false) {
+                setTotalPages(data.at(-1)["totalPages"]);
+                data.pop();
+            }
+            setEvents(data);
+            setIsLoading(false);
         }
-        setEvents(data);
-        setIsLoading(false);
     }
 
     async function getSearchEvents() {
@@ -60,15 +62,17 @@ function Paging({setEvents, setSearchEvents, setIsLoading}) {
                 "Authorization": "Bearer " + String(authTokens.access)
             },
         });
-        const data = await response.json();
-        if (data !== false) {
-            setTotalPages(data.at(-1)["totalPages"]);
-            data.pop();
-        } else {
-            setTotalPages(0);
+        if (response.status === 200) {
+            const data = await response.json();
+            if (data !== false) {
+                setTotalPages(data.at(-1)["totalPages"]);
+                data.pop();
+            } else {
+                setTotalPages(0);
+            }
+            setSearchEvents(data);
+            setIsLoading(false);
         }
-        setSearchEvents(data);
-        setIsLoading(false);
     }
 
     function changePage(event, value) {

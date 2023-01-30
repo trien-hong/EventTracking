@@ -30,9 +30,9 @@ function ProfilePictureContextProvider({children}) {
                 "Authorization": "Bearer " + String(authTokens.access)
             }
         });
-        const data = await response.json();
-        if (data.profile_picture !== null) {
-            setProfilePictureLocation(data);
+        if (response.status === 200) {
+            const data = await response.json();
+            setProfilePictureLocation(data.profile_picture);
         }
     }
 
