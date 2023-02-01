@@ -9,7 +9,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 
 function Signup() {
-    const [messages, setMessages] = useState([null]);
+    const [messages, setMessages] = useState(null);
     const [textfieldType, setTextfieldType] = useState("password");
     const [tooltipText, setTooltipText] = useState("Show Password");
     const [icon, setIcon] = useState(<VisibilityIcon/>);
@@ -21,7 +21,7 @@ function Signup() {
     async function signup(e) {
         e.preventDefault();
         // const response = await fetch(`http://127.0.0.1:8000/api/signup/`, {
-        const response = await fetch(`http://127.0.0.1/api/signup_user/`, {
+        const response = await fetch(`http://127.0.0.1/api/signup/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -80,7 +80,7 @@ function Signup() {
         <div>
             <center>
                 <br></br>
-                <form id="loginSignupForm" onSubmit={signup}>
+                <form id="form" onSubmit={signup}>
                     <Typography sx={{ mb: 1 }} variant="h5">{messages}</Typography>
                     <Typography sx={{ mb: 3 }} variant="h4"><u><b>SIGNUP</b></u></Typography>
                     <PersonIcon2 sx={{ mr: 2, mt: 2, color: "#077E1E"}} id="icons"/><TextField sx={{ background: "white", width: 375 }} type="text" label="Enter username" name="username" variant="filled" inputProps={{ maxLength: 150 }} required/>

@@ -74,8 +74,8 @@ function UserAuthContextProvider({children}) {
         const data = await response.json();
 
         if (response.status === 200) {
-            setAuthTokens(data);
             setUser(jwt_decode(data.access));
+            setAuthTokens(data);
             localStorage.setItem("authTokens", JSON.stringify(data));
         } else {
             logout();
@@ -84,6 +84,12 @@ function UserAuthContextProvider({children}) {
         if(isLoading) {
             setIsLoading(false);
         }
+    }
+
+    async function setNewToken(data) {
+        setUser(jwt_decode(data.access));
+        setAuthTokens(data);
+        localStorage.setItem("authTokens", JSON.stringify(data));
     }
 
     function logout() {
@@ -97,6 +103,7 @@ function UserAuthContextProvider({children}) {
         user: user,
         message: message,
         authTokens: authTokens,
+        setNewToken: setNewToken,
         clearLoginMessage: clearLoginMessage,
         login: login,
         logout: logout

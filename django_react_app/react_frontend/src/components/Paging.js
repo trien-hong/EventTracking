@@ -50,6 +50,8 @@ function Paging({setEvents, setSearchEvents, setIsLoading}) {
             }
             setEvents(data);
             setIsLoading(false);
+        } else {
+            setIsLoading(false);
         }
     }
 
@@ -71,6 +73,9 @@ function Paging({setEvents, setSearchEvents, setIsLoading}) {
                 setTotalPages(0);
             }
             setSearchEvents(data);
+            setIsLoading(false);
+        } else {
+            setSearchEvents(null);
             setIsLoading(false);
         }
     }

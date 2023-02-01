@@ -19,7 +19,7 @@ function Profile() {
 
     useEffect(() => {
         document.title = `Profile | ${user.username}`;
-    }, []);
+    }, [user]);
 
     useEffect(() => {
         if (profilePictureLocation !== null) {

@@ -9,7 +9,7 @@ import Loading from '../components/Loading';
 
 function Events() {
     const [isLoading, setIsLoading] = useState(true);
-    const [events, setEvents] = useState([""]);
+    const [events, setEvents] = useState(null);
     const {user} = useContext(UserAuthContext);
     const navigate = useNavigate();
     

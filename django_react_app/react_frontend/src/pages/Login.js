@@ -34,7 +34,7 @@ function Login() {
         <div>
             <center>
                 <br></br>
-                <form id="loginSignupForm" onSubmit={login}>
+                <form id="form" onSubmit={login}>
                     <Typography sx={{ mb: 1 }} variant="h5">{message}</Typography>
                     <Typography sx={{ mb: 3 }} variant="h4"><u><b>LOGIN</b></u></Typography>
                     <PersonIcon2 sx={{ mr: 2, mt: 2, color: "#077E1E" }} id="icons"/><TextField sx={{ background: "white", width: 375 }} type="text" label="Enter username" name="username" variant="filled" required/>

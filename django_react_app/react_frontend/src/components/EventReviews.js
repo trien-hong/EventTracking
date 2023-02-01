@@ -13,7 +13,6 @@ function EventReviews({event}) {
     const [rating, setRating] = useState("");
     const [comment, setComment] = useState("");
     const {user, authTokens} = useContext(UserAuthContext);
-
     useEffect(() => {
         if (event !== undefined) {
             getEventReviews();
@@ -29,7 +28,7 @@ function EventReviews({event}) {
                 "Authorization": "Bearer " + String(authTokens.access)
             },
         });
-        if (response.status === 201) {
+        if (response.status === 200) {
             const data = await response.json();
             setReviews(data);
             setIsLoading(false);
@@ -54,7 +53,7 @@ function EventReviews({event}) {
                 userRating: rating,
             })
         });
-        if (response.status === 200) {
+        if (response.status === 201) {
             alert("Review has been added to this event.");
             getEventReviews();
         } else {

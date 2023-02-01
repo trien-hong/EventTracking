@@ -1,20 +1,21 @@
 import json
 import uuid
-from django.contrib.auth import get_user_model
+import ticketmaster_api
+import openweathermap_api
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.tokens import RefreshToken
 from . models import UserEvents
 from . models import UserReviews
 from . serializers import UserEventsSerializer
 from . serializers import GetReviewsSerializer
 from . serializers import GetProfilePictureSerializer
 from . import serializers
-import ticketmaster_api
-import openweathermap_api
+from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -34,7 +35,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
 @api_view(["GET"])
 def getRoutes(request):
     """
-    Endpoint: /api/ or ""
+    Endpoints: /api/ or ""
     """
     routes = [
         {
@@ -71,7 +72,7 @@ def getRoutes(request):
             'Endpoint': '/api/user/reviews/',
             'Method': ['POST', 'PUT', 'DELETE'],
             'Restricted': True,
-            'Description': {'POST': 'Saves reviews left by the users to the database',
+            'Description': {'POST': 'Saves reviews left by the user to the database',
                             'PUT': 'Updates the specific review left by a user',
                             'DELETE': 'Deletes the specific review left by the user'}
         },
@@ -96,11 +97,17 @@ def getRoutes(request):
             'Description': {'GET': 'Returns an array of reviews from which the user have left'}
         },
         {
-            'Endpoint': '/api/profile/picture/',
+            'Endpoint': '/api/profile/settings/picture/',
             'Method': ['GET', 'PUT'],
             'Restricted': True,
             'Description': {'GET': 'Returns a location of the user\'s profile picture',
                             'PUT': 'Updates the user\'s profile picture'}
+        },
+        {
+            'Endpoint': '/api/profile/settings/info/',
+            'Method': ['PUT'],
+            'Restricted': True,
+            'Description': {'PUT': 'Updates a user\'s information (username, password, &/or zip_code)'},
         },
         {
             'Endpoint': '/api/token/',
@@ -124,7 +131,7 @@ def signup(request):
     Endpoint: /api/signup/
     """
     user_info = json.loads(request.body)
-    validate = serializers.SignUpValidateSerializer(data=user_info)
+    validate = serializers.SignupValidateSerializer(data=user_info)
     if validate.is_valid():
         user = User.objects.create_user(username=validate.validated_data["username"], password=validate.validated_data["password"], zip_code=validate.validated_data["zip_code"])
         return Response(status=status.HTTP_201_CREATED)
@@ -142,7 +149,7 @@ def events(request, page):
     if events != False:
         return Response(events, status=status.HTTP_200_OK)
     else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
@@ -154,7 +161,7 @@ def eventsSearchInput(request, input, page):
     if events != False:
         return Response(events, status=status.HTTP_200_OK)
     else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
@@ -265,9 +272,9 @@ def profileReview(request):
 
 @api_view(["GET", "PUT"])
 @permission_classes([IsAuthenticated])
-def profilePicture(request):
+def profileSettingsPicture(request):
     """
-    Endpoint: /api/profile/picture/
+    Endpoint: /api/profile/settings/picture/
     """
     if request.method == "GET":
         user = User.objects.get(username=request.user)
@@ -281,7 +288,8 @@ def profilePicture(request):
         file = request.FILES
         validate = serializers.CheckFileValidateSerializer(data=file)
         if validate.is_valid():
-            validate.validated_data["file"].name = str(request.user) + "_id_" + str(uuid.uuid4())[:8] + "." + validate.validated_data["file"].name.split(".")[-1]
+            ext = validate.validated_data["file"].name.split(".")[-1]
+            validate.validated_data["file"].name = str(request.user) + "_profile_picture_id_" + str(uuid.uuid4())[:8] + "." + ext
             user = User.objects.get(username=request.user)
             user.profile_picture.delete()
             user.profile_picture = validate.validated_data["file"]
@@ -291,3 +299,44 @@ def profilePicture(request):
             # status code 415 (UNSUPPORTED_MEDIA_TYPE) and or 413 (REQUEST_ENTITY_TOO_LARGE) would work
             # my problem is that it is one of the two OR both. i'll choose 400 for now. i'll find a better solution later.
             return Response(validate.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated])
+def profileSettingsInfo(request):
+    """
+    Endpoint: /api/profile/settings/info/
+    """
+    user = User.objects.get(id=request.user.id)
+    data = json.loads(request.body)
+    validate = serializers.UpdateUserInfoValidateSerializer(data=data)
+    if validate.is_valid():
+        if(validate.validated_data["username"] != ""):
+            user.username = validate.validated_data["username"]
+            user.save()
+        if(validate.validated_data["password"] and validate.validated_data["confirm_password"] != ""):
+            user.set_password(validate.validated_data["confirm_password"])
+            user.save()
+        if(validate.validated_data["zip_code"] != ""):
+            user.zip_code = validate.validated_data["zip_code"]
+            user.save()
+        new_token = get_new_token(user, validate.validated_data["username"], validate.validated_data["zip_code"])
+        return Response(new_token, status=status.HTTP_200_OK)
+    else:
+        return Response(validate.errors, status=status.HTTP_400_BAD_REQUEST)
+
+def get_new_token(user, username, zip_code):
+    refresh = RefreshToken.for_user(user)
+
+    refresh["id"] = user.id
+    refresh["username"] = user.username
+    refresh["zip_code"] = user.zip_code
+
+    if username != "":
+        refresh["username"] = username
+    if zip_code != "":
+        refresh['zip_code'] = zip_code
+
+    return {
+        "refresh": str(refresh),
+        "access": str(refresh.access_token)
+    }

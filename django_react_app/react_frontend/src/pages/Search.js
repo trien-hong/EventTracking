@@ -8,7 +8,7 @@ import Loading from '../components/Loading';
 
 function Search() {
     const [isLoading, setIsLoading] = useState(true);
-    const [searchEvents, setSearchEvents] = useState([""]);
+    const [searchEvents, setSearchEvents] = useState(null);
     const [searchParams] = useSearchParams();
     const search = searchParams.get("q");
     const navigate = useNavigate();
