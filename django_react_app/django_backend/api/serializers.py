@@ -44,6 +44,7 @@ class UpdateUserInfoValidateSerializer(serializers.Serializer):
 
     def validate(self, data):
         errors = []
+
         # validate username
         if User.objects.filter(username=data["username"]).exists():
             errors.append({"username" : "Username already exist."})
@@ -68,6 +69,7 @@ class CheckFileValidateSerializer(serializers.Serializer):
 
     def validate(self, data):
         errors = []
+
         # validate file type
         try:
             Image.open(data["file"])
@@ -81,6 +83,27 @@ class CheckFileValidateSerializer(serializers.Serializer):
         # i could also do this on the front-end but i should validate files on the back-end
         if data["file"].size > 5*1024*1024:
             errors.append({"file_size": "File size is greater than 5MB."})
+
+        if errors:
+            raise serializers.ValidationError(errors)
+
+        return data
+    
+class ResetPasswordValidateSerializer(serializers.Serializer):
+    username = serializers.CharField(required=True)
+    password = serializers.CharField(required=True)
+    confirm_password = serializers.CharField(required=True)
+
+    def validate(self, data):
+        errors = []
+
+        # validate username
+        if User.objects.filter(username=data["username"]).exists() == False:
+            errors.append({"username" : "Username does not exist."})
+
+        # validate password
+        if data["password"] != data["confirm_password"]:
+            errors.append({"passwords": "Passwords do not match."})
 
         if errors:
             raise serializers.ValidationError(errors)

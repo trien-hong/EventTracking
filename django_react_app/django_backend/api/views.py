@@ -80,7 +80,7 @@ def getRoutes(request):
             'Endpoint': '/api/reviews/get/event_id/<str:event_id>/',
             'Method': ['GET'],
             'Restricted': True,
-            'Description': {'GET': 'Get the reviews left by all users for that specific event'}
+            'Description': {'GET': 'Return an array of reviews left by all users for that specific event'}
         },
         {
             'Endpoint': '/api/profile/events/',
@@ -108,6 +108,12 @@ def getRoutes(request):
             'Method': ['PUT'],
             'Restricted': True,
             'Description': {'PUT': 'Updates a user\'s information (username, password, &/or zip_code)'},
+        },
+        {
+            'Endpoint': '/api/forgot/password/',
+            'Method': ['PUT'],
+            'Restricted': False,
+            'Description': {'PUT': 'Update just a user\'s password in the event that they forget it'},
         },
         {
             'Endpoint': '/api/token/',
@@ -297,7 +303,7 @@ def profileSettingsPicture(request):
             return Response(status=status.HTTP_200_OK)
         else:
             # status code 415 (UNSUPPORTED_MEDIA_TYPE) and or 413 (REQUEST_ENTITY_TOO_LARGE) would work
-            # my problem is that it is one of the two OR both. i'll choose 400 for now. i'll find a better solution later.
+            # my problem is that it is one of the two OR both. i'll choose 400 for now.
             return Response(validate.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(["PUT"])
@@ -324,7 +330,29 @@ def profileSettingsInfo(request):
     else:
         return Response(validate.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(["PUT"])
+def resetPassword(request):
+    """
+    Endpoint: /api/reset/password/
+    """
+    # obviously you shouldn't be able to update a password just because you know a username
+    # there should be some secondary method of verifiction (such as email i'll find a way to do this later)
+    # or use email as the verification since that's generally not public or harder to guess/find out
+    data = json.loads(request.body)
+    validate = serializers.ResetPasswordValidateSerializer(data=data)
+    if validate.is_valid():
+        user = User.objects.get(username=data["username"])
+        user.set_password(validate.validated_data["confirm_password"])
+        user.save()
+        # i am well aware of the flaw that the previous refresh token is still active (until it expires)
+        # that refresh token may still be used to generate a new access token
+        return Response(status=status.HTTP_200_OK)
+    else:
+        return Response(validate.errors, status=status.HTTP_404_NOT_FOUND)
+
 def get_new_token(user, username, zip_code):
+    # i am well aware of the flaw that the previous refresh token is still active (until it expires)
+    # that refresh token may still be used to generate a new access token
     refresh = RefreshToken.for_user(user)
 
     refresh["id"] = user.id

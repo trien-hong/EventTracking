@@ -8,7 +8,7 @@ Each version has its own README.md file with more information.
 # Event Tracking Web App
 Users can sign up using their email/username, password (which are hashed and not plaintext), and a zip code. These three information will then be saved into a PostgreSQL database.
 
-When the user tries to log in, it'll query the database for matching credentials. If matching, the user is now logged in. In the Django & React version, I've implemented JWT (JSON Web Tokens). The JWT is saved into their browser's localStorage. After the access token is expired, a refresh token will regenerate a new access token. JWT payload is useful for authentication along with containing useful information in its payload.
+When the user tries to log in, it'll query the database for matching credentials. If matching, the user is now logged in. In the Django & React version, I've implemented JWT (JSON Web Tokens). After logging in The JWT is saved into their browser's localStorage. After the access token is expired, a refresh token will regenerate a new access token. JWT is useful for authentication along with containing useful information in its payload.
 
 On the homepage, we make an API call to Ticketmaster using the current logged-in user's zip code. Ticketmaster will then send back a JSON containing events based on that zip code.
 

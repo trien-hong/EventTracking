@@ -6,7 +6,7 @@ import UserAuthContext from '../contexts/UserAuthContext';
 import ProfilePictureContext from '../contexts/ProfilePictureContext';
 
 function Header() {
-    const {user, logout, clearLoginMessage} = useContext(UserAuthContext);
+    const {user, logout} = useContext(UserAuthContext);
     const {profilePictureLocation} = useContext(ProfilePictureContext);
     const navigate = useNavigate();
 
@@ -43,7 +43,8 @@ function Header() {
                 ) : (
                     <>
                         <Grid container justifyContent="center">
-                            <Button sx={{ mr: 1 }} variant="contained" component={Link} to="/signup" onClick={() => { clearLoginMessage(); }}>SIGNUP</Button>
+                            <Button sx={{ mr: 1 }} variant="contained" component={Link} to="/signup">SIGNUP</Button>
+                            <Button sx={{ ml: 1 }} variant="contained" component={Link} to="/reset/password/">RESET PASSWORD</Button>
                             <Button sx={{ ml: 1 }} variant="contained" component={Link} to="/login">LOGIN</Button>
                         </Grid>
                     </>

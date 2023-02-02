@@ -43,7 +43,9 @@ function Login() {
                     <br></br>
                     <Button sx={{ my: 3 }} type="submit" variant="contained">SUBMIT<LockOpenIcon sx={{ ml: 1 }}/></Button>
                     <hr></hr>
-                    <Typography sx={{ mt: 2, mb: 1 }} variant="h6">Don't have an account? <Typography variant="h6" component={Link} to="/signup"><b>Signup here</b></Typography></Typography>
+                    <Typography sx={{ mt: 2, mb: 1 }} variant="h6">Don't have an account? <Typography variant="h6" component={Link} to="/signup/"><b>Signup here</b></Typography></Typography>
+                    <hr></hr>
+                    <Typography sx={{ mt: 2, mb: 1 }} variant="h6">Forgot your password? <Typography variant="h6" component={Link} to="/reset/password/"><b>Reset here</b></Typography></Typography>
                 </form>
             </center>
         </div>

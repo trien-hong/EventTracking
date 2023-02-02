@@ -45,9 +45,12 @@ Ticketmaster API: [developer.ticketmaster.com](https://developer.ticketmaster.co
 OpenWeatherMap API: [openweathermap.org/api](https://openweathermap.org/api) <br>
 Google Maps API: [developers.google.com/maps](https://developers.google.com/maps)
 
-## NOTE:
-I commented out two specific lines in EventDetails.js to prevent the map from loading. This is because while you do get $200 worth of free credit every month (before they start charing), it can add up. That's 4878 dynamic maps (at 0.007 cents per load) plus 9756 places search (at 0.017 per search) for a total of $199.998 for free. <br>
-If you would like to see the maps, simply uncomment the two lines in EventDetails.js and the map should start loading.
+# NOTE:
+I commented out two specific lines in EventDetails.js to prevent the map from loading. This is because while you do get $200 worth of free credits every month (before they start charing), it can add up. That's 4878 dynamic maps (at 0.007 cents per load) plus 9756 places search (at 0.017 per search) for a total of $199.998 for free. <br>
+If you would like to see the maps, simply uncomment the two lines in EventDetails.js and the map should start loading. <br>
+
+For updating user's information I am well aware of the flaw that the previous refresh token is still active (until it expires). The acess token should expire shortly. However, that refresh token may still be used to generate a new access token. Thereby gaining access to what should otherwise be restricted materials.<br>
+Possible solution is to add the refresh token to a blacklist if user's information has been updated. If a malicious actor tries to gain acess with that blacklisted token, it should prevent them from gaining access.
 
 # Images
 <details>

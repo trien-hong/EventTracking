@@ -5,6 +5,7 @@ import ProfilePictureContextProvider from './contexts/ProfilePictureContextProvi
 import Header from './components/Header';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import ResetPassword from './pages/ResetPassword';
 import Events from './pages/Events';
 import Search from './pages/Search';
 import Profile from './pages/Profile';
@@ -25,6 +26,7 @@ function App() {
             </Route>
             <Route path="/login/" element={<Login/>}/>
             <Route path="/signup/" element={<Signup/>}/>
+            <Route path="/reset/password" element={<ResetPassword/>}/>
             <Route element={<PrivateRoute/>}>
               <Route path="/events/" element={<Events/>}/>
             </Route>
