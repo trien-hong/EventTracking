@@ -55,8 +55,9 @@ Possible solution is to add the refresh token to a blacklist if user's informati
 # Images
 <details>
     <summary>Click to view images</summary>
-    <img src="https://i.imgur.com/9tluYhW.png">
-    <img src="https://i.imgur.com/CZRIkWi.png">
+    <img src="https://i.imgur.com/eYltm5A.png">
+    <img src="https://i.imgur.com/NbjqElA.png">
+    <img src="https://i.imgur.com/0n50aN6.png">
     <img src="https://i.imgur.com/j5MpiQc.png">
     <img src="https://i.imgur.com/geNwlrc.png">
     <img src="https://i.imgur.com/I6LbfxV.png">
@@ -69,8 +70,9 @@ Possible solution is to add the refresh token to a blacklist if user's informati
     <img src="https://i.imgur.com/DWpHx4W.png">
     <img src="https://i.imgur.com/anJuA4j.png">
     <img src="https://i.imgur.com/yEaJFSz.png">
-    <img src="https://i.imgur.com/knGYwwY.png">
-    <img src="https://i.imgur.com/uow4ZVH.png">
+    <img src="https://i.imgur.com/am1uFWS.png">
+    <img src="https://i.imgur.com/7OY2jiw.png">
+    <img src="https://i.imgur.com/9RodiSb.png">
     <img src="https://i.imgur.com/aZR9KgR.png">
     <img src="https://i.imgur.com/if4tPvA.png">
     <img src="https://i.imgur.com/eFaakJt.png">

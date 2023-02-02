@@ -335,17 +335,17 @@ def resetPassword(request):
     """
     Endpoint: /api/reset/password/
     """
-    # obviously you shouldn't be able to update a password just because you know a username
-    # there should be some secondary method of verifiction (such as email i'll find a way to do this later)
-    # or use email as the verification since that's generally not public or harder to guess/find out
+    # i am well aware of the flaw that the previous refresh token is still active (until it expires)
+    # that refresh token may still be used to generate a new access token
     data = json.loads(request.body)
     validate = serializers.ResetPasswordValidateSerializer(data=data)
     if validate.is_valid():
         user = User.objects.get(username=data["username"])
+        # obviously you shouldn't be able to update a password just because you know a username
+        # there should be some secondary method of verifiction (such as email i'll find a way to do this later)
+        # or use email as the verification since that's generally not public or harder to guess/find out
         user.set_password(validate.validated_data["confirm_password"])
         user.save()
-        # i am well aware of the flaw that the previous refresh token is still active (until it expires)
-        # that refresh token may still be used to generate a new access token
         return Response(status=status.HTTP_200_OK)
     else:
         return Response(validate.errors, status=status.HTTP_404_NOT_FOUND)
