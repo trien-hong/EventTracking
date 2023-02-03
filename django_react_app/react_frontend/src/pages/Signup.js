@@ -49,14 +49,14 @@ function Signup() {
             alert("There seems to be error(s) in creating your account");
             setMessages(
                 <div id="errors">
-                    ERROR(S):
-                    {data["non_field_errors"].map(errors => (
-                        <div>
+                    <Typography variant="h5">ERROR(S):</Typography>
+                    {data["non_field_errors"].map((errors, i) => (
+                        <div key={i}>
                             {Object.entries(errors).map(([key, val]) => {
                             return (
-                                <p>
+                                <Typography variant="h5" key={key}>
                                     {val}
-                                </p>
+                                </Typography>
                             )
                             })}
                         </div>

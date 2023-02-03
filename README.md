@@ -1,7 +1,9 @@
 # Update
-There are currently 3 different versions of this web app. One using Django REST framework with React (single-page application), one using Django (with templates), and Flask (with templates). All versions use PostgreSQL as the database. The most updated versions is Django with React. Flask version is quite outdated.
+There are currently 3 different versions of this web app. One using Django REST framework with ReactJS (single-page application), one using Django (with templates), and Flask (with templates). All versions use PostgreSQL as the database.
 
-The Django and Django with React version contains some new features along with updated code (compared to Flask). Both Django versions can be run locally using docker-compose. You will need to obtain API keys and set up a/multiple .env file.
+For the most updated version it will be Django REST framework with ReactJS (single-page application). Django (with templates) and Flask (with templates) version is quite outdated. I will no longer update the Django/Flask version anymore.
+
+The Django REST framework with ReactJS version contains some new features along with much needed updated code (compared to Flask & Django). Both Django versions can be run locally using docker-compose. You will need to obtain API keys and set up a/multiple .env file(s).
 
 Each version has its own README.md file with more information.
 
@@ -21,8 +23,9 @@ There is also a profile component in which the user can add the specific event i
 # Images (from Django w/ ReactJS)
 <details>
     <summary>Click to view images</summary>
-    <img src="https://i.imgur.com/9tluYhW.png">
-    <img src="https://i.imgur.com/CZRIkWi.png">
+    <img src="https://i.imgur.com/eYltm5A.png">
+    <img src="https://i.imgur.com/NbjqElA.png">
+    <img src="https://i.imgur.com/0n50aN6.png">
     <img src="https://i.imgur.com/j5MpiQc.png">
     <img src="https://i.imgur.com/geNwlrc.png">
     <img src="https://i.imgur.com/I6LbfxV.png">
@@ -35,8 +38,13 @@ There is also a profile component in which the user can add the specific event i
     <img src="https://i.imgur.com/DWpHx4W.png">
     <img src="https://i.imgur.com/anJuA4j.png">
     <img src="https://i.imgur.com/yEaJFSz.png">
-    <img src="https://i.imgur.com/knGYwwY.png">
-    <img src="https://i.imgur.com/uow4ZVH.png">
+    <img src="https://i.imgur.com/BkjlziB.png">
+    <img src="https://i.imgur.com/V1fV0AJ.png">
+    <img src="https://i.imgur.com/PXr2yUS.png">
+    <img src="https://i.imgur.com/0SgvLm6.png">
+    <img src="https://i.imgur.com/4kwF9Uc.png">
+    <img src="https://i.imgur.com/8QhOonM.png">
+    <img src="https://i.imgur.com/tOCjsrN.png">
     <img src="https://i.imgur.com/aZR9KgR.png">
     <img src="https://i.imgur.com/if4tPvA.png">
     <img src="https://i.imgur.com/eFaakJt.png">

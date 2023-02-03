@@ -1,3 +1,4 @@
+import os
 import json
 import uuid
 import ticketmaster_api
@@ -98,10 +99,11 @@ def getRoutes(request):
         },
         {
             'Endpoint': '/api/profile/settings/picture/',
-            'Method': ['GET', 'PUT'],
+            'Method': ['GET', 'PUT', 'DELETE'],
             'Restricted': True,
             'Description': {'GET': 'Returns a location of the user\'s profile picture',
-                            'PUT': 'Updates the user\'s profile picture'}
+                            'PUT': 'Updates the user\'s profile picture',
+                            'DELETE': 'Deletes the user\'s profile picture'}
         },
         {
             'Endpoint': '/api/profile/settings/info/',
@@ -276,7 +278,7 @@ def profileReview(request):
     else:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-@api_view(["GET", "PUT"])
+@api_view(["GET", "PUT", "DELETE"])
 @permission_classes([IsAuthenticated])
 def profileSettingsPicture(request):
     """
@@ -285,7 +287,7 @@ def profileSettingsPicture(request):
     if request.method == "GET":
         user = User.objects.get(username=request.user)
         serializer = GetProfilePictureSerializer(user, many=False)
-        if serializer.data["profile_picture"] != None:
+        if serializer.data["profile_picture"] != None and os.path.exists(user.profile_picture.path):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
@@ -306,12 +308,23 @@ def profileSettingsPicture(request):
             # my problem is that it is one of the two OR both. i'll choose 400 for now.
             return Response(validate.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    if request.method == "DELETE":
+        user = User.objects.get(username=request.user)
+        if os.path.exists(user.profile_picture.path):
+            user.profile_picture.delete()
+            user.save()
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
 @api_view(["PUT"])
 @permission_classes([IsAuthenticated])
 def profileSettingsInfo(request):
     """
     Endpoint: /api/profile/settings/info/
     """
+    # i am well aware of the flaw that the previous refresh token is still active (until it expires)
+    # that refresh token may still be used to generate a new access token
     user = User.objects.get(id=request.user.id)
     data = json.loads(request.body)
     validate = serializers.UpdateUserInfoValidateSerializer(data=data)

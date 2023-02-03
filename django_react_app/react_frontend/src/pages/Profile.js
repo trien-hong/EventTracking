@@ -1,10 +1,11 @@
 import { useEffect, useState, useContext } from 'react';
-import { AppBar, Avatar, Box, Button, Toolbar, Tooltip, Typography, } from '@mui/material';
+import { AppBar, Avatar, Badge, Box, Button, Toolbar, Tooltip, Typography, } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ReviewsIcon from '@mui/icons-material/Reviews';
+import DeleteIcon from '@mui/icons-material/Delete';
 import UserAuthContext from '../contexts/UserAuthContext';
 import ProfilePictureContext from '../contexts/ProfilePictureContext';
 import ProfileSettings from '../components/ProfileSettings';
@@ -15,7 +16,7 @@ function Profile() {
     const [isProfilePictureLoaded, setIsProfilePictureLoaded] = useState(false);
     const [display, setDisplay] = useState("");
     const {user} = useContext(UserAuthContext);
-    const {profilePictureLocation} = useContext(ProfilePictureContext);
+    const {profilePictureLocation, deleteProfilePicture} = useContext(ProfilePictureContext);
 
     useEffect(() => {
         document.title = `Profile | ${user.username}`;
@@ -24,6 +25,8 @@ function Profile() {
     useEffect(() => {
         if (profilePictureLocation !== null) {
             setIsProfilePictureLoaded(true);
+        } else {
+            setIsProfilePictureLoaded(false);
         }
     }, [profilePictureLocation]);
 
@@ -60,7 +63,9 @@ function Profile() {
                 <div>
                     { isProfilePictureLoaded ? (
                         <div>
-                            <Avatar sx={{ ml: 1, mb: 2, height: "175px", width: "175px", borderStyle: "solid", borderColor: "gray", borderWidth: "5px"  }} src={"http://localhost:8000" + profilePictureLocation} alt={user.username}/>
+                            <Badge overlap="circular" anchorOrigin={{ vertical: "bottom", horizontal: "right" }} badgeContent={<Tooltip title="Delete Profile Picture"><DeleteIcon id="profilePictureDelete" onClick={() => { deleteProfilePicture(); }}/></Tooltip>}>
+                                <Avatar sx={{ ml: 1, mb: 2, height: "175px", width: "175px", borderStyle: "solid", borderColor: "gray", borderWidth: "5px"  }} src={"http://localhost:8000" + profilePictureLocation} alt={user.username}/>
+                            </Badge>
                         </div>
                     ) : (
                         <div>

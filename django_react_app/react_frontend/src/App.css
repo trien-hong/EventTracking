@@ -68,6 +68,21 @@
   padding: 22px;
 }
 
+#profilePictureDelete {
+  background-color: white;
+  border-radius: 20px;
+  border-color: black;
+  border-style: solid;
+  cursor: pointer;
+  padding: 10%;
+  margin-bottom: 23px;
+  margin-right: 18px;
+}
+
+#profilePictureDelete:hover {
+  border-color: gray;
+}
+
 #eventBorder {
   background-color: #E6E6E6;
   border-style: solid;

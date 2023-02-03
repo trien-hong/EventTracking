@@ -50,6 +50,7 @@ function Paging({setEvents, setSearchEvents, setIsLoading}) {
             }
             setEvents(data);
             setIsLoading(false);
+            scrollUp();
         } else {
             setIsLoading(false);
         }
@@ -74,6 +75,7 @@ function Paging({setEvents, setSearchEvents, setIsLoading}) {
             }
             setSearchEvents(data);
             setIsLoading(false);
+            scrollUp();
         } else {
             setSearchEvents(null);
             setIsLoading(false);

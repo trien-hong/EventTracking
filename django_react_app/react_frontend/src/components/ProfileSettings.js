@@ -5,6 +5,7 @@ import ProfilePictureContext from '../contexts/ProfilePictureContext';
 import PersonIcon2 from '@mui/icons-material/Person';
 import PasswordIcon from '@mui/icons-material/Password';
 import MapIcon from '@mui/icons-material/Map';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
@@ -87,13 +88,13 @@ function ProfileSettings() {
             setUpdateUserInfoMessages(
                 <div id="errors">
                     ERROR(S):
-                    {data["non_field_errors"].map(errors => (
-                        <div>
+                    {data["non_field_errors"].map((errors, i) => (
+                        <div key={i}>
                             {Object.entries(errors).map(([key, val]) => {
                             return (
-                                <p>
+                                <Typography variant="h5" key={key}>
                                     {val}
-                                </p>
+                                </Typography>
                             )
                             })}
                         </div>
@@ -137,7 +138,7 @@ function ProfileSettings() {
                     <Typography sx={{ mt: 2, mb: 1 }} variant="h5">{uploadProfilePictureMessage}</Typography>
                     <form onSubmit={uploadProfilePicture}>
                         <Input sx={{ mt: 1, mb: 1 }} type="file" onChange={(e) => setProfilePicture(e.target.files[0])} inputProps={{ accept: "image/*" }} required></Input>
-                        <Button type="submit" variant="contained">UPLOAD PROFILE PICTURE</Button>
+                        <Button type="submit" variant="contained">UPLOAD PROFILE PICTURE <FileUploadIcon sx={{ ml: 1 }}/></Button>
                     </form>
                 </center>
             </div>

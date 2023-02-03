@@ -1,5 +1,6 @@
 # Django w/ ReactJS & PostgreSQL
-This version is using Django (specfially as an API using Django's REST framework) with ReactJS and PostgreSQL as the database. Nginx is serving both React and Django. All API request is going through Nginx and Gunicorn.
+This version is using Django (specfially as an API using Django's REST framework) with ReactJS and PostgreSQL as the database. Nginx is serving both React and Django. All API request is going through Nginx and Gunicorn. <br>
+This is a single page applcation (SPA). A page refresh never occurs. Everything is rerender on a single page depending on the user's action.
 
 # Setting Up
 Ensure you are in the django_react_app folder/version. There are three .env files you will need to add.
@@ -27,16 +28,15 @@ There are 8 total variables you'll need to add in this .env file. We can just us
 There is only 1 variable you'll need to add in this .env file.
 * `REACT_APP_GOOGLEMAP_API_KEY="ENTER YOUR GOOGLE MAP API KEY HERE"`
 
-Docker should handle all the CLI (releated to setup) so you don't have to. You just need to set up the three .env files.
-
 ## Docker & Docker-compose
+Docker should handle all the CLI (releated to setup) so you don't have to. You just need to set up the three .env files. <br><br>
 Ensure you have docker and docker compose. You can find more info here. <br>
 [docs.docker.com/get-docker/](https://docs.docker.com/get-docker/) <br>
 [docs.docker.com/compose/install/](https://docs.docker.com/compose/install/) <br>
 [docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/)
 
 # Running
-Now that your .env file is set up. Ensure you're in the django_react_app version/folder before starting. You can run the app with docker-compose. In your terminal type in `docker-compose build` and then `docker-compose up`. Both these commands may take some time.
+Now that your three .env files are set up. Ensure you're in the django_react_app version/folder before starting. You can run the app with docker-compose. In your terminal type in `docker-compose build` and then `docker-compose up`. Both these commands may take some time.
 
 Within your browser, go to `localhost` and you should see a login page. If the first option does not work try `127.0.0.1`. It may take some time for things to load.
 
@@ -70,9 +70,13 @@ Possible solution is to add the refresh token to a blacklist if user's informati
     <img src="https://i.imgur.com/DWpHx4W.png">
     <img src="https://i.imgur.com/anJuA4j.png">
     <img src="https://i.imgur.com/yEaJFSz.png">
-    <img src="https://i.imgur.com/am1uFWS.png">
-    <img src="https://i.imgur.com/7OY2jiw.png">
-    <img src="https://i.imgur.com/9RodiSb.png">
+    <img src="https://i.imgur.com/BkjlziB.png">
+    <img src="https://i.imgur.com/V1fV0AJ.png">
+    <img src="https://i.imgur.com/PXr2yUS.png">
+    <img src="https://i.imgur.com/0SgvLm6.png">
+    <img src="https://i.imgur.com/4kwF9Uc.png">
+    <img src="https://i.imgur.com/8QhOonM.png">
+    <img src="https://i.imgur.com/tOCjsrN.png">
     <img src="https://i.imgur.com/aZR9KgR.png">
     <img src="https://i.imgur.com/if4tPvA.png">
     <img src="https://i.imgur.com/eFaakJt.png">
