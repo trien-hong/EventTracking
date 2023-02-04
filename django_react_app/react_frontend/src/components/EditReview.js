@@ -33,16 +33,19 @@ function EditReview({reviews, review, setReviews}) {
                 userComment: comment
             })
         });
-        const editiedReview = reviews.map((obj) => {
-            if (obj.id === review.id) {
-                const update = ({...obj});
-                update["userRating"] = rating;
-                update["userComment"] = comment;
-                return update;
-            }
-            return obj;
-        });
         if (response.status === 200) {
+            const data = await response.json();
+            const editiedReview = reviews.map((obj) => {
+                if (obj.id === review.id) {
+                    const update = ({...obj});
+                    update["date"] = data.date
+                    update["userRating"] = data.userRating
+                    update["userComment"] = data.userComment
+                    update["isEdited"] = data.isEdited;
+                    return update;
+                }
+                return obj;
+            });
             setReviews(editiedReview);
             alert("Review has been successfully updated/edited for this event.");
             setOpen(false);

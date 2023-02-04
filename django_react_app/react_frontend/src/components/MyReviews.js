@@ -31,7 +31,15 @@ function UserReviews({reviews, review, setReviews}) {
                 </Grid>
             </Stack>
             <hr></hr>
-            <Typography sx={{ mt: 1 }} variant="body2"><b>Reviewed On: </b>{review.dateAdded}</Typography>
+            { review.isEdited ? (
+                <div>
+                    <Typography sx={{ mt: 1 }} variant="body2"><b>Last Edited Review On: </b>{review.date}</Typography>
+                </div>
+            ) : (
+                <div>
+                    <Typography sx={{ mt: 1 }} variant="body2"><b>Reviewed On: </b>{review.date}</Typography>
+                </div>
+            )}
             <Typography variant="body2"><b>Event Title: </b>{review.title}</Typography>
             <Stack alignItems="center" direction="row">
                 <Typography variant="body2">

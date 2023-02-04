@@ -4,7 +4,7 @@ import Textarea from '@mui/joy/Textarea';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import UserAuthContext from '../contexts/UserAuthContext';
 import OtherUsersReviews from './OtherUsersReviews';
-import UserReviews from './UserReviews';
+import MyReviews from './MyReviews';
 import Loading from './Loading';
 
 function EventReviews({event}) {
@@ -117,7 +117,7 @@ function EventReviews({event}) {
                                             return (
                                                 <div>
                                                     <div id="review">
-                                                        <UserReviews reviews={reviews} review={review} setReviews={setReviews}/>
+                                                        <MyReviews reviews={reviews} review={review} setReviews={setReviews}/>
                                                     </div>
                                                     <br></br>
                                                 </div>

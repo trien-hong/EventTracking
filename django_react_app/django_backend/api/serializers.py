@@ -116,14 +116,22 @@ class UserEventsSerializer(ModelSerializer):
         fields = "__all__"
 
 class GetReviewsSerializer(HyperlinkedModelSerializer):
+    date = serializers.DateTimeField(format="%m-%d-%Y @ %H:%M:%S UTC")
     username = serializers.CharField(source="user.username")
     profile_picture = serializers.CharField(source="user.profile_picture")
 
     class Meta:
         model = UserReviews
-        fields = ["username", "profile_picture", "id", "event_id", "title", "userComment", "userRating", "dateAdded"]
+        fields = ["username", "profile_picture", "id", "event_id", "title", "userComment", "userRating", "date", "isEdited"]
 
 class GetProfilePictureSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ["profile_picture"]
+
+class EditedReviewSerializer(ModelSerializer):
+    date = serializers.DateTimeField(format="%m-%d-%Y @ %H:%M:%S UTC")
+
+    class Meta:
+        model = UserReviews
+        fields = ["userComment", "userRating", "date", "isEdited"]

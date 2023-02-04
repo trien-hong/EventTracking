@@ -25,7 +25,7 @@ function OtherUsersReviews({review}) {
                 </Grid>
             </Stack>
             <hr></hr>
-            <Typography sx={{ mt: 1 }} variant="body2"><b>Reviewed On: </b>{review.dateAdded}</Typography>
+            <Typography sx={{ mt: 1 }} variant="body2"><b>Reviewed On: </b>{review.date}</Typography>
             <Typography variant="body2"><b>Event Title: </b>{review.title}</Typography>
             <Stack alignItems="center" direction="row">
                 <Typography variant="body2">

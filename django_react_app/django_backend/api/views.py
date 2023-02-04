@@ -12,9 +12,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from . models import UserEvents
 from . models import UserReviews
-from . serializers import UserEventsSerializer
-from . serializers import GetReviewsSerializer
-from . serializers import GetProfilePictureSerializer
 from . import serializers
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -207,8 +204,10 @@ def userReviews(request):
         review = UserReviews.objects.get(id=data["id"])
         review.userComment = data["userComment"]
         review.userRating = data["userRating"]
+        review.isEdited = True
         review.save()
-        return Response(status=status.HTTP_200_OK)
+        serializer = serializers.EditedReviewSerializer(review, many=False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     if request.method == "DELETE":
         data = json.loads(request.body)
@@ -223,7 +222,7 @@ def getAllReviews(request, event_id):
     Endpoint: /api/reviews/get/event_id/<str:event_id>/
     """
     reviews = UserReviews.objects.all().filter(event_id=event_id).order_by("id")
-    serializer = GetReviewsSerializer(reviews, many=True)
+    serializer = serializers.GetReviewsSerializer(reviews, many=True)
     if serializer.data != []:
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
@@ -238,7 +237,7 @@ def profileEvents(request):
     if request.method == "GET":
         user = request.user
         data = UserEvents.objects.all().filter(user=user.id)
-        serializer = UserEventsSerializer(data, many=True)
+        serializer = serializers.UserEventsSerializer(data, many=True)
         if serializer.data != []:
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
@@ -272,7 +271,7 @@ def profileReview(request):
     """
     user = request.user
     reviews = UserReviews.objects.all().filter(user=user.id).order_by("id")
-    serializer = GetReviewsSerializer(reviews, many=True)
+    serializer = serializers.GetReviewsSerializer(reviews, many=True)
     if serializer.data != []:
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
@@ -286,7 +285,7 @@ def profileSettingsPicture(request):
     """
     if request.method == "GET":
         user = User.objects.get(username=request.user)
-        serializer = GetProfilePictureSerializer(user, many=False)
+        serializer = serializers.GetProfilePictureSerializer(user, many=False)
         if serializer.data["profile_picture"] != None and os.path.exists(user.profile_picture.path):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:

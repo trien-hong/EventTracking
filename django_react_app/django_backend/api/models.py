@@ -23,5 +23,6 @@ class UserReviews(models.Model):
     title = models.TextField()
     userComment = models.TextField()
     userRating = models.TextField()
-    dateAdded = models.DateField(auto_now_add=True)
+    date = models.DateTimeField(auto_now=True)
+    isEdited = models.BooleanField(default=False)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, default=None)
