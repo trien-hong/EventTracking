@@ -43,13 +43,13 @@ def getRoutes(request):
             'Description': {'POST': 'Signup a user and save their information inside the database'}
         },
         {
-            'Endpoint': '/api/events/page/<str:page>/',
+            'Endpoint': '/api/events/page/<str:page>/size/<str:size>/sort/<str:sort>/',
             'Method': ['GET'],
             'Restricted': True,
             'Description': {'GET': 'Returns an array of events based on the current logged in user zip code'}
         },
         {
-            'Endpoint': '/api/events/search/input/<str:input>/page/<str:page>/',
+            'Endpoint': '/api/events/search/input/<str:input>/page/<str:page>/size/<str:size>/sort/<str:sort>/',
             'Method': ['GET'],
             'Restricted': True,
             'Description': {'GET': 'Returns an array of events based on the input for searching events'}
@@ -145,12 +145,12 @@ def signup(request):
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def events(request, page):
+def events(request, size, page, sort):
     """
-    Endpoint: /api/events/page/<str:page>/
+    Endpoint: /api/events/page/<str:page>/size/<str:size>/sort/<str:sort>/
     """
     user = request.user
-    events = ticketmaster_api.getEvents(user.zip_code, page)
+    events = ticketmaster_api.getEvents(user.zip_code, size, page, sort)
     if events != False:
         return Response(events, status=status.HTTP_200_OK)
     else:
@@ -158,11 +158,11 @@ def events(request, page):
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def eventsSearchInput(request, input, page):
+def eventsSearchInput(request, input, size, page, sort):
     """
-    Endpoint: /api/events/search/input/<str:input>/page/<str:page>/
+    Endpoint: /api/events/search/input/<str:input>/page/<str:page>/size/<str:size>/sort/<str:sort>/
     """
-    events = ticketmaster_api.getEvents(input, page)
+    events = ticketmaster_api.getEvents(input, size, page, sort)
     if events != False:
         return Response(events, status=status.HTTP_200_OK)
     else:

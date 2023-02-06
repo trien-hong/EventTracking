@@ -23,7 +23,7 @@ function Header() {
                         <Grid container justifyContent="flex-start">
                             <Button variant="contained" component={Link} to="/events">EVENTS</Button>
                         </Grid>
-                        <Grid container justifyContent="center">
+                        <Grid sx={{ ml: 6 }} container justifyContent="center">
                             <form onSubmit={search}>
                                 <TextField sx={{ background: "white", width: 375 }} label="Search events here..." name="searchBar" variant="filled" required InputLabelProps={{ required: false }} InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title="Search"><IconButton type="submit"><SearchIcon sx={{ color: "black" }}/></IconButton></Tooltip></InputAdornment>)}}/>
                             </form>

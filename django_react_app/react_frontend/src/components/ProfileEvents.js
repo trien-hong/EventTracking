@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { Chip, Divider, Typography } from '@mui/material';
+import ErrorIcon from '@mui/icons-material/Error';
 import UserAuthContext from '../contexts/UserAuthContext';
 import DeleteEventButton from '../components/DeleteEventButton';
 import Loading from '../components/Loading';
@@ -64,8 +65,9 @@ function ProfileEvents() {
                             </div>
                         </div>
                     ) : (
-                        <div>
-                            <Typography id="errors" variant="h5" align="center">Your profile does not contain any events. <br></br>Try saving some events in.</Typography>
+                        <div id="container">
+                            <Typography id="errors" variant="h5" align="center">Your profile does not contain any events.<br></br>Try saving some events in.</Typography>
+                            <Divider sx={{ my: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="error" label="ERROR" icon={ <ErrorIcon/> }/></Divider>
                         </div>
                     )}
                     <br></br>

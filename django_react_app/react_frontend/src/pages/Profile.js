@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { AppBar, Avatar, Badge, Box, Button, Toolbar, Tooltip, Typography, } from '@mui/material';
+import { Grid, Stack, AppBar, Avatar, Badge, Box, Button, Toolbar, Tooltip, Typography, } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -63,19 +63,19 @@ function Profile() {
                 <div>
                     { isProfilePictureLoaded ? (
                         <div>
-                            <Badge overlap="circular" anchorOrigin={{ vertical: "bottom", horizontal: "right" }} badgeContent={<Tooltip title="Delete Profile Picture"><DeleteIcon id="profilePictureDelete" onClick={() => { deleteProfilePicture(); }}/></Tooltip>}>
-                                <Avatar sx={{ ml: 1, mb: 2, height: "175px", width: "175px", borderStyle: "solid", borderColor: "gray", borderWidth: "5px"  }} src={"http://localhost:8000" + profilePictureLocation} alt={user.username}/>
+                            <Badge overlap="circular" anchorOrigin={{ vertical: "bottom", horizontal: "right" }} badgeContent={<Tooltip title="Delete Profile Picture"><DeleteIcon sx={{ mt: 3 }} id="profilePictureDelete" onClick={() => { deleteProfilePicture(); }}/></Tooltip>}>
+                                <Avatar sx={{ height: "175px", width: "175px", borderStyle: "solid", borderColor: "gray", borderWidth: "5px"  }} src={"http://localhost:8000" + profilePictureLocation} alt={user.username}/>
                             </Badge>
                         </div>
                     ) : (
                         <div>
-                            <Avatar sx={{ ml: 1, mb: 2, height: "175px", width: "175px", borderStyle: "solid", borderColor: "gray", borderWidth: "5px"  }}>{user.username.charAt(0)}</Avatar>
+                            <Avatar sx={{ height: "175px", width: "175px", borderStyle: "solid", borderColor: "gray", borderWidth: "5px"  }}>{user.username.charAt(0)}</Avatar>
                         </div>
                     )}
                 </div>
-                <Button sx={{ mb: 3 }} variant="contained" onClick={() => { displayProfileSettings(); }}>Profile Settings<SettingsIcon sx={{ ml: 1 }}/></Button>
-                <Button sx={{ mb: 3, mx: 1.5 }} variant="contained" onClick={() => { displayProfileEvents(); }}>Profile Events<AssignmentIcon sx={{ ml: 1 }}/></Button>
-                <Button sx={{ mb: 3 }} variant="contained" onClick={() => { displayProfileReviews(); }}>Profile Reviews<ReviewsIcon sx={{ ml: 1 }}/></Button>
+                <Button sx={{ my: 3 }} variant="contained" onClick={() => { displayProfileSettings(); }}>Profile Settings<SettingsIcon sx={{ ml: 1 }}/></Button>
+                <Button sx={{ my: 3, mx: 1.5 }} variant="contained" onClick={() => { displayProfileEvents(); }}>Profile Events<AssignmentIcon sx={{ ml: 1 }}/></Button>
+                <Button sx={{ my: 3 }} variant="contained" onClick={() => { displayProfileReviews(); }}>Profile Reviews<ReviewsIcon sx={{ ml: 1 }}/></Button>
                 {display}
                 <AppBar position="static" sx={{ position: "fixed", bottom: 0, color: "black", background: "lightgray" }}>
                     <Toolbar style={{ pt: 3, minHeight: 40 }}>

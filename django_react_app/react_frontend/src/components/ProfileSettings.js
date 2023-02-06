@@ -1,14 +1,15 @@
 import { useEffect, useState, useContext } from 'react';
-import { Button, Input, IconButton, InputAdornment, TextField, Tooltip, Typography } from '@mui/material';
+import { Chip, Button, Divider, Input, IconButton, InputAdornment, TextField, Tooltip, Typography } from '@mui/material';
 import UserAuthContext from '../contexts/UserAuthContext';
 import ProfilePictureContext from '../contexts/ProfilePictureContext';
 import PersonIcon2 from '@mui/icons-material/Person';
 import PasswordIcon from '@mui/icons-material/Password';
-import MapIcon from '@mui/icons-material/Map';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import ErrorIcon from '@mui/icons-material/Error';
 
 function ProfileSettings() {
     const [profilePicture, setProfilePicture] = useState(null);
@@ -45,18 +46,18 @@ function ProfileSettings() {
             alert("Sorry, the file doesn't seem to be a valid image and or file size is greater than 5MB.");
             setUploadProfilePictureMessage(
                 <div id="errors">
-                    <Typography id="errors" variant="h5">ERROR(S):</Typography>
                     {data["non_field_errors"].map(errors => (
                         <div>
                             {Object.entries(errors).map(([key, val]) => {
                             return (
-                                <Typography id="errors" variant="h5">
+                                <div key={key}>
                                     {val}
-                                </Typography>
+                                </div>
                             )
                             })}
                         </div>
                     ))}
+                    <Divider sx={{ mt: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="error" label="ERROR(S)" icon={ <ErrorIcon/> }/></Divider>
                 </div>
             );
         }
@@ -87,18 +88,18 @@ function ProfileSettings() {
             alert("There seems to be error(s) in updating your new information on your account");
             setUpdateUserInfoMessages(
                 <div id="errors">
-                    ERROR(S):
                     {data["non_field_errors"].map((errors, i) => (
                         <div key={i}>
                             {Object.entries(errors).map(([key, val]) => {
                             return (
-                                <Typography variant="h5" key={key}>
+                                <div key={key}>
                                     {val}
-                                </Typography>
+                                </div>
                             )
                             })}
                         </div>
                     ))}
+                    <Divider sx={{ mt: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="error" label="ERROR(S)" icon={ <ErrorIcon/> }/></Divider>
                 </div>
             );
         }
@@ -118,26 +119,26 @@ function ProfileSettings() {
 
     return (
         <div>
-            <div id="form">
+            <div id="container">
                 <center>
-                    <Typography sx={{ mb: 3 }} variant="h4"><u><b>Update Your Info</b></u></Typography>
-                    <hr></hr>
+                    <Typography variant="h4"><u><b>Update Your Info</b></u></Typography>
+                    <Divider sx={{ my: 2, backgroundColor: "gray" }}/>
+                    <Typography sx={{ mb: 2 }} variant="h5">{updateUserInfoMessage}</Typography>
                     <form onSubmit={updateUserInfo}>
-                        <Typography sx={{ mt: 2 }} variant="h5">{updateUserInfoMessage}</Typography>
-                        <PersonIcon2 sx={{ mr: 2, mt: 5, color: "#077E1E"}} id="icons"/><TextField sx={{ mt: 2, background: "white", width: 375 }} type="text" label="Enter new username" name="username" variant="filled" inputProps={{ maxLength: 150 }}/>
+                        <PersonIcon2 sx={{ mr: 2, mt: 2.2, color: "#077E1E"}} id="icons"/><TextField sx={{ background: "white", width: 375 }} type="text" label="Enter new username" name="username" variant="filled" inputProps={{ maxLength: 150 }}/>
                         <br></br>
-                        <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#077E1E" }} id="icons"/><TextField sx={{ background: "white", width: 375, mt: 0.5 }} type={textfieldType} label="Enter new password" name="password" variant="filled" InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
+                        <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#077E1E" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Enter new password" name="password" variant="filled" InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
                         <br></br>
-                        <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#077E1E" }} id="icons"/><TextField sx={{ background: "white", width: 375, mt: 0.5 }} type={textfieldType} label="Confirm new password" name="confirm_password" variant="filled" InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
+                        <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#077E1E" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Confirm new password" name="confirm_password" variant="filled" InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
                         <br></br>
-                        <MapIcon sx={{ mr: 2, mt: 2.3, color: "#077E1E" }} id="icons"/><TextField sx={{ background: "white", width: 375, mt: 0.5 }} type="text" name="zip_code" label="Enter new ZIP Code" variant="filled" inputProps={{ minLength:5, maxLength: 5 }}/>
+                        <TravelExploreIcon sx={{ mr: 2, mt: 2.2, color: "#077E1E" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type="text" name="zip_code" label="Enter new ZIP Code" variant="filled" inputProps={{ minLength:5, maxLength: 5 }}/>
                         <br></br>
                         <Button sx={{ my: 3 }} type="submit" variant="contained">UPDATE<AssignmentIndIcon sx={{ ml: 1 }}/></Button>
                     </form>
-                    <hr></hr>
-                    <Typography sx={{ mt: 2, mb: 1 }} variant="h5">{uploadProfilePictureMessage}</Typography>
+                    <Divider sx={{ backgroundColor: "gray" }}/>
+                    <Typography sx={{ my: 2 }} variant="h5">{uploadProfilePictureMessage}</Typography>
                     <form onSubmit={uploadProfilePicture}>
-                        <Input sx={{ mt: 1, mb: 1 }} type="file" onChange={(e) => setProfilePicture(e.target.files[0])} inputProps={{ accept: "image/*" }} required></Input>
+                        <Input sx={{ mt: 1 }} type="file" onChange={(e) => setProfilePicture(e.target.files[0])} inputProps={{ accept: "image/*" }} required></Input>
                         <Button type="submit" variant="contained">UPLOAD PROFILE PICTURE <FileUploadIcon sx={{ ml: 1 }}/></Button>
                     </form>
                 </center>

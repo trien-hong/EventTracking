@@ -1,6 +1,6 @@
 import { useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, IconButton, InputAdornment, TextField, Tooltip, Typography } from '@mui/material';
+import { Button, Divider, Grid, IconButton, InputAdornment, TextField, Tooltip, Typography } from '@mui/material';
 import PersonIcon2 from '@mui/icons-material/Person';
 import PasswordIcon from '@mui/icons-material/Password';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
@@ -32,22 +32,23 @@ function Login() {
 
     return (
         <div>
-            <center>
-                <br></br>
-                <form id="form" onSubmit={login}>
-                    <Typography sx={{ mb: 1 }} variant="h5">{message}</Typography>
-                    <Typography sx={{ mb: 3 }} variant="h4"><u><b>LOGIN</b></u></Typography>
-                    <PersonIcon2 sx={{ mr: 2, mt: 2, color: "#077E1E" }} id="icons"/><TextField sx={{ background: "white", width: 375 }} type="text" label="Enter username" name="username" variant="filled" required/>
-                    <br></br>
-                    <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#077E1E" }} id="icons"/><TextField sx={{ background: "white", width: 375, mt: 0.5 }} type={textfieldType} label="Enter password" name="password" variant="filled" required InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
-                    <br></br>
-                    <Button sx={{ my: 3 }} type="submit" variant="contained">SUBMIT<LockOpenIcon sx={{ ml: 1 }}/></Button>
-                    <hr></hr>
-                    <Typography sx={{ mt: 2, mb: 1 }} variant="h6">Don't have an account? <Typography variant="h6" component={Link} to="/signup/"><b>Signup here</b></Typography></Typography>
-                    <hr></hr>
-                    <Typography sx={{ mt: 2, mb: 1 }} variant="h6">Forgot your password? <Typography variant="h6" component={Link} to="/reset/password/"><b>Reset here</b></Typography></Typography>
-                </form>
-            </center>
+            <Grid sx={{ mt: 2 }} container justifyContent="center" textAlign="center">
+                <div id="container">
+                    <Typography variant="h5">{message}</Typography>
+                    <Typography variant="h4"><u><b>LOGIN</b></u></Typography>
+                    <form onSubmit={login}>
+                        <PersonIcon2 sx={{ mr: 2, mt: 4, color: "#077E1E" }} id="icons"/><TextField sx={{ mt: 2, width: 375, background: "white" }} type="text" label="Enter username" name="username" variant="filled" required/>
+                        <br></br>
+                        <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#077E1E" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Enter password" name="password" variant="filled" required InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
+                        <br></br>
+                        <Button sx={{ my: 2.5 }} type="submit" variant="contained">SUBMIT<LockOpenIcon sx={{ ml: 1 }}/></Button>
+                    </form>
+                    <Divider sx={{ backgroundColor: "gray" }}/>
+                    <Typography sx={{ my: 1 }} variant="h6">Don't have an account? <Typography variant="h6" component={Link} to="/signup/"><b>Signup here</b></Typography></Typography>
+                    <Divider sx={{ backgroundColor: "gray" }}/>
+                    <Typography sx={{ mt: 1 }} variant="h6">Forgot your password? <Typography variant="h6" component={Link} to="/reset/password/"><b>Reset here</b></Typography></Typography>
+                </div>
+            </Grid>
         </div>
     );
 }

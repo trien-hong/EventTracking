@@ -5,7 +5,7 @@ import UserAuthContext from '../contexts/UserAuthContext';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
-function Paging({setEvents, setSearchEvents, setIsLoading}) {
+function Paging({setEvents, setSearchEvents, setIsLoading, eventsPerPage, sortingOptions}) {
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const {authTokens} = useContext(UserAuthContext);
@@ -13,29 +13,36 @@ function Paging({setEvents, setSearchEvents, setIsLoading}) {
     const search = searchParams.get("q");
     const location = useLocation();
 
+    // i am aware of the double calls to the API in useEffect. i'll try to fix later.
+
     useEffect(() => {
         if (location.pathname === "/events" || location.pathname === "/events/" || location.pathname === "/") {
             document.title = `Events | Page #${currentPage}`;
             getEvents();
         }
-    }, [currentPage]);
+        if (location.pathname === "/search" || location.pathname === "/search/") {
+            document.title = `${search} | Page #${currentPage}`;
+            getSearchEvents();
+        }
+    }, [currentPage, eventsPerPage, sortingOptions]);
 
     useEffect(() => {
         if (location.pathname === "/search" || location.pathname === "/search/") {
             setCurrentPage(1);
         }
     }, [search]);
-    
+
     useEffect(() => {
-        if (location.pathname === "/search" || location.pathname === "/search/") {
-            document.title = `${search} | Page #${currentPage}`;
-            getSearchEvents();
-        }
-    }, [currentPage, search]);
+        setCurrentPage(1);
+    }, [eventsPerPage]);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [sortingOptions]);
 
     async function getEvents() {
-        // const response = await fetch(`http://127.0.0.1:8000/api/events/page/${currentPage - 1}/`, {
-        const response = await fetch(`http://127.0.0.1/api/events/page/${currentPage - 1}/`, {
+        // const response = await fetch(`http://127.0.0.1:8000/api/events/size/${eventsPerPage}/page/${currentPage-1}/sort/${sortingOptions}/`, {
+        const response = await fetch(`http://127.0.0.1/api/events/size/${eventsPerPage}/page/${currentPage-1}/sort/${sortingOptions}/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -46,8 +53,8 @@ function Paging({setEvents, setSearchEvents, setIsLoading}) {
             const data = await response.json();
             if (data !== false) {
                 setTotalPages(data.at(-1)["totalPages"]);
-                data.pop();
             }
+            data.pop();
             setEvents(data);
             setIsLoading(false);
             scrollUp();
@@ -57,8 +64,8 @@ function Paging({setEvents, setSearchEvents, setIsLoading}) {
     }
 
     async function getSearchEvents() {
-        // const response = await fetch(`http://127.0.0.1:8000/api/events/search/input/${search}/page/${currentPage - 1}/`, {
-        const response = await fetch(`http://127.0.0.1/api/events/search/input/${search}/page/${currentPage - 1}/`, {
+        // const response = await fetch(`http://127.0.0.1:8000/api/events/search/input/${search}/size/${eventsPerPage}/page/${currentPage-1}/sort/${sortingOptions}/`, {
+        const response = await fetch(`http://127.0.0.1/api/events/search/input/${search}/size/${eventsPerPage}/page/${currentPage-1}/sort/${sortingOptions}/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
+import { Chip, Divider } from '@mui/material';
+import ErrorIcon from '@mui/icons-material/Error';
 import UserAuthContext from './UserAuthContext';
 
 function UserAuthContextProvider({children}) {
@@ -53,8 +55,8 @@ function UserAuthContextProvider({children}) {
             alert(data["detail"]);
             setMessage(
                 <div id="errors">
-                    ERROR: {data["detail"]}.
-                    <hr></hr>
+                    {data["detail"]}
+                    <Divider sx={{ my: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="error" label="ERROR" icon={ <ErrorIcon/> }/></Divider>
                 </div>
             );
         }
