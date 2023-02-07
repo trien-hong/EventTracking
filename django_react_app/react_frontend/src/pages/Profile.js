@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { Grid, Stack, AppBar, Avatar, Badge, Box, Button, Toolbar, Tooltip, Typography, } from '@mui/material';
+import { AppBar, Avatar, Badge, Box, Button, Toolbar, Tooltip, Typography, } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -15,6 +15,9 @@ import ProfileReviews from '../components/ProfileReviews';
 function Profile() {
     const [isProfilePictureLoaded, setIsProfilePictureLoaded] = useState(false);
     const [display, setDisplay] = useState("");
+    const [settingsButtonColor, setSettingsButtonColor] = useState("primary");
+    const [eventsButtonColor, setEventsButtonColor] = useState("primary");
+    const [reviewsButtonColor, setReviewsButtonColor] = useState("primary");
     const {user} = useContext(UserAuthContext);
     const {profilePictureLocation, deleteProfilePicture} = useContext(ProfilePictureContext);
 
@@ -39,21 +42,45 @@ function Profile() {
     }
 
     function displayProfileSettings() {
-        setDisplay(
-            <ProfileSettings/>
-        );
+        if (settingsButtonColor === "success") {
+            setDisplay(null);
+            setSettingsButtonColor("primary");
+        } else {
+            setSettingsButtonColor("success");
+            setEventsButtonColor("primary");
+            setReviewsButtonColor("primary");
+            setDisplay(
+                <ProfileSettings/>
+            );
+        }
     }
 
     function displayProfileEvents() {
-        setDisplay(
-            <ProfileEvents/>
-        );
+        if (eventsButtonColor === "success") {
+            setDisplay(null);
+            setEventsButtonColor("primary");
+        } else {
+            setSettingsButtonColor("primary");
+            setEventsButtonColor("success");
+            setReviewsButtonColor("primary");
+            setDisplay(
+                <ProfileEvents/>
+            );
+        }
     }
 
     function displayProfileReviews() {
-        setDisplay(
-            <ProfileReviews/>
-        );
+        if (reviewsButtonColor === "success") {
+            setDisplay(null);
+            setReviewsButtonColor("primary");
+        } else {
+            setSettingsButtonColor("primary");
+            setEventsButtonColor("primary");
+            setReviewsButtonColor("success");
+            setDisplay(
+                <ProfileReviews/>
+            );
+        }
     }
 
     return (
@@ -73,9 +100,9 @@ function Profile() {
                         </div>
                     )}
                 </div>
-                <Button sx={{ my: 3 }} variant="contained" onClick={() => { displayProfileSettings(); }}>Profile Settings<SettingsIcon sx={{ ml: 1 }}/></Button>
-                <Button sx={{ my: 3, mx: 1.5 }} variant="contained" onClick={() => { displayProfileEvents(); }}>Profile Events<AssignmentIcon sx={{ ml: 1 }}/></Button>
-                <Button sx={{ my: 3 }} variant="contained" onClick={() => { displayProfileReviews(); }}>Profile Reviews<ReviewsIcon sx={{ ml: 1 }}/></Button>
+                <Button sx={{ my: 3 }} color={settingsButtonColor} variant="contained" onClick={() => { displayProfileSettings(); }}>Profile Settings<SettingsIcon sx={{ ml: 1 }}/></Button>
+                <Button sx={{ my: 3, mx: 1.5 }} color={eventsButtonColor} variant="contained" onClick={() => { displayProfileEvents(); }}>Profile Events<AssignmentIcon sx={{ ml: 1 }}/></Button>
+                <Button sx={{ my: 3 }} color={reviewsButtonColor} variant="contained" onClick={() => { displayProfileReviews(); }}>Profile Reviews<ReviewsIcon sx={{ ml: 1 }}/></Button>
                 {display}
                 <AppBar position="static" sx={{ position: "fixed", bottom: 0, color: "black", background: "lightgray" }}>
                     <Toolbar style={{ pt: 3, minHeight: 40 }}>

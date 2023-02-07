@@ -59,7 +59,6 @@ function ProfileEvents() {
                                             <Typography sx={{ my: 2.5 }}>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
                                             <DeleteEventButton event={event} profileEvents={profileEvents} setProfileEvents={setProfileEvents}/>
                                         </center>
-                                        <div id="map"></div>
                                     </div>
                                 )}
                             </div>

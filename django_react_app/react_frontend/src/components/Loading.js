@@ -1,14 +1,14 @@
-import { CircularProgress, Typography } from '@mui/material';
+import { Grid, CircularProgress, Typography } from '@mui/material';
 
 function Loading() {
     return (
         <div>
-            <center>
+            <Grid sx={{ mt: 2 }} container justifyContent="center" textAlign="center">
                 <Typography sx={{ my: 3 }} variant="h5">Loading...</Typography>
-            </center>
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            </Grid>
+            <Grid container justifyContent="center" textAlign="center">
                 <CircularProgress/>
-            </div>
+            </Grid>
         </div>
     );
 }

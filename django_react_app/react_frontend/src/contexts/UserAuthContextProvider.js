@@ -55,7 +55,7 @@ function UserAuthContextProvider({children}) {
             alert(data["detail"]);
             setMessage(
                 <div id="errors">
-                    {data["detail"]}
+                    {data["detail"]}.
                     <Divider sx={{ my: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="error" label="ERROR" icon={ <ErrorIcon/> }/></Divider>
                 </div>
             );

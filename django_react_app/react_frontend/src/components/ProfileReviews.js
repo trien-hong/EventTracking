@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { Chip, Divider, Grid, Typography } from '@mui/material';
+import { Chip, Divider, Typography } from '@mui/material';
 import ErrorIcon from '@mui/icons-material/Error';
 import UserAuthContext from '../contexts/UserAuthContext';
 import Loading from './Loading';
@@ -61,7 +61,7 @@ function ProfileReviews() {
                         </div>
                     ) : (
                         <div id="container">
-                            <Typography id="errors" variant="h5" align="center">Sorry, the page you were looking for does not exist.<br></br>You'll automatically be redirect shortly.</Typography>
+                            <Typography id="errors" variant="h5" align="center">Your profile does contain any reviews.<br></br>Try adding reviews in.</Typography>
                             <Divider sx={{ mt: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="error" label="ERROR" icon={ <ErrorIcon/> }/></Divider>
                         </div>
                     )}

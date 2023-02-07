@@ -9,6 +9,7 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import CheckIcon from '@mui/icons-material/Check';
 import ErrorIcon from '@mui/icons-material/Error';
 
 function ProfileSettings() {
@@ -39,7 +40,12 @@ function ProfileSettings() {
         });
         if (response.status === 200) {
             alert("Profile picture successfully uploaded.");
-            setUploadProfilePictureMessage(null);
+            setUploadProfilePictureMessage(
+                <div id="success">
+                    Profile picture successfully uploaded.
+                    <Divider sx={{ my: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="success" label="success" icon={ <CheckIcon/> }/></Divider>
+                </div>
+            );
             getProfilePicture();
         } else {
             const data = await response.json();
@@ -49,11 +55,11 @@ function ProfileSettings() {
                     {data["non_field_errors"].map(errors => (
                         <div>
                             {Object.entries(errors).map(([key, val]) => {
-                            return (
-                                <div key={key}>
-                                    {val}
-                                </div>
-                            )
+                                return (
+                                    <div key={key}>
+                                        {val}
+                                    </div>
+                                );
                             })}
                         </div>
                     ))}
@@ -82,8 +88,13 @@ function ProfileSettings() {
         const data = await response.json();
         if (response.status === 200) {
             setNewToken(data);
-            setUpdateUserInfoMessages(null);
-            alert("Your information has been updated. \n\nAny field(s) left empty will not be reflected.");
+            alert("Your account information has been updated. \n\nAny field(s) left empty will not be reflected.");
+            setUpdateUserInfoMessages(
+                <div id="success">
+                    Your account information has been updated.<br></br>Any field(s) left empty will not be reflected.
+                    <Divider sx={{ my: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="success" label="success" icon={ <CheckIcon/> }/></Divider>
+                </div>
+            );
         } else {
             alert("There seems to be error(s) in updating your new information on your account");
             setUpdateUserInfoMessages(
@@ -91,11 +102,11 @@ function ProfileSettings() {
                     {data["non_field_errors"].map((errors, i) => (
                         <div key={i}>
                             {Object.entries(errors).map(([key, val]) => {
-                            return (
-                                <div key={key}>
-                                    {val}
-                                </div>
-                            )
+                                return (
+                                    <div key={key}>
+                                        {val}
+                                    </div>
+                                );
                             })}
                         </div>
                     ))}
@@ -125,20 +136,20 @@ function ProfileSettings() {
                     <Divider sx={{ my: 2, backgroundColor: "gray" }}/>
                     <Typography sx={{ mb: 2 }} variant="h5">{updateUserInfoMessage}</Typography>
                     <form onSubmit={updateUserInfo}>
-                        <PersonIcon2 sx={{ mr: 2, mt: 2.2, color: "#077E1E"}} id="icons"/><TextField sx={{ background: "white", width: 375 }} type="text" label="Enter new username" name="username" variant="filled" inputProps={{ maxLength: 150 }}/>
+                        <PersonIcon2 sx={{ mr: 2, mt: 2.2, color: "#CC4D00"}} id="icons"/><TextField sx={{ background: "white", width: 375 }} type="text" label="Enter new username" name="username" variant="filled" inputProps={{ maxLength: 150 }}/>
                         <br></br>
-                        <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#077E1E" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Enter new password" name="password" variant="filled" InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
+                        <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Enter new password" name="password" variant="filled" InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
                         <br></br>
-                        <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#077E1E" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Confirm new password" name="confirm_password" variant="filled" InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
+                        <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Confirm new password" name="confirm_password" variant="filled" InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
                         <br></br>
-                        <TravelExploreIcon sx={{ mr: 2, mt: 2.2, color: "#077E1E" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type="text" name="zip_code" label="Enter new ZIP Code" variant="filled" inputProps={{ minLength:5, maxLength: 5 }}/>
+                        <TravelExploreIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type="text" name="zip_code" label="Enter new ZIP Code" variant="filled" inputProps={{ minLength:5, maxLength: 5 }}/>
                         <br></br>
-                        <Button sx={{ my: 3 }} type="submit" variant="contained">UPDATE<AssignmentIndIcon sx={{ ml: 1 }}/></Button>
+                        <Button sx={{ my: 2 }} type="submit" variant="contained">UPDATE<AssignmentIndIcon sx={{ ml: 1 }}/></Button>
                     </form>
                     <Divider sx={{ backgroundColor: "gray" }}/>
                     <Typography sx={{ my: 2 }} variant="h5">{uploadProfilePictureMessage}</Typography>
                     <form onSubmit={uploadProfilePicture}>
-                        <Input sx={{ mt: 1 }} type="file" onChange={(e) => setProfilePicture(e.target.files[0])} inputProps={{ accept: "image/*" }} required></Input>
+                        <Input type="file" onChange={(e) => setProfilePicture(e.target.files[0])} inputProps={{ accept: "image/*" }} required></Input>
                         <Button type="submit" variant="contained">UPLOAD PROFILE PICTURE <FileUploadIcon sx={{ ml: 1 }}/></Button>
                     </form>
                 </center>

@@ -37,9 +37,9 @@ function Login() {
                     <Typography variant="h5">{message}</Typography>
                     <Typography variant="h4"><u><b>LOGIN</b></u></Typography>
                     <form onSubmit={login}>
-                        <PersonIcon2 sx={{ mr: 2, mt: 4, color: "#077E1E" }} id="icons"/><TextField sx={{ mt: 2, width: 375, background: "white" }} type="text" label="Enter username" name="username" variant="filled" required/>
+                        <PersonIcon2 sx={{ mr: 2, mt: 4, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 2, width: 375, background: "white" }} type="text" label="Enter username" name="username" variant="filled" required/>
                         <br></br>
-                        <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#077E1E" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Enter password" name="password" variant="filled" required InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
+                        <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Enter password" name="password" variant="filled" required InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
                         <br></br>
                         <Button sx={{ my: 2.5 }} type="submit" variant="contained">SUBMIT<LockOpenIcon sx={{ ml: 1 }}/></Button>
                     </form>
