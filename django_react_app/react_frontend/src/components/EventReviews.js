@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { Box, Button, FormControl, InputLabel, MenuItem, Rating, Select, Typography } from '@mui/material';
+import { Box, Button, Divider, FormControl, Grid, InputLabel, MenuItem, Rating, Select, Typography } from '@mui/material';
 import Textarea from '@mui/joy/Textarea';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import UserAuthContext from '../contexts/UserAuthContext';
@@ -20,8 +20,8 @@ function EventReviews({event}) {
     }, [event]);
 
     async function getEventReviews() {
-        // const response = await fetch(`http://127.0.0.1:8000/api/reviews/get/event_id/${event.event_id}/`, {
-        const response = await fetch(`http://127.0.0.1/api/reviews/get/event_id/${event.event_id}/`, {
+        const response = await fetch(`http://127.0.0.1:8000/api/reviews/get/event_id/${event.event_id}/`, {
+        // const response = await fetch(`http://127.0.0.1/api/reviews/get/event_id/${event.event_id}/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -97,7 +97,7 @@ function EventReviews({event}) {
                             <Button type="submit" variant="contained">SUBMIT &nbsp;<RateReviewIcon/></Button>
                         </Box>
                     </form>
-                    <hr></hr>
+                    <Divider sx={{ my: 2, backgroundColor: "gray" }}/>
                     {reviews ? (
                         <div id="reviews">
                             <Typography sx={{ my: 2 }} variant="h4">Reviews</Typography>
@@ -106,22 +106,20 @@ function EventReviews({event}) {
                                     {(() => {
                                         if (review.username !== user.username) {
                                             return (
-                                                <div>
+                                                <Grid sx={{ my: 2.5 }}>
                                                     <div id="review">
                                                         <OtherUsersReviews review={review}/>
                                                     </div>
-                                                    <br></br>
-                                                </div>
-                                            )
+                                                </Grid>
+                                            );
                                         } else {
                                             return (
-                                                <div>
+                                                <Grid sx={{ my: 2.5 }}>
                                                     <div id="review">
                                                         <MyReviews reviews={reviews} review={review} setReviews={setReviews}/>
                                                     </div>
-                                                    <br></br>
-                                                </div>
-                                            )
+                                                </Grid>
+                                            );
                                         }
                                     })()}
                                 </div>
@@ -129,7 +127,7 @@ function EventReviews({event}) {
                         </div>
                     ) : (
                         <div>
-                            <Typography sx={{ mt: 2 }} id="errors" variant="h6">There's no reviews for this specific event yet. <br></br>Be the first!</Typography>
+                            <Typography sx={{ mt: 2 }} id="errors" variant="h5">There's no reviews for this specific event yet.<br></br>Be the first!</Typography>
                         </div>
                     )}
                 </div>

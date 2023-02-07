@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Avatar, Box, Rating, Stack, Grid, Typography } from '@mui/material';
+import { Avatar, Box, Divider, Rating, Stack, Grid, Typography } from '@mui/material';
 
 function OtherUsersReviews({review}) {
     const [containsProfilePicture, setContainsProfilePicture] = useState(false);
@@ -24,7 +24,7 @@ function OtherUsersReviews({review}) {
                     <Typography variant="body2"><b>{review.username}</b></Typography>
                 </Grid>
             </Stack>
-            <hr></hr>
+            <Divider sx={{ backgroundColor: "gray" }}/>
             <Typography sx={{ mt: 1 }} variant="body2"><b>Reviewed On: </b>{review.date}</Typography>
             <Typography variant="body2"><b>Event Title: </b>{review.title}</Typography>
             <Stack alignItems="center" direction="row">

@@ -31,25 +31,23 @@ function Login() {
     }
 
     return (
-        <div>
-            <Grid sx={{ mt: 2 }} container justifyContent="center" textAlign="center">
-                <div id="container">
-                    <Typography variant="h5">{message}</Typography>
-                    <Typography variant="h4"><u><b>LOGIN</b></u></Typography>
-                    <form onSubmit={login}>
-                        <PersonIcon2 sx={{ mr: 2, mt: 4, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 2, width: 375, background: "white" }} type="text" label="Enter username" name="username" variant="filled" required/>
-                        <br></br>
-                        <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Enter password" name="password" variant="filled" required InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
-                        <br></br>
-                        <Button sx={{ my: 2.5 }} type="submit" variant="contained">SUBMIT<LockOpenIcon sx={{ ml: 1 }}/></Button>
-                    </form>
-                    <Divider sx={{ backgroundColor: "gray" }}/>
-                    <Typography sx={{ my: 1 }} variant="h6">Don't have an account? <Typography variant="h6" component={Link} to="/signup/"><b>Signup here</b></Typography></Typography>
-                    <Divider sx={{ backgroundColor: "gray" }}/>
-                    <Typography sx={{ mt: 1 }} variant="h6">Forgot your password? <Typography variant="h6" component={Link} to="/reset/password/"><b>Reset here</b></Typography></Typography>
-                </div>
-            </Grid>
-        </div>
+        <Grid sx={{ mt: 2 }} container justifyContent="center" textAlign="center">
+            <div id="generalContainer">
+                <Typography variant="h5">{message}</Typography>
+                <Typography variant="h4"><u><b>LOGIN</b></u></Typography>
+                <form onSubmit={login}>
+                    <PersonIcon2 sx={{ mr: 2, mt: 4, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 2, width: 375, background: "white" }} type="text" label="Enter username" name="username" variant="filled" required/>
+                    <br></br>
+                    <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Enter password" name="password" variant="filled" required InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
+                    <br></br>
+                    <Button sx={{ my: 2.5 }} type="submit" variant="contained">SUBMIT<LockOpenIcon sx={{ ml: 1 }}/></Button>
+                </form>
+                <Divider sx={{ backgroundColor: "gray" }}/>
+                <Typography sx={{ my: 1 }} variant="h6">Don't have an account? <Typography variant="h6" component={Link} to="/signup/"><b>Signup here</b></Typography></Typography>
+                <Divider sx={{ backgroundColor: "gray" }}/>
+                <Typography sx={{ mt: 1 }} variant="h6">Forgot your password? <Typography variant="h6" component={Link} to="/reset/password/"><b>Reset here</b></Typography></Typography>
+            </div>
+        </Grid>
     );
 }
 

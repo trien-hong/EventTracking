@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Avatar, Box, Rating, Stack, Grid, Typography } from '@mui/material';
+import { Avatar, Box, Divider, Rating, Stack, Grid, Typography } from '@mui/material';
 import EditReview from './EditReview';
 import DeleteReview from './DeleteReview';
 
@@ -13,7 +13,7 @@ function UserReviews({reviews, review, setReviews}) {
     }, [review]);
 
     return (
-        <Box sx={{ mx: 1.25, textAlign: "left" }}>
+        <Box sx={{ mx: 1.5, textAlign: "left" }}>
             <Stack sx={{ mt: 1.5, mb: 1.3 }} direction="row" alignItems="center" spacing={1.25}>
                 <Grid>
                     {containsProfilePicture ? (
@@ -30,7 +30,7 @@ function UserReviews({reviews, review, setReviews}) {
                     <DeleteReview reviews={reviews} review={review} setReviews={setReviews}/>
                 </Grid>
             </Stack>
-            <hr></hr>
+            <Divider sx={{ backgroundColor: "gray" }}/>
             { review.isEdited ? (
                 <div>
                     <Typography sx={{ mt: 1 }} variant="body2"><b>Last Edited Review On: </b>{review.date}</Typography>

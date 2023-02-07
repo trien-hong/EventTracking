@@ -21,7 +21,7 @@ function Events() {
     }
 
     return (
-        <div>
+        <div id="events">
             {isLoading ? (
                 <div>
                     <Loading/>
@@ -31,25 +31,23 @@ function Events() {
                     {events ? (
                         <div>
                             <DisplayOptions setEventsPerPage={setEventsPerPage} eventsPerPage={eventsPerPage} setSortingOptions={setSortingOptions} sortingOptions={sortingOptions}/>
-                            <div id="content">
-                                <div id="events">
-                                    {events.map((event, i) =>
-                                        <div id="eventBorder" key={i}>
-                                            <center>
-                                                <Typography sx={{ mt: 2.5 }}><b><i>{event.title}</i></b></Typography>
-                                                <Typography sx={{ my: 2.5 }}>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
-                                                <img src={event.imageUrl} alt="not found" onClick={() => { goToEventDetails(event.event_id); }}/>
-                                                <Typography sx={{ my: 2.5 }}>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
-                                                <SaveEventButton event={event} margin={2.5}/>
-                                            </center>
-                                        </div>
-                                    )}
-                                </div>
+                            <div id="eventsContainer">
+                                {events.map((event, i) =>
+                                    <div id="eventBorder" key={i}>
+                                        <Grid textAlign="center">
+                                            <Typography sx={{ mt: 2.5 }}><b><i>{event.title}</i></b></Typography>
+                                            <Typography sx={{ my: 2.5 }}>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
+                                            <img src={event.imageUrl} alt="not found" onClick={() => { goToEventDetails(event.event_id); }}/>
+                                            <Typography sx={{ my: 2.5 }}>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
+                                            <SaveEventButton event={event} margin={2.5}/>
+                                        </Grid>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ) : (
                         <div>
-                            <Grid sx={{ mt: 2 }} container justifyContent="center" textAlign="center">
+                            <Grid sx={{ mt: 2 }} justifyContent="center" textAlign="center">
                                 <div id="container">
                                     <Typography id="errors" variant="h5" align="center">Your ZIP code of "{user.zip_code}" did not have any events.<br></br>Try Searching for events instead.</Typography>
                                     <Divider sx={{ mt: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="error" label="ERROR" icon={ <ErrorIcon/> }/></Divider>
@@ -59,8 +57,6 @@ function Events() {
                     )}
                 </div>
             )}
-            <br></br>
-            <br></br>
             <Paging setEvents={setEvents} setIsLoading={setIsLoading} eventsPerPage={eventsPerPage} sortingOptions={sortingOptions}/>
         </div>
     );

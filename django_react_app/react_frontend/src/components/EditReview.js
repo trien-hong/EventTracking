@@ -38,9 +38,9 @@ function EditReview({reviews, review, setReviews}) {
             const editiedReview = reviews.map((obj) => {
                 if (obj.id === review.id) {
                     const update = ({...obj});
-                    update["date"] = data.date
-                    update["userRating"] = data.userRating
-                    update["userComment"] = data.userComment
+                    update["date"] = data.date;
+                    update["userRating"] = data.userRating;
+                    update["userComment"] = data.userComment;
                     update["isEdited"] = data.isEdited;
                     return update;
                 }
@@ -101,7 +101,7 @@ function EditReview({reviews, review, setReviews}) {
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => { handleCancle() }}>Cancel</Button>
+                    <Button onClick={() => { handleCancle() }}>CANCEL</Button>
                 </DialogActions>
             </Dialog>
         </div>

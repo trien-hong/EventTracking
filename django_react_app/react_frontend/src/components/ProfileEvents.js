@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Chip, Divider, Typography } from '@mui/material';
+import { Chip, Divider, Grid, Typography } from '@mui/material';
 import ErrorIcon from '@mui/icons-material/Error';
 import UserAuthContext from '../contexts/UserAuthContext';
 import DeleteEventButton from '../components/DeleteEventButton';
@@ -40,7 +40,7 @@ function ProfileEvents() {
     }
 
     return (
-        <div>
+        <div id="profileEvents">
             { isLoading ? (
                 <div>
                     <Loading/>
@@ -48,30 +48,25 @@ function ProfileEvents() {
             ) : (
                 <div>
                     {profileEvents ? (
-                        <div>
-                            <div id="profile">
-                                {profileEvents.map((event, i) =>
-                                    <div id="eventBorder" className={event.event_id} key={i}>
-                                        <center>
-                                            <Typography sx={{ mt: 2.5 }}><b><i>{event.title}</i></b></Typography>
-                                            <Typography sx={{ my: 2.5 }}>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
-                                            <img src={event.imageUrl} alt="not found" onClick={() => { goToEventDetails(event.event_id); }}/>
-                                            <Typography sx={{ my: 2.5 }}>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
-                                            <DeleteEventButton event={event} profileEvents={profileEvents} setProfileEvents={setProfileEvents}/>
-                                        </center>
-                                    </div>
-                                )}
-                            </div>
+                        <div id="profileEventsContainer">
+                            {profileEvents.map((event, i) =>
+                                <div id="eventBorder" key={i}>
+                                    <Grid textAlign="center">
+                                        <Typography sx={{ mt: 2.5 }}><b><i>{event.title}</i></b></Typography>
+                                        <Typography sx={{ my: 2.5 }}>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
+                                        <img src={event.imageUrl} alt="not found" onClick={() => { goToEventDetails(event.event_id); }}/>
+                                        <Typography sx={{ my: 2.5 }}>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
+                                        <DeleteEventButton event={event} profileEvents={profileEvents} setProfileEvents={setProfileEvents}/>
+                                    </Grid>
+                                </div>
+                            )}
                         </div>
                     ) : (
-                        <div id="container">
+                        <div id="generalContainer">
                             <Typography id="errors" variant="h5" align="center">Your profile does not contain any events.<br></br>Try saving some events in.</Typography>
                             <Divider sx={{ my: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="error" label="ERROR" icon={ <ErrorIcon/> }/></Divider>
                         </div>
                     )}
-                    <br></br>
-                    <br></br>
-                    <br></br>
                 </div>
             )}
         </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { Chip, Divider, Typography } from '@mui/material';
+import { Chip, Divider, Grid, Typography } from '@mui/material';
 import ErrorIcon from '@mui/icons-material/Error';
 import UserAuthContext from '../contexts/UserAuthContext';
 import Loading from './Loading';
@@ -34,7 +34,7 @@ function ProfileReviews() {
     }
 
     return (
-        <div>
+        <div id="profileReviews">
             {isLoading ? (
                 <div>
                     <Loading/>
@@ -42,26 +42,21 @@ function ProfileReviews() {
             ) : (
                 <div>
                     {reviews ? (
-                        <div>
-                            <div id="reviewBorder">
-                                <Typography sx={{ mb: 2 }} variant="h4">All Reviews You've Left</Typography>
-                                {reviews.map((review, i) =>
-                                    <div key={i}>
+                        <div id="profileReviewsContainer">
+                            <Typography sx={{ mb: 2 }} variant="h4">All Reviews You've Left</Typography>
+                            {reviews.map((review, i) =>
+                                <div key={i}>
+                                    <Grid sx={{ my: 2.5 }}>
                                         <div id="review">
                                             <MyReviews reviews={reviews} review={review} setReviews={setReviews}/>
                                         </div>
-                                        <br></br>
-                                    </div>
-                                )}
-                            </div>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
+                                    </Grid>
+                                </div>
+                            )}
                         </div>
                     ) : (
-                        <div id="container">
-                            <Typography id="errors" variant="h5" align="center">Your profile does contain any reviews.<br></br>Try adding reviews in.</Typography>
+                        <div id="generalContainer">
+                            <Typography id="errors" variant="h5" align="center">Your profile does contain any reviews.<br></br>Try adding some reviews in.</Typography>
                             <Divider sx={{ mt: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="error" label="ERROR" icon={ <ErrorIcon/> }/></Divider>
                         </div>
                     )}

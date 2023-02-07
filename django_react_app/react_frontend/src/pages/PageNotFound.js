@@ -27,15 +27,13 @@ function PageNotFound() {
     }
 
     return (
-        <div>
-            <Grid sx={{ mt: 2 }} container justifyContent="center" textAlign="center">
-                <div id="container">
-                    <Typography id="errors" variant="h5" align="center">Sorry, the page you were looking for does not exist.<br></br>You'll automatically be redirect shortly.</Typography>
-                    <Divider sx={{ mt: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="error" label="ERROR | 404" icon={ <ErrorIcon/> }/></Divider>
-                    <LinearProgress sx={{ mt: 2 }} color="error" variant="determinate" value={progress}/>
-                </div>
-            </Grid>
-        </div>
+        <Grid sx={{ mt: 2 }} container justifyContent="center" textAlign="center">
+            <div id="generalContainer">
+                <Typography id="errors" variant="h5" align="center">Sorry, the page you were looking for does not exist.<br></br>You'll automatically be redirect shortly.</Typography>
+                <Divider sx={{ mt: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="error" label="ERROR | 404" icon={ <ErrorIcon/> }/></Divider>
+                <LinearProgress sx={{ mt: 2 }} color="error" variant="determinate" value={progress}/>
+            </div>
+        </Grid>
     );
 }
 

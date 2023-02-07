@@ -129,35 +129,29 @@ function ProfileSettings() {
     }
 
     return (
-        <div>
-            <div id="container">
-                <center>
-                    <Typography variant="h4"><u><b>Update Your Info</b></u></Typography>
-                    <Divider sx={{ my: 2, backgroundColor: "gray" }}/>
-                    <Typography sx={{ mb: 2 }} variant="h5">{updateUserInfoMessage}</Typography>
-                    <form onSubmit={updateUserInfo}>
-                        <PersonIcon2 sx={{ mr: 2, mt: 2.2, color: "#CC4D00"}} id="icons"/><TextField sx={{ background: "white", width: 375 }} type="text" label="Enter new username" name="username" variant="filled" inputProps={{ maxLength: 150 }}/>
-                        <br></br>
-                        <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Enter new password" name="password" variant="filled" InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
-                        <br></br>
-                        <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Confirm new password" name="confirm_password" variant="filled" InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
-                        <br></br>
-                        <TravelExploreIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type="text" name="zip_code" label="Enter new ZIP Code" variant="filled" inputProps={{ minLength:5, maxLength: 5 }}/>
-                        <br></br>
-                        <Button sx={{ my: 2 }} type="submit" variant="contained">UPDATE<AssignmentIndIcon sx={{ ml: 1 }}/></Button>
-                    </form>
-                    <Divider sx={{ backgroundColor: "gray" }}/>
-                    <Typography sx={{ my: 2 }} variant="h5">{uploadProfilePictureMessage}</Typography>
-                    <form onSubmit={uploadProfilePicture}>
-                        <Input type="file" onChange={(e) => setProfilePicture(e.target.files[0])} inputProps={{ accept: "image/*" }} required></Input>
-                        <Button type="submit" variant="contained">UPLOAD PROFILE PICTURE <FileUploadIcon sx={{ ml: 1 }}/></Button>
-                    </form>
-                </center>
+        <div id="profileSettings">
+            <div id="generalContainer">
+                <Typography variant="h4"><u><b>Update Your Info</b></u></Typography>
+                <Divider sx={{ my: 2, backgroundColor: "gray" }}/>
+                <Typography sx={{ mb: 2 }} variant="h5">{updateUserInfoMessage}</Typography>
+                <form onSubmit={updateUserInfo}>
+                    <PersonIcon2 sx={{ mr: 2, mt: 2.2, color: "#CC4D00"}} id="icons"/><TextField sx={{ background: "white", width: 375 }} type="text" label="Enter new username" name="username" variant="filled" inputProps={{ maxLength: 150 }}/>
+                    <br></br>
+                    <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Enter new password" name="password" variant="filled" InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
+                    <br></br>
+                    <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Confirm new password" name="confirm_password" variant="filled" InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
+                    <br></br>
+                    <TravelExploreIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type="text" name="zip_code" label="Enter new ZIP Code" variant="filled" inputProps={{ minLength:5, maxLength: 5 }}/>
+                    <br></br>
+                    <Button sx={{ my: 2 }} type="submit" variant="contained">UPDATE<AssignmentIndIcon sx={{ ml: 1 }}/></Button>
+                </form>
+                <Divider sx={{ backgroundColor: "gray" }}/>
+                <Typography sx={{ my: 2 }} variant="h5">{uploadProfilePictureMessage}</Typography>
+                <form onSubmit={uploadProfilePicture}>
+                    <Input type="file" onChange={(e) => setProfilePicture(e.target.files[0])} inputProps={{ accept: "image/*" }} required></Input>
+                    <Button type="submit" variant="contained">UPLOAD PROFILE PICTURE <FileUploadIcon sx={{ ml: 1 }}/></Button>
+                </form>
             </div>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
         </div>
     );
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { AppBar, Avatar, Badge, Box, Button, Toolbar, Tooltip, Typography, } from '@mui/material';
+import { AppBar, Avatar, Badge, Box, Button, Grid, Toolbar, Tooltip, Typography, } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -84,22 +84,20 @@ function Profile() {
     }
 
     return (
-        <div>
-            <center>
+        <div id="profile">
+            <Grid textAlign="center">
                 <Typography sx={{ my: 2 }} variant="h4">Welcome, {user.username}!</Typography>
-                <div>
-                    { isProfilePictureLoaded ? (
-                        <div>
-                            <Badge overlap="circular" anchorOrigin={{ vertical: "bottom", horizontal: "right" }} badgeContent={<Tooltip title="Delete Profile Picture"><DeleteIcon sx={{ mt: 3 }} id="profilePictureDelete" onClick={() => { deleteProfilePicture(); }}/></Tooltip>}>
-                                <Avatar sx={{ height: "175px", width: "175px", borderStyle: "solid", borderColor: "gray", borderWidth: "5px"  }} src={"http://localhost:8000" + profilePictureLocation} alt={user.username}/>
-                            </Badge>
-                        </div>
-                    ) : (
-                        <div>
-                            <Avatar sx={{ height: "175px", width: "175px", borderStyle: "solid", borderColor: "gray", borderWidth: "5px"  }}>{user.username.charAt(0)}</Avatar>
-                        </div>
-                    )}
-                </div>
+                { isProfilePictureLoaded ? (
+                    <Grid sx={{ display: "flex", justifyContent: "center" }}>
+                        <Badge overlap="circular" anchorOrigin={{ vertical: "bottom", horizontal: "right" }} badgeContent={<Tooltip title="Delete Profile Picture"><DeleteIcon sx={{ mt: 3 }} id="profilePictureDelete" onClick={() => { deleteProfilePicture(); }}/></Tooltip>}>
+                            <Avatar sx={{ height: "175px", width: "175px", borderStyle: "solid", borderColor: "gray", borderWidth: "5px" }} src={"http://localhost:8000" + profilePictureLocation} alt={user.username}/>
+                        </Badge>
+                    </Grid>
+                ) : (
+                    <Grid sx={{ display: "flex", justifyContent: "center" }}>
+                        <Avatar sx={{ height: "175px", width: "175px", borderStyle: "solid", borderColor: "gray", borderWidth: "5px" }}>{user.username.charAt(0)}</Avatar>
+                    </Grid>
+                )}
                 <Button sx={{ my: 3 }} color={settingsButtonColor} variant="contained" onClick={() => { displayProfileSettings(); }}>Profile Settings<SettingsIcon sx={{ ml: 1 }}/></Button>
                 <Button sx={{ my: 3, mx: 1.5 }} color={eventsButtonColor} variant="contained" onClick={() => { displayProfileEvents(); }}>Profile Events<AssignmentIcon sx={{ ml: 1 }}/></Button>
                 <Button sx={{ my: 3 }} color={reviewsButtonColor} variant="contained" onClick={() => { displayProfileReviews(); }}>Profile Reviews<ReviewsIcon sx={{ ml: 1 }}/></Button>
@@ -116,7 +114,7 @@ function Profile() {
                         </Box>
                     </Toolbar>
                 </AppBar>
-            </center>
+            </Grid>
         </div>
     );
 }

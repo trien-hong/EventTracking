@@ -10,31 +10,8 @@
   color: green;
 }
 
-#container {
-  background-color: #DFDFDF;
-  border-style: solid;
-  display: inline-block;
-  padding: 1%;
-}
-
 #icons {
   transform: scale(1.5);
-}
-
-#errorIcon {
-  transform: scale(3.5);
-  vertical-align: middle;
-}
-
-#scroll {
-  background-color: white;
-  border-style: solid;
-  border-color: black;
-  cursor: pointer;
-}
-
-#scroll:hover {
-  border-color: gray;
 }
 
 #userReviewIcon {
@@ -48,39 +25,36 @@
   border-color: gray;
 }
 
-#events {
-  background-color: white;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 20px;
-  width: 70%;
-  margin: 0 auto;
-  padding: 22px;
-}
-
-#profile {
-  background-color: white;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 20px;
-  width: 70%;
-  margin: 0 auto;
-  padding: 22px;
-}
-
-#profilePictureDelete {
-  background-color: white;
-  border-radius: 20px;
-  border-color: black;
+#generalContainer {
+  background-color: #DFDFDF;
   border-style: solid;
-  cursor: pointer;
-  padding: 10%;
-  margin-bottom: 23px;
-  margin-right: 18px;
+  display: inline-block;
+  padding: 1%;
 }
 
-#profilePictureDelete:hover {
+#scroll {
+  background-color: white;
+  border-style: solid;
+  border-color: black;
+  cursor: pointer;
+}
+
+#scroll:hover {
   border-color: gray;
+}
+
+#events {
+  padding-bottom: 40px;
+}
+
+#eventsContainer {
+  background-color: white;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  width: 70%;
+  margin: 0 auto;
+  padding: 22px;
 }
 
 #eventBorder {
@@ -104,16 +78,65 @@
   grid-column-end: 5;
 }
 
-#eventDetailsBorder {
-  background-color: #E6E6E6;
-  border-style: solid;
-  border-radius: 10px;
-  display: inline-block;
-  padding: 1%;
-  width: 60%;
+#eventBorder > div > img {
+  aspect-ratio: 16/9;
+  width: 90%;
 }
 
-#reviewBorder {
+#eventBorder > div > img:hover {
+  border-style: double;
+  cursor: pointer;
+  border-width: 5px;
+}
+
+#search {
+  padding-bottom: 40px;
+}
+
+#eventDetails {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+#eventDetailsContainer {
+  background-color: #E6E6E6;
+  border-style: solid;
+  display: inline-block;
+  padding: 1%;
+  width: 50%;
+}
+
+#eventDetailsContainer > img {
+  aspect-ratio: 16/9;
+  width: 100%;
+}
+
+#profilePictureDelete {
+  background-color: white;
+  border-radius: 20px;
+  border-color: black;
+  border-style: solid;
+  cursor: pointer;
+  padding: 10%;
+  margin-bottom: 23px;
+  margin-right: 18px;
+}
+
+#profilePictureDelete:hover {
+  border-color: gray;
+}
+
+#profileEventsContainer {
+  background-color: white;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  width: 70%;
+  margin: 0 auto;
+  padding: 22px;
+}
+
+#profileReviewsContainer {
   margin: auto;
   width: 65%;
   background-color: #E6E6E6;
@@ -129,23 +152,6 @@
   background-color: #FFEE85;
   /* background: linear-gradient(225deg, #CFB722 49px, #FFEE85 49px); */
   overflow-wrap: break-word;
-  width: 100%;
-}
-
-#eventBorder > center > img:hover {
-  border-style: double;
-  cursor: pointer;
-  border-width: 5px;
-}
-
-#eventBorder > center > img {
-  aspect-ratio: 16/9;
-  width: 90%;
-}
-
-#eventDetailsBorder > img {
-  aspect-ratio: 16/9;
-  width: 100%;
 }
 
 .map-container {
@@ -155,4 +161,16 @@
 
 .gm-err-icon {
   width: 25%;
+}
+
+#profileSettings {
+  padding-bottom: 70px;
+}
+
+#profileEvents {
+  padding-bottom: 40px;
+}
+
+#profileReviews {
+  padding-bottom: 70px;
 }

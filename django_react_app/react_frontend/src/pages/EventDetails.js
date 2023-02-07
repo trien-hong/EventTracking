@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Button, Divider, Stack, Typography } from '@mui/material';
+import { Button, Divider, Grid, Stack, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import UserAuthContext from '../contexts/UserAuthContext';
 import SaveEventButton from '../components/SaveEventButton';
@@ -53,9 +53,8 @@ function EventDetails() {
     }
 
     return (
-        <div>
-            <br></br>
-            <center>
+        <div id="eventDetails">
+            <Grid textAlign="center">
                 {isLoading ? (
                     <div>
                         <Loading/>
@@ -63,34 +62,30 @@ function EventDetails() {
                 ) : (
                     <div>
                         {showReviews ? (
-                            <div id="reviewBorder">
+                            <div id="eventDetailsContainer">
                                 <Typography variant="h5"><Button variant="contained" onClick={() => { goBack(); }}><ArrowBackIcon/></Button>&nbsp; | &nbsp;<b><u>User's Reviews</u></b>&nbsp; | &nbsp;<Button variant="contained" onClick={() => { hide(); }}>Show Event Details</Button></Typography>
                                 <EventReviews event={eventDetails}/>
                             </div>
                         ) : (
-                            <div id="eventDetailsBorder">
+                            <div id="eventDetailsContainer">
                                 <Typography variant="h5"><Button variant="contained" onClick={() => { goBack(); }}><ArrowBackIcon/></Button>&nbsp; | &nbsp;<b><u>Event Details</u></b>&nbsp; | &nbsp;<Button variant="contained" onClick={() => { show(); }}>Show Reviews</Button></Typography>
                                 <Typography sx={{ my: 1.5 }} variant="h4"><b><i>{eventDetails.title}</i></b></Typography>
                                 <img src={eventDetails.imageUrl} alt="not found"/>
-                                <br></br>
-                                <br></br>
-                                <hr></hr>
-                                <Stack sx={{ my: 2}} direction="row" justifyContent="center" divider={<Divider orientation="vertical" flexItem/>} spacing={4}>
-                                    <Box>
+                                <Divider sx={{ my: 2, backgroundColor: "gray" }}/>
+                                <Stack sx={{ my: 2}} direction="row" justifyContent="space-evenly" alignItems="center" divider={<Divider sx={{ backgroundColor: "gray" }} orientation="vertical" flexItem/>} spacing={6}>
+                                    <Grid>
                                         <Typography variant="h6"><b>Date:</b> {eventDetails.date}</Typography>
                                         <Typography variant="h6"><b>Genre:</b> {eventDetails.genre}</Typography>
                                         <Typography variant="h6"><b>Venue:</b> {eventDetails.venu}</Typography>
                                         <Typography variant="h6"><b>Address:</b> {eventDetails.address}</Typography>
                                         <Typography sx={{ mb: 1 }} variant="h6"><b>Price:</b> {eventDetails.minPrice} &nbsp;-&nbsp; {eventDetails.maxPrice}</Typography>
                                         <SaveEventButton event={eventDetails} margin={0}/>
-                                    </Box>
-                                    <Box>
-                                        <center>
-                                            <Weather latitude={eventDetails.latitude} longitude={eventDetails.longitude}/>
-                                        </center>
-                                    </Box>
+                                    </Grid>
+                                    <Grid>
+                                        <Weather latitude={eventDetails.latitude} longitude={eventDetails.longitude}/>
+                                    </Grid>
                                 </Stack>
-                                <hr></hr>
+                                <Divider sx={{ my: 2, backgroundColor: "gray" }}/>
                                 {/* <Map latitude={eventDetails.latitude} longitude={eventDetails.longitude}/> */}
                                 {/* If you would like to see Maps you should uncomment the line above this.
                                 Since there is a quota on free use (before they start charging) I commented this out so it won't load */}
@@ -98,8 +93,7 @@ function EventDetails() {
                         )}
                     </div>
                 )}
-            </center>
-            <br></br>
+            </Grid>
         </div>
     );
 }
