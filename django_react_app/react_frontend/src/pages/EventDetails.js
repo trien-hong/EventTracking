@@ -72,7 +72,7 @@ function EventDetails() {
                                 <Typography sx={{ my: 1.5 }} variant="h4"><b><i>{eventDetails.title}</i></b></Typography>
                                 <img src={eventDetails.imageUrl} alt="not found"/>
                                 <Divider sx={{ my: 2, backgroundColor: "gray" }}/>
-                                <Stack sx={{ my: 2}} direction="row" justifyContent="space-evenly" alignItems="center" divider={<Divider sx={{ backgroundColor: "gray" }} orientation="vertical" flexItem/>} spacing={6}>
+                                <Stack sx={{ my: 2}} direction="row" justifyContent="space-evenly" alignItems="center" divider={<Divider sx={{ backgroundColor: "gray" }} orientation="vertical" flexItem/>}>
                                     <Grid>
                                         <Typography variant="h6"><b>Date:</b> {eventDetails.date}</Typography>
                                         <Typography variant="h6"><b>Genre:</b> {eventDetails.genre}</Typography>

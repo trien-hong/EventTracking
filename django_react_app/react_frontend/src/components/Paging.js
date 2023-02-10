@@ -1,9 +1,9 @@
 import { useEffect, useState, useContext } from "react";
-import { AppBar, Box, Pagination, Toolbar, Tooltip } from '@mui/material';
 import { useLocation, useSearchParams } from "react-router-dom";
-import UserAuthContext from '../contexts/UserAuthContext';
+import { AppBar, Box, Pagination, Toolbar, Tooltip } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import UserAuthContext from '../contexts/UserAuthContext';
 
 function Paging({setEvents, setSearchEvents, setIsLoading, eventsPerPage, sortingOptions}) {
     const [totalPages, setTotalPages] = useState(0);
@@ -24,7 +24,7 @@ function Paging({setEvents, setSearchEvents, setIsLoading, eventsPerPage, sortin
             document.title = `${search} | Page #${currentPage}`;
             getSearchEvents();
         }
-    }, [currentPage, eventsPerPage, sortingOptions]);
+    }, [currentPage, eventsPerPage, sortingOptions, search]);
 
     useEffect(() => {
         if (location.pathname === "/search" || location.pathname === "/search/") {

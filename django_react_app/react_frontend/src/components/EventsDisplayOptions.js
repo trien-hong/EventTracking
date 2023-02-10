@@ -1,6 +1,6 @@
 import { FormControl, Grid, InputLabel, MenuItem, Select, Stack } from '@mui/material';
 
-function DisplayOptions({eventsPerPage, setEventsPerPage, sortingOptions, setSortingOptions}) {
+function EventsDisplayOptions({eventsPerPage, setEventsPerPage, sortingOptions, setSortingOptions}) {
     function changeEventsPerPage(e) {
         setEventsPerPage(e.target.value);
     }
@@ -11,7 +11,7 @@ function DisplayOptions({eventsPerPage, setEventsPerPage, sortingOptions, setSor
 
     return (
         <div>
-            <Stack sx={{ my: 1 }} id="displayOptions" direction="row" justifyContent="center" spacing={2}>
+            <Stack sx={{ my: 1 }} direction="row" justifyContent="center" spacing={2}>
                 <Grid>
                     <FormControl sx={{ minWidth: 125, backgroundColor: "white" }} variant="filled" size="small">
                         <InputLabel>Events Per Page</InputLabel>
@@ -40,4 +40,4 @@ function DisplayOptions({eventsPerPage, setEventsPerPage, sortingOptions, setSor
     )
 }
 
-export default DisplayOptions;
+export default EventsDisplayOptions;

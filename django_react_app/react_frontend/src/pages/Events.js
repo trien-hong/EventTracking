@@ -4,7 +4,7 @@ import { Chip, Divider, Grid, Typography } from '@mui/material';
 import ErrorIcon from '@mui/icons-material/Error';
 import UserAuthContext from '../contexts/UserAuthContext';
 import SaveEventButton from '../components/SaveEventButton';
-import DisplayOptions from '../components/DisplayOptions';
+import EventsDisplayOptions from '../components/EventsDisplayOptions';
 import Paging from '../components/Paging';
 import Loading from '../components/Loading';
 
@@ -30,7 +30,7 @@ function Events() {
                 <div>
                     {events ? (
                         <div>
-                            <DisplayOptions setEventsPerPage={setEventsPerPage} eventsPerPage={eventsPerPage} setSortingOptions={setSortingOptions} sortingOptions={sortingOptions}/>
+                            <EventsDisplayOptions setEventsPerPage={setEventsPerPage} eventsPerPage={eventsPerPage} setSortingOptions={setSortingOptions} sortingOptions={sortingOptions}/>
                             <div id="eventsContainer">
                                 {events.map((event, i) =>
                                     <div id="eventBorder" key={i}>
@@ -48,8 +48,8 @@ function Events() {
                     ) : (
                         <div>
                             <Grid sx={{ mt: 2 }} justifyContent="center" textAlign="center">
-                                <div id="container">
-                                    <Typography id="errors" variant="h5" align="center">Your ZIP code of "{user.zip_code}" did not have any events.<br></br>Try Searching for events instead.</Typography>
+                                <div id="generalContainer">
+                                    <Typography id="errors" variant="h5" align="center">Your ZIP code of "{user.zip_code}" did not have any events.<br></br>Try searching for events instead.</Typography>
                                     <Divider sx={{ mt: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="error" label="ERROR" icon={ <ErrorIcon/> }/></Divider>
                                 </div>
                             </Grid>

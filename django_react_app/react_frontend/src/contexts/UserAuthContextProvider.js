@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
-import { Chip, Divider } from '@mui/material';
-import ErrorIcon from '@mui/icons-material/Error';
 import UserAuthContext from './UserAuthContext';
 
 function UserAuthContextProvider({children}) {
+    const [openAlert, setOpenAlert] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState(() => localStorage.getItem("authTokens") ? jwt_decode(localStorage.getItem("authTokens")) : null);
     const [authTokens, setAuthTokens] = useState(() => localStorage.getItem("authTokens") ? JSON.parse(localStorage.getItem("authTokens")) : null);
@@ -26,7 +25,8 @@ function UserAuthContextProvider({children}) {
         return (() => clearInterval(interval));
     }, [authTokens, isLoading]);
 
-    function clearLoginMessage() {
+    function clearLoginAlert() {
+        setOpenAlert(false);
         setMessage(null);
     }
 
@@ -56,9 +56,9 @@ function UserAuthContextProvider({children}) {
             setMessage(
                 <div id="errors">
                     {data["detail"]}.
-                    <Divider sx={{ my: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="error" label="ERROR" icon={ <ErrorIcon/> }/></Divider>
                 </div>
             );
+            setOpenAlert(true);
         }
     }
 
@@ -95,6 +95,7 @@ function UserAuthContextProvider({children}) {
     }
 
     function logout() {
+        clearLoginAlert();
         setUser(null);
         setAuthTokens(null);
         localStorage.removeItem("authTokens");
@@ -102,11 +103,13 @@ function UserAuthContextProvider({children}) {
     }
 
     const data = {
+        openAlert: openAlert,
+        setOpenAlert: setOpenAlert,
         user: user,
         message: message,
         authTokens: authTokens,
         setNewToken: setNewToken,
-        clearLoginMessage: clearLoginMessage,
+        clearLoginAlert: clearLoginAlert,
         login: login,
         logout: logout
     };

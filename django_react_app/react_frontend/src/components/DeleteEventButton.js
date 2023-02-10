@@ -31,7 +31,7 @@ function DeleteEventButton({event, profileEvents, setProfileEvents}) {
 
     return (
         <div>
-            <Button sx={{ mb: 3 }} variant="contained" onClick={() => { deleteProfileEvent(); }}>DELETE EVENT<DeleteIcon sx={{ ml: 1 }}/></Button>
+            <Button sx={{ mb: 3 }} variant="contained" onClick={() => { deleteProfileEvent(); }}><DeleteIcon sx={{ mr: 1 }}/>DELETE EVENT</Button>
         </div>
     );
 }

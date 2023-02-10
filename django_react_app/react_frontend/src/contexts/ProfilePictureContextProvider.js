@@ -19,8 +19,8 @@ function ProfilePictureContextProvider({children}) {
     }, [user]);
 
     async function getProfilePicture() {
-        const response = await fetch(`http://127.0.0.1:8000/api/profile/settings/picture/`, {
-        // const response = await fetch(`http://127.0.0.1/api/profile/settings/picture/`, {
+        // const response = await fetch(`http://127.0.0.1:8000/api/profile/settings/picture/`, {
+        const response = await fetch(`http://127.0.0.1/api/profile/settings/picture/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

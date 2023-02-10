@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Avatar, Box, Divider, Rating, Stack, Grid, Typography } from '@mui/material';
+import { Avatar, Box, Divider, Grid, Rating, Stack, Typography } from '@mui/material';
 
 function OtherUsersReviews({review}) {
     const [containsProfilePicture, setContainsProfilePicture] = useState(false);

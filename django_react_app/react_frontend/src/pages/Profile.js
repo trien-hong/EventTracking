@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { AppBar, Avatar, Badge, Box, Button, Grid, Toolbar, Tooltip, Typography, } from '@mui/material';
+import { AppBar, Avatar, Badge, Box, Button, Grid, Toolbar, Tooltip, Typography } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -98,9 +98,9 @@ function Profile() {
                         <Avatar sx={{ height: "175px", width: "175px", borderStyle: "solid", borderColor: "gray", borderWidth: "5px" }}>{user.username.charAt(0)}</Avatar>
                     </Grid>
                 )}
-                <Button sx={{ my: 3 }} color={settingsButtonColor} variant="contained" onClick={() => { displayProfileSettings(); }}>Profile Settings<SettingsIcon sx={{ ml: 1 }}/></Button>
-                <Button sx={{ my: 3, mx: 1.5 }} color={eventsButtonColor} variant="contained" onClick={() => { displayProfileEvents(); }}>Profile Events<AssignmentIcon sx={{ ml: 1 }}/></Button>
-                <Button sx={{ my: 3 }} color={reviewsButtonColor} variant="contained" onClick={() => { displayProfileReviews(); }}>Profile Reviews<ReviewsIcon sx={{ ml: 1 }}/></Button>
+                <Button sx={{ my: 3 }} color={settingsButtonColor} variant="contained" onClick={() => { displayProfileSettings(); }}><SettingsIcon sx={{ mr: 1 }}/>Profile Settings</Button>
+                <Button sx={{ my: 3, mx: 1.5 }} color={eventsButtonColor} variant="contained" onClick={() => { displayProfileEvents(); }}><AssignmentIcon sx={{ mr: 1 }}/>Profile Events</Button>
+                <Button sx={{ my: 3 }} color={reviewsButtonColor} variant="contained" onClick={() => { displayProfileReviews(); }}><ReviewsIcon sx={{ mr: 1 }}/>Profile Reviews</Button>
                 {display}
                 <AppBar position="static" sx={{ position: "fixed", bottom: 0, color: "black", background: "lightgray" }}>
                     <Toolbar style={{ pt: 3, minHeight: 40 }}>

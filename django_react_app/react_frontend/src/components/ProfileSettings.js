@@ -1,7 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { Chip, Button, Divider, Input, IconButton, InputAdornment, TextField, Tooltip, Typography } from '@mui/material';
-import UserAuthContext from '../contexts/UserAuthContext';
-import ProfilePictureContext from '../contexts/ProfilePictureContext';
+import { Button, Collapse, Divider, Grid, IconButton, Input, InputAdornment, TextField, Tooltip, Typography } from '@mui/material';
 import PersonIcon2 from '@mui/icons-material/Person';
 import PasswordIcon from '@mui/icons-material/Password';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
@@ -9,13 +7,16 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import CheckIcon from '@mui/icons-material/Check';
-import ErrorIcon from '@mui/icons-material/Error';
+import UserAuthContext from '../contexts/UserAuthContext';
+import ProfilePictureContext from '../contexts/ProfilePictureContext';
+import AlertMessage from '../components/AlertMessage';
 
 function ProfileSettings() {
+    const [openAlert, setOpenAlert] = useState(false);
+    const [severity, setSeverity] = useState("info");
+    const [alertTitle, setAlertTitle] = useState(null);
     const [profilePicture, setProfilePicture] = useState(null);
-    const [updateUserInfoMessage, setUpdateUserInfoMessages] = useState(null);
-    const [uploadProfilePictureMessage, setUploadProfilePictureMessage] = useState(null);
+    const [messages, setMessages] = useState(null);
     const {user, authTokens, setNewToken} = useContext(UserAuthContext);
     const {getProfilePicture} = useContext(ProfilePictureContext);
     const [textfieldType, setTextfieldType] = useState("password");
@@ -40,17 +41,19 @@ function ProfileSettings() {
         });
         if (response.status === 200) {
             alert("Profile picture successfully uploaded.");
-            setUploadProfilePictureMessage(
+            setMessages(
                 <div id="success">
                     Profile picture successfully uploaded.
-                    <Divider sx={{ my: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="success" label="success" icon={ <CheckIcon/> }/></Divider>
                 </div>
             );
             getProfilePicture();
+            setSeverity("success");
+            setAlertTitle("SUCCESS");
+            setOpenAlert(true);
         } else {
             const data = await response.json();
             alert("Sorry, the file doesn't seem to be a valid image and or file size is greater than 5MB.");
-            setUploadProfilePictureMessage(
+            setMessages(
                 <div id="errors">
                     {data["non_field_errors"].map(errors => (
                         <div>
@@ -63,9 +66,11 @@ function ProfileSettings() {
                             })}
                         </div>
                     ))}
-                    <Divider sx={{ mt: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="error" label="ERROR(S)" icon={ <ErrorIcon/> }/></Divider>
                 </div>
             );
+            setSeverity("error");
+            setAlertTitle("ERROR(S)");
+            setOpenAlert(true);
         }
     }
 
@@ -89,15 +94,17 @@ function ProfileSettings() {
         if (response.status === 200) {
             setNewToken(data);
             alert("Your account information has been updated. \n\nAny field(s) left empty will not be reflected.");
-            setUpdateUserInfoMessages(
+            setMessages(
                 <div id="success">
                     Your account information has been updated.<br></br>Any field(s) left empty will not be reflected.
-                    <Divider sx={{ my: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="success" label="success" icon={ <CheckIcon/> }/></Divider>
                 </div>
             );
+            setSeverity("success");
+            setAlertTitle("SUCCESS");
+            setOpenAlert(true);
         } else {
             alert("There seems to be error(s) in updating your new information on your account");
-            setUpdateUserInfoMessages(
+            setMessages(
                 <div id="errors">
                     {data["non_field_errors"].map((errors, i) => (
                         <div key={i}>
@@ -110,9 +117,11 @@ function ProfileSettings() {
                             })}
                         </div>
                     ))}
-                    <Divider sx={{ mt: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="error" label="ERROR(S)" icon={ <ErrorIcon/> }/></Divider>
                 </div>
             );
+            setSeverity("error");
+            setAlertTitle("ERROR(S)");
+            setOpenAlert(true);
         }
     }
 
@@ -131,9 +140,13 @@ function ProfileSettings() {
     return (
         <div id="profileSettings">
             <div id="generalContainer">
+                <Grid textAlign="left">
+                    <Collapse in={openAlert}>
+                        <AlertMessage setOpenAlert={setOpenAlert} severity={severity} alertTitle={alertTitle} messages={messages}/>
+                    </Collapse>
+                </Grid>
                 <Typography variant="h4"><u><b>Update Your Info</b></u></Typography>
                 <Divider sx={{ my: 2, backgroundColor: "gray" }}/>
-                <Typography sx={{ mb: 2 }} variant="h5">{updateUserInfoMessage}</Typography>
                 <form onSubmit={updateUserInfo}>
                     <PersonIcon2 sx={{ mr: 2, mt: 2.2, color: "#CC4D00"}} id="icons"/><TextField sx={{ background: "white", width: 375 }} type="text" label="Enter new username" name="username" variant="filled" inputProps={{ maxLength: 150 }}/>
                     <br></br>
@@ -143,13 +156,12 @@ function ProfileSettings() {
                     <br></br>
                     <TravelExploreIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type="text" name="zip_code" label="Enter new ZIP Code" variant="filled" inputProps={{ minLength:5, maxLength: 5 }}/>
                     <br></br>
-                    <Button sx={{ my: 2 }} type="submit" variant="contained">UPDATE<AssignmentIndIcon sx={{ ml: 1 }}/></Button>
+                    <Button sx={{ my: 2 }} type="submit" variant="contained"><AssignmentIndIcon sx={{ mr: 1 }}/>UPDATE</Button>
                 </form>
-                <Divider sx={{ backgroundColor: "gray" }}/>
-                <Typography sx={{ my: 2 }} variant="h5">{uploadProfilePictureMessage}</Typography>
+                <Divider sx={{ mb: 2, backgroundColor: "gray" }}/>
                 <form onSubmit={uploadProfilePicture}>
                     <Input type="file" onChange={(e) => setProfilePicture(e.target.files[0])} inputProps={{ accept: "image/*" }} required></Input>
-                    <Button type="submit" variant="contained">UPLOAD PROFILE PICTURE <FileUploadIcon sx={{ ml: 1 }}/></Button>
+                    <Button type="submit" variant="contained"><FileUploadIcon sx={{ mr: 1 }}/>UPLOAD PROFILE PICTURE</Button>
                 </form>
             </div>
         </div>

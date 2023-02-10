@@ -52,33 +52,42 @@ If you would like to see the maps, simply uncomment the two lines in EventDetail
 For updating user's information I am well aware of the flaw that the previous refresh token is still active (until it expires). The acess token should expire shortly. However, that refresh token may still be used to generate a new access token. Thereby gaining access to what should otherwise be restricted materials.<br>
 Possible solution is to add the refresh token to a blacklist if user's information has been updated. If a malicious actor tries to gain acess with that blacklisted token, it should prevent them from gaining access.
 
-# Images
+# Images (from Django w/ ReactJS)
 <details>
     <summary>Click to view images</summary>
-    <img src="https://i.imgur.com/eYltm5A.png">
-    <img src="https://i.imgur.com/NbjqElA.png">
-    <img src="https://i.imgur.com/0n50aN6.png">
-    <img src="https://i.imgur.com/j5MpiQc.png">
-    <img src="https://i.imgur.com/geNwlrc.png">
-    <img src="https://i.imgur.com/I6LbfxV.png">
-    <img src="https://i.imgur.com/IvqNobW.png">
-    <img src="https://i.imgur.com/bMoTlSZ.png">
-    <img src="https://i.imgur.com/UQyS59B.png">
-    <img src="https://i.imgur.com/ELF6b2Q.png">
-    <img src="https://i.imgur.com/z6xgX4D.png">
-    <img src="https://i.imgur.com/9Cg9kxJ.png">
-    <img src="https://i.imgur.com/DWpHx4W.png">
-    <img src="https://i.imgur.com/anJuA4j.png">
-    <img src="https://i.imgur.com/yEaJFSz.png">
-    <img src="https://i.imgur.com/BkjlziB.png">
-    <img src="https://i.imgur.com/V1fV0AJ.png">
-    <img src="https://i.imgur.com/PXr2yUS.png">
-    <img src="https://i.imgur.com/0SgvLm6.png">
-    <img src="https://i.imgur.com/4kwF9Uc.png">
-    <img src="https://i.imgur.com/8QhOonM.png">
-    <img src="https://i.imgur.com/tOCjsrN.png">
-    <img src="https://i.imgur.com/aZR9KgR.png">
-    <img src="https://i.imgur.com/if4tPvA.png">
-    <img src="https://i.imgur.com/eFaakJt.png">
-    <img src="https://i.imgur.com/kYjao53.png">
+    <a href="https://imgur.com/a/znEcjhc" target="_blank">Imgur link with a short description for each image</a>
+    <br><br>
+    <img src="https://i.imgur.com/3KsWCjP.png">
+    <img src="https://i.imgur.com/1Odrrox.png">
+    <img src="https://i.imgur.com/7EuSEN1.png">
+    <img src="https://i.imgur.com/mrRFW9b.png">
+    <img src="https://i.imgur.com/NphgiNl.png">
+    <img src="https://i.imgur.com/bKujqDG.png">
+    <img src="https://i.imgur.com/4lSbSuD.png">
+    <img src="https://i.imgur.com/KbjyTto.png">
+    <img src="https://i.imgur.com/0jML4GA.png">
+    <img src="https://i.imgur.com/x01eFsk.png">
+    <img src="https://i.imgur.com/Qj3h2LN.png">
+    <img src="https://i.imgur.com/lX3nNm2.png">
+    <img src="https://i.imgur.com/SSqxaBz.png">
+    <img src="https://i.imgur.com/CURSx8X.png">
+    <img src="https://i.imgur.com/UNuFyG7.png">
+    <img src="https://i.imgur.com/c0jAeMn.png">
+    <img src="https://i.imgur.com/lYpLSJM.png">
+    <img src="https://i.imgur.com/scVTYS1.png">
+    <img src="https://i.imgur.com/Glje6zc.png">
+    <img src="https://i.imgur.com/LBFqj4v.png">
+    <img src="https://i.imgur.com/qCNVx7I.png">
+    <img src="https://i.imgur.com/qPw5W3t.png">
+    <img src="https://i.imgur.com/zPEurIX.png">
+    <img src="https://i.imgur.com/o9CinAk.png">
+    <img src="https://i.imgur.com/XciTPoy.png">
+    <img src="https://i.imgur.com/MU5xVXe.png">
+    <img src="https://i.imgur.com/tuPiXau.png">
+    <img src="https://i.imgur.com/cl5nuoI.png">
+    <img src="https://i.imgur.com/y7TKlMh.png">
+    <img src="https://i.imgur.com/MQu8dSp.png">
+    <img src="https://i.imgur.com/ogBn3HY.png">
+    <img src="https://i.imgur.com/qIzDJor.png">
+    <img src="https://i.imgur.com/lwpZRkw.png">
 </details>

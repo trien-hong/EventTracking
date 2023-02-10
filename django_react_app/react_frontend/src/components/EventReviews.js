@@ -20,8 +20,8 @@ function EventReviews({event}) {
     }, [event]);
 
     async function getEventReviews() {
-        const response = await fetch(`http://127.0.0.1:8000/api/reviews/get/event_id/${event.event_id}/`, {
-        // const response = await fetch(`http://127.0.0.1/api/reviews/get/event_id/${event.event_id}/`, {
+        // const response = await fetch(`http://127.0.0.1:8000/api/reviews/get/event_id/${event.event_id}/`, {
+        const response = await fetch(`http://127.0.0.1/api/reviews/get/event_id/${event.event_id}/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -94,7 +94,7 @@ function EventReviews({event}) {
                                 </Select>
                             </FormControl>
                             <Rating sx={{ mx: 4, fontSize: "1.70rem" }} value={parseInt(rating)} readOnly/>
-                            <Button type="submit" variant="contained">SUBMIT &nbsp;<RateReviewIcon/></Button>
+                            <Button type="submit" variant="contained"><RateReviewIcon sx={{ mr: 1 }}/>SUBMIT</Button>
                         </Box>
                     </form>
                     <Divider sx={{ my: 2, backgroundColor: "gray" }}/>

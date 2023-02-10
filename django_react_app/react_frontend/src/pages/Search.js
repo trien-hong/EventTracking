@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Chip, Divider, Grid, Typography } from '@mui/material';
 import ErrorIcon from '@mui/icons-material/Error';
 import SaveEventButton from '../components/SaveEventButton';
-import DisplayOptions from '../components/DisplayOptions';
+import EventsDisplayOptions from '../components/EventsDisplayOptions';
 import Paging from '../components/Paging';
 import Loading from '../components/Loading';
 
@@ -29,7 +29,7 @@ function Search() {
                 <div>
                     {searchEvents ? (
                         <div>
-                            <DisplayOptions setEventsPerPage={setEventsPerPage} eventsPerPage={eventsPerPage} setSortingOptions={setSortingOptions} sortingOptions={sortingOptions}/>
+                            <EventsDisplayOptions setEventsPerPage={setEventsPerPage} eventsPerPage={eventsPerPage} setSortingOptions={setSortingOptions} sortingOptions={sortingOptions}/>
                             <div id="eventsContainer">
                                 {searchEvents.map((event, i) =>
                                     <div id="eventBorder" key={i}>

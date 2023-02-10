@@ -33,7 +33,7 @@ function SaveEventButton({event, margin}) {
 
     return (
         <div>
-            <Button sx={{ mb: margin }} variant="contained" onClick={() => { saveEvent(); }}>SAVE EVENT<SaveAltIcon sx={{ ml: 1 }}/></Button>
+            <Button sx={{ mb: margin }} variant="contained" onClick={() => { saveEvent(); }}><SaveAltIcon sx={{ mr: 1 }}/>SAVE EVENT</Button>
         </div>
     );
 }

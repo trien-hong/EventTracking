@@ -1,16 +1,16 @@
 # Update
-There are currently 3 different versions of this web app. One using Django REST framework with ReactJS (single-page application), one using Django (with templates), and Flask (with templates). All versions use PostgreSQL as the database.
+There are currently 3 different versions of this web app. One using Django REST framework with ReactJS (single-page application), one using Django (with templates), and one using Flask (with templates). All versions use PostgreSQL as the database.
 
 For the most updated version it will be Django REST framework with ReactJS (single-page application). Django (with templates) and Flask (with templates) version is quite outdated. I will no longer update the Django/Flask version anymore.
 
-The Django REST framework with ReactJS version contains some new features along with much needed updated code (compared to Flask & Django). Both Django versions can be run locally using docker-compose. You will need to obtain API keys and set up a/multiple .env file(s).
+The Django REST framework with ReactJS version contains some new features along with much needed updated code (compared to Flask/Django). Both Django versions can be run locally using docker-compose. You will need to obtain API keys and set up a/multiple .env file(s).
 
 Each version has its own README.md file with more information.
 
 # Event Tracking Web App
 Users can sign up using their email/username, password (which are hashed and not plaintext), and a zip code. These three information will then be saved into a PostgreSQL database.
 
-When the user tries to log in, it'll query the database for matching credentials. If matching, the user is now logged in. In the Django & React version, I've implemented JWT (JSON Web Tokens). After logging in The JWT is saved into their browser's localStorage. After the access token is expired, a refresh token will regenerate a new access token. JWT is useful for authentication along with containing useful information in its payload.
+When the user tries to log in, it'll query the database for matching credentials. If matching, the user is now logged in. In the Django REST framework with ReactJS version, I've implemented JWT (JSON Web Tokens). After logging in the JWT is saved into their browser's localStorage. After the access token is expired, a refresh token will regenerate a new access token. JWT is useful for authentication along with containing useful information in its payload.
 
 On the homepage, we make an API call to Ticketmaster using the current logged-in user's zip code. Ticketmaster will then send back a JSON containing events based on that zip code.
 
@@ -23,30 +23,39 @@ There is also a profile component in which the user can add the specific event i
 # Images (from Django w/ ReactJS)
 <details>
     <summary>Click to view images</summary>
-    <img src="https://i.imgur.com/eYltm5A.png">
-    <img src="https://i.imgur.com/NbjqElA.png">
-    <img src="https://i.imgur.com/0n50aN6.png">
-    <img src="https://i.imgur.com/j5MpiQc.png">
-    <img src="https://i.imgur.com/geNwlrc.png">
-    <img src="https://i.imgur.com/I6LbfxV.png">
-    <img src="https://i.imgur.com/IvqNobW.png">
-    <img src="https://i.imgur.com/bMoTlSZ.png">
-    <img src="https://i.imgur.com/UQyS59B.png">
-    <img src="https://i.imgur.com/ELF6b2Q.png">
-    <img src="https://i.imgur.com/z6xgX4D.png">
-    <img src="https://i.imgur.com/9Cg9kxJ.png">
-    <img src="https://i.imgur.com/DWpHx4W.png">
-    <img src="https://i.imgur.com/anJuA4j.png">
-    <img src="https://i.imgur.com/yEaJFSz.png">
-    <img src="https://i.imgur.com/BkjlziB.png">
-    <img src="https://i.imgur.com/V1fV0AJ.png">
-    <img src="https://i.imgur.com/PXr2yUS.png">
-    <img src="https://i.imgur.com/0SgvLm6.png">
-    <img src="https://i.imgur.com/4kwF9Uc.png">
-    <img src="https://i.imgur.com/8QhOonM.png">
-    <img src="https://i.imgur.com/tOCjsrN.png">
-    <img src="https://i.imgur.com/aZR9KgR.png">
-    <img src="https://i.imgur.com/if4tPvA.png">
-    <img src="https://i.imgur.com/eFaakJt.png">
-    <img src="https://i.imgur.com/kYjao53.png">
+    <a href="https://imgur.com/a/znEcjhc" target="_blank">Imgur link with a short description for each image</a>
+    <br><br>
+    <img src="https://i.imgur.com/3KsWCjP.png">
+    <img src="https://i.imgur.com/1Odrrox.png">
+    <img src="https://i.imgur.com/7EuSEN1.png">
+    <img src="https://i.imgur.com/mrRFW9b.png">
+    <img src="https://i.imgur.com/NphgiNl.png">
+    <img src="https://i.imgur.com/bKujqDG.png">
+    <img src="https://i.imgur.com/4lSbSuD.png">
+    <img src="https://i.imgur.com/KbjyTto.png">
+    <img src="https://i.imgur.com/0jML4GA.png">
+    <img src="https://i.imgur.com/x01eFsk.png">
+    <img src="https://i.imgur.com/Qj3h2LN.png">
+    <img src="https://i.imgur.com/lX3nNm2.png">
+    <img src="https://i.imgur.com/SSqxaBz.png">
+    <img src="https://i.imgur.com/CURSx8X.png">
+    <img src="https://i.imgur.com/UNuFyG7.png">
+    <img src="https://i.imgur.com/c0jAeMn.png">
+    <img src="https://i.imgur.com/lYpLSJM.png">
+    <img src="https://i.imgur.com/scVTYS1.png">
+    <img src="https://i.imgur.com/Glje6zc.png">
+    <img src="https://i.imgur.com/LBFqj4v.png">
+    <img src="https://i.imgur.com/qCNVx7I.png">
+    <img src="https://i.imgur.com/qPw5W3t.png">
+    <img src="https://i.imgur.com/zPEurIX.png">
+    <img src="https://i.imgur.com/o9CinAk.png">
+    <img src="https://i.imgur.com/XciTPoy.png">
+    <img src="https://i.imgur.com/MU5xVXe.png">
+    <img src="https://i.imgur.com/tuPiXau.png">
+    <img src="https://i.imgur.com/cl5nuoI.png">
+    <img src="https://i.imgur.com/y7TKlMh.png">
+    <img src="https://i.imgur.com/MQu8dSp.png">
+    <img src="https://i.imgur.com/ogBn3HY.png">
+    <img src="https://i.imgur.com/qIzDJor.png">
+    <img src="https://i.imgur.com/lwpZRkw.png">
 </details>
