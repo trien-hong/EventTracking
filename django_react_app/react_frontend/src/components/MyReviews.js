@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { Avatar, Box, Divider, Grid, Rating, Stack, Typography } from '@mui/material';
 import EditReview from './EditReview';
 import DeleteReview from './DeleteReview';
+import Replies from './Replies';
 
 function UserReviews({reviews, review, setReviews}) {
+    const [replies, setReplies] = useState(review.replies);
     const [containsProfilePicture, setContainsProfilePicture] = useState(false);
 
     useEffect(() => {
@@ -23,7 +25,7 @@ function UserReviews({reviews, review, setReviews}) {
                     )}
                 </Grid>
                 <Grid>
-                    <Typography variant="body2"><b>{review.username}</b></Typography>
+                    <Typography variant="h6"><b>{review.username}</b></Typography>
                 </Grid>
                 <Grid container justifyContent="flex-end">
                     <EditReview reviews={reviews} review={review} setReviews={setReviews}/>
@@ -32,22 +34,19 @@ function UserReviews({reviews, review, setReviews}) {
             </Stack>
             <Divider sx={{ backgroundColor: "gray" }}/>
             { review.isEdited ? (
-                <div>
-                    <Typography sx={{ mt: 1 }} variant="body2"><b>Last Edited Review On: </b>{review.date}</Typography>
-                </div>
+                <Typography sx={{ mt: 1 }} variant="body1"><b>Last Edited Review On: </b>{review.date}</Typography>
             ) : (
-                <div>
-                    <Typography sx={{ mt: 1 }} variant="body2"><b>Reviewed On: </b>{review.date}</Typography>
-                </div>
+                <Typography sx={{ mt: 1 }} variant="body1"><b>Reviewed On: </b>{review.date}</Typography>
             )}
-            <Typography variant="body2"><b>Event Title: </b>{review.title}</Typography>
+            <Typography variant="body1"><b>Event Title: </b>{review.title}</Typography>
             <Stack alignItems="center" direction="row">
-                <Typography variant="body2">
+                <Typography variant="body1">
                     <b>Rating: </b>
                 </Typography>
                 <Rating sx={{ ml: 0.5, fontSize: 20 }} value={parseInt(review.userRating)} readOnly/>
             </Stack>
-            <Typography sx={{ mb: 1.5 }} variant="body2"><b>Comment: </b>{review.userComment}</Typography>
+            <Typography variant="body1"><b>Comment: </b>{review.userComment}</Typography>
+            <Replies review={review} replies={replies} setReplies={setReplies}/>
         </Box>
     );
 }

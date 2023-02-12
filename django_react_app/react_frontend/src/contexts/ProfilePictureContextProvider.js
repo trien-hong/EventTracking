@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import ProfilePictureContext from './ProfilePictureContext';
 import UserAuthContext from './UserAuthContext';
 

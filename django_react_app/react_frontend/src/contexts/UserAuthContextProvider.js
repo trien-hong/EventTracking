@@ -25,11 +25,6 @@ function UserAuthContextProvider({children}) {
         return (() => clearInterval(interval));
     }, [authTokens, isLoading]);
 
-    function clearLoginAlert() {
-        setOpenAlert(false);
-        setMessage(null);
-    }
-
     async function login(e) {
         e.preventDefault();
         // const response = await fetch(`http://127.0.0.1:8000/api/token/`, {
@@ -55,7 +50,7 @@ function UserAuthContextProvider({children}) {
             alert(data["detail"]);
             setMessage(
                 <div id="errors">
-                    {data["detail"]}.
+                    <li>{data["detail"]}.</li>
                 </div>
             );
             setOpenAlert(true);
@@ -63,8 +58,8 @@ function UserAuthContextProvider({children}) {
     }
 
     async function updateToken() {
-        // const response = await fetch(`http://127.0.0.1:8000/api/token/refresh/`, {
-        const response = await fetch(`http://127.0.0.1/api/token/refresh/`, {
+        const response = await fetch(`http://127.0.0.1:8000/api/token/refresh/`, {
+        // const response = await fetch(`http://127.0.0.1/api/token/refresh/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -92,6 +87,11 @@ function UserAuthContextProvider({children}) {
         setUser(jwt_decode(data.access));
         setAuthTokens(data);
         localStorage.setItem("authTokens", JSON.stringify(data));
+    }
+
+    function clearLoginAlert() {
+        setOpenAlert(false);
+        setMessage(null);
     }
 
     function logout() {

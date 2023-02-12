@@ -55,12 +55,12 @@ function ProfileSettings() {
             alert("Sorry, the file doesn't seem to be a valid image and or file size is greater than 5MB.");
             setMessages(
                 <div id="errors">
-                    {data["non_field_errors"].map(errors => (
-                        <div>
+                    {data["non_field_errors"].map((errors, i) => (
+                        <div key={i}>
                             {Object.entries(errors).map(([key, val]) => {
                                 return (
                                     <div key={key}>
-                                        {val}
+                                        <li>{val}</li>
                                     </div>
                                 );
                             })}
@@ -76,8 +76,8 @@ function ProfileSettings() {
 
     async function updateUserInfo(e) {
         e.preventDefault();
-        // const response = await fetch(`http://127.0.0.1:8000/api/profile/settings/info/`, {
-        const response = await fetch(`http://127.0.0.1/api/profile/settings/info/`, {
+        const response = await fetch(`http://127.0.0.1:8000/api/profile/settings/info/`, {
+        // const response = await fetch(`http://127.0.0.1/api/profile/settings/info/`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -111,7 +111,7 @@ function ProfileSettings() {
                             {Object.entries(errors).map(([key, val]) => {
                                 return (
                                     <div key={key}>
-                                        {val}
+                                        <li>{val}</li>
                                     </div>
                                 );
                             })}

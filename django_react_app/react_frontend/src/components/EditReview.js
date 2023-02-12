@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Rating, Select, Tooltip, Typography } from '@mui/material';
 import Textarea from '@mui/joy/Textarea';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
@@ -6,15 +6,10 @@ import RateReviewIcon from '@mui/icons-material/RateReview';
 import UserAuthContext from '../contexts/UserAuthContext';
 
 function EditReview({reviews, review, setReviews}) {
-    const [open, setOpen] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
     const [comment, setComment] = useState(review.userComment);
     const [rating, setRating] = useState(review.userRating);
     const {authTokens} = useContext(UserAuthContext);
-
-    useEffect(() => {
-        setComment(review.userComment);
-        setRating(review.userRating);
-    }, [review]);
 
     async function editReview(e) {
         e.preventDefault();
@@ -48,20 +43,22 @@ function EditReview({reviews, review, setReviews}) {
             });
             setReviews(editiedReview);
             alert("Review has been successfully updated/edited for this event.");
-            setOpen(false);
+            setOpenDialog(false);
         } else {
             alert("There seems to be an issue in updating/editing your review.");
         }
     }
 
-    function handleOpen() {
-        setOpen(true);
-    }
-
-    function handleCancle() {
+    function handleOpenDialog() {
         setComment(review.userComment);
         setRating(review.userRating);
-        setOpen(false);
+        setOpenDialog(true);
+    }
+
+    function handleCancelDialog() {
+        setComment(review.userComment);
+        setRating(review.userRating);
+        setOpenDialog(false);
     }
 
     function changeRating(e) {
@@ -75,9 +72,9 @@ function EditReview({reviews, review, setReviews}) {
     return (
         <div>
             <Tooltip title="Edit Review">
-                <ModeEditIcon id="userReviewIcon" onClick={() => { handleOpen(); }}/>
+                <ModeEditIcon id="userReviewIcon" onClick={() => { handleOpenDialog(); }}/>
             </Tooltip>
-            <Dialog open={open} onClose={() => { handleCancle(); }}>
+            <Dialog open={openDialog} onClose={() => { handleCancelDialog(); }}>
                 <DialogTitle align="center"><b><u>Edit Your Review</u></b></DialogTitle>
                 <DialogContent>
                     <Typography variant="h6"><b>Event Title:</b> <i>{review.title}</i></Typography>
@@ -96,12 +93,12 @@ function EditReview({reviews, review, setReviews}) {
                                 </Select>
                             </FormControl>
                             <Rating sx={{ mx: 4, fontSize: "1.70rem" }} value={parseInt(rating)} readOnly/>
-                            <Button type="submit" variant="contained">UPDATE &nbsp;<RateReviewIcon/></Button>
+                            <Button type="submit" variant="contained"><RateReviewIcon sx={{ mr: 1 }}/>UPDATE</Button>
                         </Box>
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => { handleCancle() }}>CANCEL</Button>
+                    <Button variant="outlined" onClick={() => { handleCancelDialog() }}>CANCEL</Button>
                 </DialogActions>
             </Dialog>
         </div>

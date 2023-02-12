@@ -7,10 +7,6 @@ function DeleteReview({reviews, review, setReviews}) {
     const {authTokens} = useContext(UserAuthContext);
 
     async function deleteReview() {
-        setReviews((reviews) => reviews.filter((reviews) => reviews !== review));
-        if (reviews.length - 1 === 0) {
-            setReviews(null);
-        }
         // const response = await fetch(`http://127.0.0.1:8000/api/user/reviews/`, {
         const response = await fetch(`http://127.0.0.1/api/user/reviews/`, {
             method: "DELETE",
@@ -23,6 +19,10 @@ function DeleteReview({reviews, review, setReviews}) {
             })
         });
         if (response.status === 200) {
+            setReviews((reviews) => reviews.filter((reviews) => reviews !== review));
+            if (reviews.length - 1 === 0) {
+                setReviews(null);
+            }
             alert("Review has been successfully deleted from this event.");
         } else {
             alert("There seems to be an issue in deleting your review.");

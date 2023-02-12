@@ -12,6 +12,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from . models import UserEvents
 from . models import UserReviews
+from . models import UserReplies
 from . import serializers
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -73,6 +74,14 @@ def getRoutes(request):
             'Description': {'POST': 'Saves reviews left by the user to the database',
                             'PUT': 'Updates the specific review left by a user',
                             'DELETE': 'Deletes the specific review left by the user'}
+        },
+        {
+            'Endpoint': '/api/user/replies/',
+            'Method': ['POST', 'PUT', 'DELETE'],
+            'Restricted': True,
+            'Description': {'POST': 'Saves replies left by the user to the database',
+                            'PUT': 'Updates the specific reply left by a user',
+                            'DELETE': 'Deletes the specific reply left by the user'}
         },
         {
             'Endpoint': '/api/reviews/get/event_id/<str:event_id>/',
@@ -213,6 +222,36 @@ def userReviews(request):
         data = json.loads(request.body)
         review = UserReviews.objects.all().filter(id=data["review_id"])
         review.delete()
+        return Response(status=status.HTTP_200_OK)
+    
+@api_view(["POST", "PUT", "DELETE"])
+@permission_classes([IsAuthenticated])
+def userReplies(request):
+    """
+    Endpoint: /api/user/replies/
+    """
+    if request.method == "POST":
+        user = User.objects.get(id=request.user.id)
+        data = json.loads(request.body)
+        review = UserReviews(id=data["review_id"])
+        reply = UserReplies(reply=data["reply"], review=review, user=user)
+        reply.save()
+        serializer = serializers.GetReplies(reply)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        reply = UserReplies.objects.get(id=data["reply_id"])
+        reply.reply = data["editedReply"]
+        reply.isEdited = True
+        reply.save()
+        serializer = serializers.EditedReplySerializer(reply, many=False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    if request.method == "DELETE":
+        data = json.loads(request.body)
+        reply = UserReplies.objects.get(id=data["reply_id"])
+        reply.delete()
         return Response(status=status.HTTP_200_OK)
 
 @api_view(["GET"])

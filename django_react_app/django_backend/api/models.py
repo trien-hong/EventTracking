@@ -26,3 +26,10 @@ class UserReviews(models.Model):
     date = models.DateTimeField(auto_now=True)
     isEdited = models.BooleanField(default=False)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, default=None)
+
+class UserReplies(models.Model):
+    reply = models.TextField()
+    date = models.DateTimeField(auto_now=True)
+    isEdited = models.BooleanField(default=False)
+    review = models.ForeignKey(UserReviews, on_delete=models.CASCADE, default=None)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, default=None)

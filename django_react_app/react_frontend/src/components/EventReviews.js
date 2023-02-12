@@ -13,6 +13,7 @@ function EventReviews({event}) {
     const [rating, setRating] = useState("");
     const [comment, setComment] = useState("");
     const {user, authTokens} = useContext(UserAuthContext);
+    
     useEffect(() => {
         if (event !== undefined) {
             getEventReviews();
@@ -127,7 +128,7 @@ function EventReviews({event}) {
                         </div>
                     ) : (
                         <div>
-                            <Typography sx={{ mt: 2 }} id="errors" variant="h5">There's no reviews for this specific event yet.<br></br>Be the first!</Typography>
+                            <Typography sx={{ mt: 2 }} id="errors" variant="h5">There are no reviews for this specific event yet.<br></br>Be the first!</Typography>
                         </div>
                     )}
                 </div>

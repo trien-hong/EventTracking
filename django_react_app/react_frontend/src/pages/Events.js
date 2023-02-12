@@ -35,10 +35,10 @@ function Events() {
                                 {events.map((event, i) =>
                                     <div id="eventBorder" key={i}>
                                         <Grid textAlign="center">
-                                            <Typography sx={{ mt: 2.5 }}><b><i>{event.title}</i></b></Typography>
-                                            <Typography sx={{ my: 2.5 }}>{event.date} &nbsp;|&nbsp; {event.city}</Typography>
+                                            <Typography sx={{ mt: 2.5 }} variant="body1"><b><i>{event.title}</i></b></Typography>
+                                            <Typography sx={{ my: 2.5 }} variant="body1">{event.date} &nbsp;|&nbsp; {event.city}</Typography>
                                             <img src={event.imageUrl} alt="not found" onClick={() => { goToEventDetails(event.event_id); }}/>
-                                            <Typography sx={{ my: 2.5 }}>{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
+                                            <Typography sx={{ my: 2.5 }} variant="body1">{event.minPrice} &nbsp;-&nbsp; {event.maxPrice}</Typography>
                                             <SaveEventButton event={event} margin={2.5}/>
                                         </Grid>
                                     </div>

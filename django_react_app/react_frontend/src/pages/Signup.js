@@ -60,7 +60,7 @@ function Signup() {
                             {Object.entries(errors).map(([key, val]) => {
                                 return (
                                     <div key={key}>
-                                        {val}
+                                        <li>{val}</li>
                                     </div>
                                 );
                             })}

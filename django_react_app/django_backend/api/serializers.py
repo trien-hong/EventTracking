@@ -4,6 +4,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework.serializers import HyperlinkedModelSerializer
 from . models import UserEvents
 from . models import UserReviews
+from . models import UserReplies
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -115,14 +116,24 @@ class UserEventsSerializer(ModelSerializer):
         model = UserEvents
         fields = "__all__"
 
-class GetReviewsSerializer(HyperlinkedModelSerializer):
+class GetReplies(HyperlinkedModelSerializer):
     date = serializers.DateTimeField(format="%m-%d-%Y @ %H:%M:%S UTC")
     username = serializers.CharField(source="user.username")
     profile_picture = serializers.CharField(source="user.profile_picture")
 
     class Meta:
+        model = UserReplies
+        fields = ["username", "profile_picture", "id", "reply", "date", "isEdited"]
+
+class GetReviewsSerializer(HyperlinkedModelSerializer):
+    date = serializers.DateTimeField(format="%m-%d-%Y @ %H:%M:%S UTC")
+    username = serializers.CharField(source="user.username")
+    profile_picture = serializers.CharField(source="user.profile_picture")
+    replies = GetReplies(many=True, source="userreplies_set")
+
+    class Meta:
         model = UserReviews
-        fields = ["username", "profile_picture", "id", "event_id", "title", "userComment", "userRating", "date", "isEdited"]
+        fields = ["username", "profile_picture", "id", "event_id", "title", "userComment", "userRating", "date", "isEdited", "replies"]
 
 class GetProfilePictureSerializer(ModelSerializer):
     class Meta:
@@ -135,3 +146,10 @@ class EditedReviewSerializer(ModelSerializer):
     class Meta:
         model = UserReviews
         fields = ["userComment", "userRating", "date", "isEdited"]
+
+class EditedReplySerializer(ModelSerializer):
+    date = serializers.DateTimeField(format="%m-%d-%Y @ %H:%M:%S UTC")
+
+    class Meta:
+        model = UserReplies
+        fields = ["reply", "date", "isEdited"]

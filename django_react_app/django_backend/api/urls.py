@@ -16,6 +16,7 @@ urlpatterns = [
     path("api/events/weather/latitude/<str:latitude>/longitude/<str:longitude>/", views.eventsWeather, name="eventsWeather"),
     path("api/events/search/input/<str:input>/size/<str:size>/page/<str:page>/sort/<str:sort>/", views.eventsSearchInput, name="eventsSearchInput"),
     path("api/user/reviews/", views.userReviews, name="userReviews"),
+    path("api/user/replies/", views.userReplies, name="userReplies"),
     path("api/reviews/get/event_id/<str:event_id>/", views.getAllReviews, name="getAllReviews"),
     path("api/profile/events/", views.profileEvents, name="profileEvents"),
     path("api/profile/reviews/", views.profileReview, name="profileReview"),

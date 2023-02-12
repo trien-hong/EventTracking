@@ -85,7 +85,7 @@ function EventDetails() {
                                         <Weather latitude={eventDetails.latitude} longitude={eventDetails.longitude}/>
                                     </Grid>
                                 </Stack>
-                                <Divider sx={{ my: 2, backgroundColor: "gray" }}/>
+                                <Divider sx={{ backgroundColor: "gray" }}/>
                                 {/* <Map latitude={eventDetails.latitude} longitude={eventDetails.longitude}/> */}
                                 {/* If you would like to see Maps you should uncomment the line above this.
                                 Since there is a quota on free use (before they start charging) I commented this out so it won't load */}

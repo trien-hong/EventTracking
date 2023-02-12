@@ -36,9 +36,9 @@ function Weather({latitude, longitude}) {
                 <div>
                     <img src={weather.weather_icon} style={{ width: "35%", backgroundColor: "#88E0F3" }} alt="not found"/>
                     <Typography variant="h6"><b>{weather.weather_description}</b></Typography>
-                    <Typography variant="h6"><b>Current Temp: </b>{weather.temperature_f}°F</Typography>
-                    <Typography variant="h6"><b>Low Temp: </b>{weather.temperature_min_f}°F</Typography>
-                    <Typography variant="h6"><b>High Temp: </b>{weather.temperature_max_f}°F</Typography>
+                    <Typography variant="h6"><b>Current Temp: </b>{weather.temperature_f}°F / {weather.temperature_c}°C</Typography>
+                    <Typography variant="h6"><b>Low Temp: </b>{weather.temperature_min_f}°F / {weather.temperature_min_c}°C</Typography>
+                    <Typography variant="h6"><b>High Temp: </b>{weather.temperature_max_f}°F / {weather.temperature_max_c}°C</Typography>
                 </div>
             ) : (
                 <div>
