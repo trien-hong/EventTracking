@@ -101,7 +101,7 @@ ROOT_URLCONF = "django_backend.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "email_templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -178,5 +178,10 @@ CORS_ALLOW_ALL_ORIGINS = True
 AUTH_USER_MODEL = "api.User"
 
 MEDIA_URL = "media/"
-
 MEDIA_ROOT = BASE_DIR / "media"
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")

@@ -10,6 +10,7 @@ User = get_user_model()
 
 
 class SignupValidateSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
     username = serializers.CharField(required=True)
     password = serializers.CharField(required=True)
     confirm_password = serializers.CharField(required=True)
@@ -17,6 +18,10 @@ class SignupValidateSerializer(serializers.Serializer):
 
     def validate(self, data):
         errors = []
+
+        # validate email
+        if User.objects.filter(email=data["email"]).exists():
+            errors.append({"email" : "Email already exist."})
 
         # validate username
         if User.objects.filter(username=data["username"]).exists():

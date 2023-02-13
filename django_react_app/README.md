@@ -5,7 +5,7 @@ This is a single page applcation (SPA). A page refresh never occurs. Everything 
 # Setting Up
 Ensure you are in the django_react_app folder/version. There are three .env files you will need to add.
 
-One in the django_react_app folder (where docker-compose.yml is located), one in django_backend folder (where Dockerfile is located), and one in react_frontend (where Dockerfile is located). A total of 12 environment variables are needed.
+One in the django_react_app folder (where docker-compose.yml is located), one in django_backend folder (where Dockerfile is located), and one in react_frontend (where Dockerfile is located). A combined total of 14 environment variables are needed.
 
 ## django_react_app folder .env
 There are 3 total variables you'll need to add in this .env file. We can just use the default settings for now.
@@ -14,7 +14,9 @@ There are 3 total variables you'll need to add in this .env file. We can just us
 * `POSTGRES_PASSWORD="postgres"`
 
 ## django_backend folder .env
-There are 8 total variables you'll need to add in this .env file. We can just use the default database of PostgreSQL for now.
+There are 10 total variables you'll need to add in this .env file. We can just use the default database of PostgreSQL for now.
+* `EMAIL_HOST_USER="Enter your gmail/google email"`
+* `EMAIL_HOST_PASSWORD="Enter your APP PASSWORD NOT EMAIL PASSWORD"`
 * `TICKETMASTER_API_KEY="ENTER YOUR TICKETMASTER API KEY HERE"`
 * `OPENWEATHERMAP_API_KEY="ENTER YOUR OPENWEATHERMAP API KEY HERE"`
 * `SECRET_KEY="ENTER YOUR SECRET KEY HERE (you can make this up)"`
@@ -23,6 +25,8 @@ There are 8 total variables you'll need to add in this .env file. We can just us
 * `DB_PASSWORD="postgres"`
 * `DB_HOST="database"`
 * `DB_PORT="5432"`
+
+Note that the `EMAIL_HOST_PASSWORD` is NOT the password you login with. You'll need to generate an app password within "manage your google account" security settings. You will also have to activate two factor authentication on your google account otherwise it will not work.<br>I am using gmail SMTP. You can switch it up if you would like.
 
 ## react_backend folder .env
 There is only 1 variable you'll need to add in this .env file.
@@ -57,7 +61,9 @@ Possible solution is to add the refresh token to a blacklist if user's informati
     <summary>Click to view images</summary>
     <a href="https://imgur.com/a/znEcjhc" target="_blank">Imgur link with a short description for each image</a>
     <br><br>
-    <img src="https://i.imgur.com/3KsWCjP.png">
+    <img src="https://i.imgur.com/6tW4YFY.png">
+    <img src="https://i.imgur.com/0YjOYWV.png">
+    <img src="https://i.imgur.com/5e1txIa.png">
     <img src="https://i.imgur.com/1Odrrox.png">
     <img src="https://i.imgur.com/7EuSEN1.png">
     <img src="https://i.imgur.com/mrRFW9b.png">

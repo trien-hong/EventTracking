@@ -76,8 +76,8 @@ function ProfileSettings() {
 
     async function updateUserInfo(e) {
         e.preventDefault();
-        const response = await fetch(`http://127.0.0.1:8000/api/profile/settings/info/`, {
-        // const response = await fetch(`http://127.0.0.1/api/profile/settings/info/`, {
+        // const response = await fetch(`http://127.0.0.1:8000/api/profile/settings/info/`, {
+        const response = await fetch(`http://127.0.0.1/api/profile/settings/info/`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

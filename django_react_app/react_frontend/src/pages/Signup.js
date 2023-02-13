@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Collapse, Divider, Grid, IconButton, InputAdornment, TextField, Tooltip, Typography } from '@mui/material';
+import EmailIcon from '@mui/icons-material/Email';
 import PersonIcon2 from '@mui/icons-material/Person';
 import PasswordIcon from '@mui/icons-material/Password';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
@@ -34,6 +35,7 @@ function Signup() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
+                "email": e.target.email.value,
                 "username": e.target.username.value,
                 "password": e.target.password.value,
                 "confirm_password": e.target.confirm_password.value,
@@ -44,7 +46,8 @@ function Signup() {
             alert("Account has been created!\n\nYou can now login.");
             setMessages(
                 <div id="success">
-                    Account has been created! You can now <Typography variant="body1" color="success" component={Link} to="/login/"><b>login</b></Typography>.
+                    Account has been created! You can now <Typography variant="body1" color="success" component={Link} to="/login/"><b>login</b></Typography>.<br></br>
+                    A welcome email has been sent to the email address provided.
                 </div>
             );
             setSeverity("success");
@@ -95,7 +98,9 @@ function Signup() {
                 <Grid textAlign="center">
                     <Typography variant="h4"><u><b>SIGNUP</b></u></Typography>
                     <form onSubmit={signup}>
-                        <PersonIcon2 sx={{ mr: 2, mt: 4, color: "#CC4D00"}} id="icons"/><TextField sx={{ mt: 2, width: 375, background: "white" }} type="text" label="Enter username" name="username" variant="filled" inputProps={{ maxLength: 150 }} required/>
+                        <EmailIcon sx={{ mr: 2, mt: 4, color: "#CC4D00"}} id="icons"/><TextField sx={{ mt: 2, width: 375, background: "white" }} type="text" label="Enter email" name="email" variant="filled" inputProps={{ maxLength: 150 }} required/>
+                        <br></br>
+                        <PersonIcon2 sx={{ mr: 2, mt: 2.2, color: "#CC4D00"}} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type="text" label="Enter username" name="username" variant="filled" inputProps={{ maxLength: 150 }} required/>
                         <br></br>
                         <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Enter password" name="password" variant="filled" required InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
                         <br></br>

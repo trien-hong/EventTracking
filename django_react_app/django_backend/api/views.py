@@ -1,8 +1,8 @@
 import os
 import json
 import uuid
-import ticketmaster_api
-import openweathermap_api
+from third_party_apis import ticketmaster_api
+from third_party_apis import openweathermap_api
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -14,6 +14,8 @@ from . models import UserEvents
 from . models import UserReviews
 from . models import UserReplies
 from . import serializers
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -23,6 +25,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
 
         token['id'] = user.id
+        token['email'] = user.email
         token['username'] = user.username
         token['zip_code'] = user.zip_code
 
@@ -147,7 +150,16 @@ def signup(request):
     user_info = json.loads(request.body)
     validate = serializers.SignupValidateSerializer(data=user_info)
     if validate.is_valid():
-        user = User.objects.create_user(username=validate.validated_data["username"], password=validate.validated_data["password"], zip_code=validate.validated_data["zip_code"])
+        send_mail(
+            "Event Tracking | Welcome, " + validate.validated_data["username"] + "! ",
+            "Welcome!",
+            None,
+            [validate.validated_data["email"]],
+            fail_silently=False,
+            html_message = render_to_string("../email_templates/welcome.html", {"username": validate.validated_data["username"]})
+        )
+        user = User.objects.create_user(email=validate.validated_data["email"], username=validate.validated_data["username"], password=validate.validated_data["password"], zip_code=validate.validated_data["zip_code"])
+        
         return Response(status=status.HTTP_201_CREATED)
     else:
         return Response(validate.errors, status=status.HTTP_400_BAD_REQUEST)

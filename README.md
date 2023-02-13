@@ -8,7 +8,7 @@ The Django REST framework with ReactJS version contains some new features along 
 Each version has its own README.md file with more information.
 
 # Event Tracking Web App
-Users can sign up using their email/username, password (which are hashed and not plaintext), and a zip code. These three information will then be saved into a PostgreSQL database.
+Users can sign up using their email, username, password (which are hashed and not plaintext), and a zip code. These four information will then be saved into a PostgreSQL database. Upon a successful signup, a simple welcome email will be sent out to the email address provided.
 
 When the user tries to log in, it'll query the database for matching credentials. If matching, the user is now logged in. In the Django REST framework with ReactJS version, I've implemented JWT (JSON Web Tokens). After logging in the JWT is saved into their browser's localStorage. After the access token is expired, a refresh token will regenerate a new access token. JWT is useful for authentication along with containing useful information in its payload.
 
@@ -25,7 +25,9 @@ There is also a profile component in which the user can add the specific event i
     <summary>Click to view images</summary>
     <a href="https://imgur.com/a/znEcjhc" target="_blank">Imgur link with a short description for each image</a>
     <br><br>
-    <img src="https://i.imgur.com/3KsWCjP.png">
+    <img src="https://i.imgur.com/6tW4YFY.png">
+    <img src="https://i.imgur.com/0YjOYWV.png">
+    <img src="https://i.imgur.com/5e1txIa.png">
     <img src="https://i.imgur.com/1Odrrox.png">
     <img src="https://i.imgur.com/7EuSEN1.png">
     <img src="https://i.imgur.com/mrRFW9b.png">

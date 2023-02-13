@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <style>
+                h2 {
+                    padding-top: 0px;
+                    margin: 0px;
+                }
+
+                #background {
+                    width: 100%;
+                    height: 100%;
+                    padding: 25px;
+                    background-color: #CACACA;
+                }
+
+                #container {
+                    font-family: sans-serif;
+                    padding: 25px;
+                    background-color: #E9E9E9;
+                    max-width: 500px;
+                    border-style: solid;
+                    border-width: 2px;
+                }
+
+                #body-container {
+                    text-align: left;
+                }
+            </style>
+        </head>
+    <body>
+        <div id="background">
+            <center>
+                <div id="container">
+                    <div id="header-container">
+                            <h2>Welcome to Event Tracking!</h2>
+                    </div>
+                    <div id="body-container">
+                        <hr></hr>
+                        <h3>Hello, <u>{{ username }}</u>!</h3>
+                        <h3>There are currently 3 different versions of this web app. One using Django REST framework with ReactJS (single-page application), one using Django (with templates), and one using Flask (with templates). All versions use PostgreSQL as the database.</h3>
+                        <h3>For the most updated version it will be Django REST framework with ReactJS (single-page application). Django (with templates) and Flask (with templates) version is quite outdated. I will no longer update the Django/Flask version anymore.</h3>
+                        <h3>The Django REST framework with ReactJS version contains some new features along with much needed updated code (compared to Flask/Django). Both Django versions can be run locally using docker-compose. You will need to obtain API keys and set up a/multiple .env file(s).</h3>
+                        <h3>Each version has its own README.md file with more information.</h3>
+                        <h3>Thank you for signing up! :)</h3>
+                        <hr></hr>
+                    </div>
+                    <!-- i can't seem to embed images directly into html for the time being maybe i'll try again another time -->
+                    <div id="footer-container">
+                        <div>
+                            <img style="vertical-align:middle" src="http://drive.google.com/uc?export=view&id=1CqeNlDQb3ZF606W4mroWmOIKctH14GuT" alt="github_icon" width="50" height="50">
+                            <span>&nbsp;&nbsp;&nbsp;<a href="https://github.com/miserrano7/EventTracking">Event Tracking GitHub Repository</a></span>
+                        </div>
+                        <hr></hr>
+                        <div>
+                            <img style="vertical-align:middle" src="http://drive.google.com/uc?export=view&id=1GB8JPCo0KxvSZiXD3NEq3uaAKcgLHVKH" alt="imgur_icon" width="50" height="50">
+                            <span>&nbsp;&nbsp;&nbsp;<a href="https://imgur.com/a/znEcjhc">Imgur Link (images of web app)</a></span>
+                        </div>
+                        <hr></hr>
+                        <div>
+                            <img style="vertical-align:middle" src="http://drive.google.com/uc?export=view&id=1G60pa9G3HkbirQzAggUQf0UxUSsaVrIO" alt="github_icon" width="50" height="50">
+                            <span>&nbsp;&nbsp;&nbsp;<a href="https://github.com/trien-hong">My GitHub</a></span>
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
+    </body>
+</html>
