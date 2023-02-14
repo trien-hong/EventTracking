@@ -26,7 +26,7 @@ There are 10 total variables you'll need to add in this .env file. We can just u
 * `DB_HOST="database"`
 * `DB_PORT="5432"`
 
-Note that the `EMAIL_HOST_PASSWORD` is NOT the password you login with. You'll need to generate an app password within "manage your google account" security settings. You will also have to activate two factor authentication on your google account otherwise it will not work.<br>I am using gmail SMTP. You can switch it up if you would like.
+Note that the `EMAIL_HOST_PASSWORD` is NOT the password you login with. You'll need to generate an app password within "manage your google account" security settings. You will also have to activate two factor authentication on your google account otherwise it will not work.<br>I am using gmail's simple mail transfer protocol (SMTP). You can change it up if you would like.
 
 ## react_backend folder .env
 There is only 1 variable you'll need to add in this .env file.
@@ -92,6 +92,7 @@ Possible solution is to add the refresh token to a blacklist if user's informati
     <img src="https://i.imgur.com/qCNVx7I.png">
     <img src="https://i.imgur.com/qPw5W3t.png">
     <img src="https://i.imgur.com/zPEurIX.png">
+    <img src="https://i.imgur.com/F7R2Cqg.png">
     <img src="https://i.imgur.com/o9CinAk.png">
     <img src="https://i.imgur.com/XciTPoy.png">
     <img src="https://i.imgur.com/MU5xVXe.png">

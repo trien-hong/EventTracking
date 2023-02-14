@@ -25,7 +25,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
 
         token['id'] = user.id
-        token['email'] = user.email
         token['username'] = user.username
         token['zip_code'] = user.zip_code
 
@@ -159,7 +158,6 @@ def signup(request):
             html_message = render_to_string("../email_templates/welcome.html", {"username": validate.validated_data["username"]})
         )
         user = User.objects.create_user(email=validate.validated_data["email"], username=validate.validated_data["username"], password=validate.validated_data["password"], zip_code=validate.validated_data["zip_code"])
-        
         return Response(status=status.HTTP_201_CREATED)
     else:
         return Response(validate.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -248,7 +246,7 @@ def userReplies(request):
         review = UserReviews(id=data["review_id"])
         reply = UserReplies(reply=data["reply"], review=review, user=user)
         reply.save()
-        serializer = serializers.GetReplies(reply)
+        serializer = serializers.UserRepliesSerializer(reply)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
     if request.method == "PUT":
@@ -273,7 +271,7 @@ def getAllReviews(request, event_id):
     Endpoint: /api/reviews/get/event_id/<str:event_id>/
     """
     reviews = UserReviews.objects.all().filter(event_id=event_id).order_by("id")
-    serializer = serializers.GetReviewsSerializer(reviews, many=True)
+    serializer = serializers.UserReviewsSerializer(reviews, many=True)
     if serializer.data != []:
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
@@ -322,7 +320,7 @@ def profileReview(request):
     """
     user = request.user
     reviews = UserReviews.objects.all().filter(user=user.id).order_by("id")
-    serializer = serializers.GetReviewsSerializer(reviews, many=True)
+    serializer = serializers.UserReviewsSerializer(reviews, many=True)
     if serializer.data != []:
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
@@ -336,7 +334,7 @@ def profileSettingsPicture(request):
     """
     if request.method == "GET":
         user = User.objects.get(username=request.user)
-        serializer = serializers.GetProfilePictureSerializer(user, many=False)
+        serializer = serializers.UserProfilePictureSerializer(user, many=False)
         if serializer.data["profile_picture"] != None and os.path.exists(user.profile_picture.path):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
@@ -377,20 +375,55 @@ def profileSettingsInfo(request):
     # that refresh token may still be used to generate a new access token
     user = User.objects.get(id=request.user.id)
     data = json.loads(request.body)
+    print(data)
     validate = serializers.UpdateUserInfoValidateSerializer(data=data)
+    old_email = ""
     if validate.is_valid():
+        if(validate.validated_data["email"] != ""):
+            old_email = user.email
+            new_email = validate.validated_data["email"]
+            user.email = new_email
+            user.save()
         if(validate.validated_data["username"] != ""):
             user.username = validate.validated_data["username"]
             user.save()
-        if(validate.validated_data["password"] and validate.validated_data["confirm_password"] != ""):
+        if(validate.validated_data["password"] != "" and validate.validated_data["confirm_password"] != ""):
             user.set_password(validate.validated_data["confirm_password"])
             user.save()
         if(validate.validated_data["zip_code"] != ""):
             user.zip_code = validate.validated_data["zip_code"]
             user.save()
         new_token = get_new_token(user, validate.validated_data["username"], validate.validated_data["zip_code"])
+        if old_email == "":
+            print("working")
+            send_mail(
+                "Account Information Change",
+                "Your account information has changed. If this was indeed yourself, you can ignore this.",
+                None,
+                [user.email],
+                fail_silently=False,
+                html_message = render_to_string("../email_templates/account_info_change.html", {"username": user.username, "failed": False})
+            )
+        else:
+            print("working")
+            send_mail(
+                "Account Information Change",
+                "Your account information has changed. If this was indeed yourself, you can ignore this.",
+                None,
+                [user.email, old_email],
+                fail_silently=False,
+                html_message = render_to_string("../email_templates/account_info_change.html", {"username": user.username, "failed": False})
+            )
         return Response(new_token, status=status.HTTP_200_OK)
     else:
+        send_mail(
+            "Attempt at Account Information Change",
+            "Attempt at changing your account information has failed. If this was not you, you should immediately take steps to secure your account.",
+            None,
+            [user.email],
+            fail_silently=False,
+            html_message = render_to_string("../email_templates/account_info_change.html", {"username": user.username, "failed": True})
+        )
         return Response(validate.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(["PUT"])
@@ -403,15 +436,35 @@ def resetPassword(request):
     data = json.loads(request.body)
     validate = serializers.ResetPasswordValidateSerializer(data=data)
     if validate.is_valid():
-        user = User.objects.get(username=data["username"])
         # obviously you shouldn't be able to update a password just because you know a username
         # there should be some secondary method of verifiction (such as email i'll find a way to do this later)
         # or use email as the verification since that's generally not public or harder to guess/find out
+        user = User.objects.get(username=data["username"])
         user.set_password(validate.validated_data["confirm_password"])
         user.save()
+        send_mail(
+            "Account Information Change",
+            "Your account information has changed. If this was indeed yourself, you can ignore this.",
+            None,
+            [user.email],
+            fail_silently=False,
+            html_message = render_to_string("../email_templates/account_info_change.html", {"username": user.username, "failed": False})
+        )
         return Response(status=status.HTTP_200_OK)
     else:
-        return Response(validate.errors, status=status.HTTP_404_NOT_FOUND)
+        try:
+            user = User.objects.get(username=data["username"])
+            send_mail(
+                "Attempt at Account Information Change",
+                "Attempt at changing your account information has failed. If this was not you, you should immediately take steps to secure your account.",
+                None,
+                [user.email],
+                fail_silently=False,
+                html_message = render_to_string("../email_templates/account_info_change.html", {"username": user.username, "failed": True})
+            )
+            return Response(validate.errors, status=status.HTTP_404_NOT_FOUND)
+        except:
+            return Response(validate.errors, status=status.HTTP_404_NOT_FOUND)
 
 def get_new_token(user, username, zip_code):
     # i am well aware of the flaw that the previous refresh token is still active (until it expires)

@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Collapse, Divider, Grid, IconButton, InputAdornment, TextField, Tooltip, Typography } from '@mui/material';
+import LinearProgress from '@mui/material/LinearProgress';
 import EmailIcon from '@mui/icons-material/Email';
 import PersonIcon2 from '@mui/icons-material/Person';
 import PasswordIcon from '@mui/icons-material/Password';
@@ -12,6 +13,7 @@ import UserAuthContext from '../contexts/UserAuthContext';
 import AlertMessage from '../components/AlertMessage';
 
 function Signup() {
+    const [signupLoading, setSignupLoading] = useState(null);
     const [openAlert, setOpenAlert] = useState(false);
     const [severity, setSeverity] = useState("info");
     const [alertTitle, setAlertTitle] = useState(null);
@@ -28,6 +30,7 @@ function Signup() {
 
     async function signup(e) {
         e.preventDefault();
+        setSignupLoading(<LinearProgress sx={{ mb: 1.5 }}/>);
         // const response = await fetch(`http://127.0.0.1:8000/api/signup/`, {
         const response = await fetch(`http://127.0.0.1/api/signup/`, {
             method: "POST",
@@ -43,6 +46,7 @@ function Signup() {
             })
         });
         if (response.status === 201) {
+            setSignupLoading(null);
             alert("Account has been created!\n\nYou can now login.");
             setMessages(
                 <div id="success">
@@ -54,7 +58,9 @@ function Signup() {
             setAlertTitle("SUCCESS");
             setOpenAlert(true);
         } else {
+            setSignupLoading(null);
             const data = await response.json();
+            console.log(data)
             alert("There seems to be error(s) in creating your account");
             setMessages(
                 <div id="errors">
@@ -92,13 +98,14 @@ function Signup() {
     return (
         <Grid sx={{ mt: 2 }} container justifyContent="center">
             <div id="generalContainer">
+                {signupLoading}
                 <Collapse in={openAlert}>
                     <AlertMessage setOpenAlert={setOpenAlert} severity={severity} alertTitle={alertTitle} messages={messages}/>
                 </Collapse>
                 <Grid textAlign="center">
                     <Typography variant="h4"><u><b>SIGNUP</b></u></Typography>
                     <form onSubmit={signup}>
-                        <EmailIcon sx={{ mr: 2, mt: 4, color: "#CC4D00"}} id="icons"/><TextField sx={{ mt: 2, width: 375, background: "white" }} type="text" label="Enter email" name="email" variant="filled" inputProps={{ maxLength: 150 }} required/>
+                        <EmailIcon sx={{ mr: 2, mt: 4, color: "#CC4D00"}} id="icons"/><TextField sx={{ mt: 2, width: 375, background: "white" }} type="email" label="Enter email" name="email" variant="filled" inputProps={{ maxLength: 150 }} required/>
                         <br></br>
                         <PersonIcon2 sx={{ mr: 2, mt: 2.2, color: "#CC4D00"}} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type="text" label="Enter username" name="username" variant="filled" inputProps={{ maxLength: 150 }} required/>
                         <br></br>

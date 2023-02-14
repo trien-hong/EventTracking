@@ -34,16 +34,44 @@
             <center>
                 <div id="container">
                     <div id="header-container">
-                        <h2>Welcome to Event Tracking!</h2>
+                        {% if failed %}
+                            <!-- if the attempt has failed -->
+                            <h2>Attempt at Account Info Change</h2>
+                        {% else %}
+                            <!-- if the attempt was successful -->
+                            <h2>Account Info Change</h2>
+                        {% endif %}
                     </div>
                     <div id="body-container">
                         <hr></hr>
                         <h3>Hello, <u>{{ username }}</u>!</h3>
-                        <h3>There are currently 3 different versions of this web app. One using Django REST framework with ReactJS (single-page application), one using Django (with templates), and one using Flask (with templates). All versions use PostgreSQL as the database.</h3>
-                        <h3>For the most updated version it will be Django REST framework with ReactJS (single-page application). Django (with templates) and Flask (with templates) version is quite outdated. I will no longer update the Django/Flask version anymore.</h3>
-                        <h3>The Django REST framework with ReactJS version contains some new features along with much needed updated code (compared to Flask/Django). Both Django versions can be run locally using docker-compose. You will need to obtain API keys and set up a/multiple .env file(s).</h3>
-                        <h3>Each version has its own README.md file with more information.</h3>
-                        <h3>Thank you for signing up! :)</h3>
+                        {% if failed %}
+                            <!-- if the attempt has failed -->
+                            <h3>Someone (hopefully you) has attempted to change the information on your account.</h3>
+                            <h3>If this was not you, you should immediately take steps into securing your account.</h3>
+                            <h3>Althought the attempt has failed, you should still secure your account. Read more below.</h3>
+                        {% else %}
+                            <!-- if the attempt was successful -->
+                            <h3>Someone (hopefully you) has successfully changed the information on your account.</h3>
+                            <h3>If this was you, you safety ignore this email.</h3>
+                            <h3>However, if this was not you, you should immediately take steps into securing your account.</h3>
+                        {% endif %}
+                        <h3>Here for some basic first steps...</h3>
+                        <ul>
+                            <li>Update your password</li>
+                            <ul>
+                                <li>Only use unique passwords for every account</li>
+                            </ul>
+                            <li>Update your username</li>
+                            <li>Update your email</li>
+                            <ul>
+                                <li>Update your email password</li>
+                            </ul>
+                        </ul>
+                        <p>Indeed very basic as I'll still need to update the back-end with more sophisticated security. Some options are 2FA/MFA, back-up pins, account signup verification, changing user's info only on verification, etc.</p>
+                        <h3>Be informed & stay informed!</h3>
+                        <h3><a href="https://www.pcmag.com/how-to/12-simple-things-you-can-do-to-be-more-secure-online">Read more about digital safety here</a></h3>
+                        <h3>Thanking you for using the web app!</h3>
                         <hr></hr>
                     </div>
                     <!-- i can't seem to embed images directly into html for the time being maybe i'll try again another time -->

@@ -5,23 +5,32 @@ from rest_framework.serializers import HyperlinkedModelSerializer
 from . models import UserEvents
 from . models import UserReviews
 from . models import UserReplies
+from django.core.validators import validate_email
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
 class SignupValidateSerializer(serializers.Serializer):
-    email = serializers.EmailField(required=True)
+    email = serializers.CharField(required=True)
     username = serializers.CharField(required=True)
     password = serializers.CharField(required=True)
     confirm_password = serializers.CharField(required=True)
     zip_code = serializers.CharField(required=True)
+    # i am aware that an EmailField & IntegerField exist but my problem is that if it's invalid
+    # it raises an expection and stops all the other checks such as username, password, etc.
 
     def validate(self, data):
         errors = []
 
         # validate email
         if User.objects.filter(email=data["email"]).exists():
-            errors.append({"email" : "Email already exist."})
+            errors.append({"email_exist" : "Email already exist."})
+
+        # validate email
+        try:
+            validate_email(data["email"])
+        except:
+            errors.append({"email_invalid" : "Email seems to be invalid."})
 
         # validate username
         if User.objects.filter(username=data["username"]).exists():
@@ -43,13 +52,27 @@ class SignupValidateSerializer(serializers.Serializer):
         return data
 
 class UpdateUserInfoValidateSerializer(serializers.Serializer):
+    email = serializers.CharField(required=False, allow_blank=True)
     username = serializers.CharField(required=False, allow_blank=True)
     password = serializers.CharField(required=False, allow_blank=True)
     confirm_password = serializers.CharField(required=False, allow_blank=True)
     zip_code = serializers.CharField(required=False, allow_blank=True)
+    # i am aware that an EmailField & IntegerField exist but my problem is that if it's invalid
+    # it raises an expection and stops all the other checks such as username, password, etc.
 
     def validate(self, data):
         errors = []
+
+        # validate email
+        if User.objects.filter(email=data["email"]).exists():
+            errors.append({"email_exist" : "Email already exist."})
+
+        # validate email
+        try:
+            if data["email"] != "":
+                validate_email(data["email"])
+        except:
+            errors.append({"email_invalid" : "Email seems to be invalid."})
 
         # validate username
         if User.objects.filter(username=data["username"]).exists():
@@ -121,7 +144,7 @@ class UserEventsSerializer(ModelSerializer):
         model = UserEvents
         fields = "__all__"
 
-class GetReplies(HyperlinkedModelSerializer):
+class UserRepliesSerializer(HyperlinkedModelSerializer):
     date = serializers.DateTimeField(format="%m-%d-%Y @ %H:%M:%S UTC")
     username = serializers.CharField(source="user.username")
     profile_picture = serializers.CharField(source="user.profile_picture")
@@ -130,17 +153,17 @@ class GetReplies(HyperlinkedModelSerializer):
         model = UserReplies
         fields = ["username", "profile_picture", "id", "reply", "date", "isEdited"]
 
-class GetReviewsSerializer(HyperlinkedModelSerializer):
+class UserReviewsSerializer(HyperlinkedModelSerializer):
     date = serializers.DateTimeField(format="%m-%d-%Y @ %H:%M:%S UTC")
     username = serializers.CharField(source="user.username")
     profile_picture = serializers.CharField(source="user.profile_picture")
-    replies = GetReplies(many=True, source="userreplies_set")
+    replies = UserRepliesSerializer(many=True, source="userreplies_set")
 
     class Meta:
         model = UserReviews
         fields = ["username", "profile_picture", "id", "event_id", "title", "userComment", "userRating", "date", "isEdited", "replies"]
 
-class GetProfilePictureSerializer(ModelSerializer):
+class UserProfilePictureSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ["profile_picture"]

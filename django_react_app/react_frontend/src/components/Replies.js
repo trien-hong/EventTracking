@@ -31,7 +31,7 @@ function Replies({review, replies, setReplies}) {
                 reply: reply
             })
         });
-        if (response.status === 200) {
+        if (response.status === 201) {
             const data = await response.json();
             var copy_replies = replies;
             copy_replies.push(data);

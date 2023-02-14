@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Collapse, Divider, Grid, IconButton, InputAdornment, TextField, Tooltip, Typography } from '@mui/material';
+import LinearProgress from '@mui/material/LinearProgress';
 import PersonIcon2 from '@mui/icons-material/Person';
 import PasswordIcon from '@mui/icons-material/Password';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
@@ -13,6 +14,7 @@ function ResetPassword() {
     // obviously you shouldn't be able to update a password just because you know a username
     // there should be some secondary method of verifiction (such as email i'll find a way to do this later)
     // or use email as the verification since that's generally not public or harder to guess/find out
+    const [resetPasswordLoading, setResetPasswordLoading] = useState(null);
     const [openAlert, setOpenAlert] = useState(false);
     const [severity, setSeverity] = useState("info");
     const [alertTitle, setAlertTitle] = useState(null);
@@ -29,6 +31,7 @@ function ResetPassword() {
 
     async function resetPassword(e) {
         e.preventDefault();
+        setResetPasswordLoading(<LinearProgress sx={{ mb: 1.5 }}/>);
         // const response = await fetch(`http://127.0.0.1:8000/api/reset/password/`, {
         const response = await fetch(`http://127.0.0.1/api/reset/password/`, {
             method: "PUT",
@@ -42,6 +45,7 @@ function ResetPassword() {
             })
         });
         if (response.status === 200) {
+            setResetPasswordLoading(null);
             alert("You have updated your account password!");
             setMessages(
                 <div id="success">
@@ -52,6 +56,7 @@ function ResetPassword() {
             setAlertTitle("SUCCESS");
             setOpenAlert(true);
         } else {
+            setResetPasswordLoading(null);
             const data = await response.json();
             alert("There seems to be error(s) in resting your password.");
             setMessages(
@@ -90,6 +95,7 @@ function ResetPassword() {
     return (
         <Grid sx={{ mt: 2 }} container justifyContent="center">
             <div id="generalContainer">
+                {resetPasswordLoading}
                 <Collapse in={openAlert}>
                     <AlertMessage setOpenAlert={setOpenAlert} severity={severity} alertTitle={alertTitle} messages={messages}/>
                 </Collapse>

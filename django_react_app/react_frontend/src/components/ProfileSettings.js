@@ -1,5 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { Button, Collapse, Divider, Grid, IconButton, Input, InputAdornment, TextField, Tooltip, Typography } from '@mui/material';
+import LinearProgress from '@mui/material/LinearProgress';
+import EmailIcon from '@mui/icons-material/Email';
 import PersonIcon2 from '@mui/icons-material/Person';
 import PasswordIcon from '@mui/icons-material/Password';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
@@ -12,6 +14,7 @@ import ProfilePictureContext from '../contexts/ProfilePictureContext';
 import AlertMessage from '../components/AlertMessage';
 
 function ProfileSettings() {
+    const [profileSettingsLoading, setProfileSettingsLoading] = useState(null);
     const [openAlert, setOpenAlert] = useState(false);
     const [severity, setSeverity] = useState("info");
     const [alertTitle, setAlertTitle] = useState(null);
@@ -29,6 +32,7 @@ function ProfileSettings() {
     
     async function uploadProfilePicture(e) {
         e.preventDefault();
+        setProfileSettingsLoading(<LinearProgress sx={{ mb: 1.5 }}/>);
         const formData = new FormData();
         formData.append("file", profilePicture);
         // const response = await fetch(`http://127.0.0.1:8000/api/profile/settings/picture/`, {
@@ -40,6 +44,7 @@ function ProfileSettings() {
             body: formData
         });
         if (response.status === 200) {
+            setProfileSettingsLoading(null);
             alert("Profile picture successfully uploaded.");
             setMessages(
                 <div id="success">
@@ -51,6 +56,7 @@ function ProfileSettings() {
             setAlertTitle("SUCCESS");
             setOpenAlert(true);
         } else {
+            setProfileSettingsLoading(null);
             const data = await response.json();
             alert("Sorry, the file doesn't seem to be a valid image and or file size is greater than 5MB.");
             setMessages(
@@ -76,6 +82,7 @@ function ProfileSettings() {
 
     async function updateUserInfo(e) {
         e.preventDefault();
+        setProfileSettingsLoading(<LinearProgress sx={{ mb: 1.5 }}/>);
         // const response = await fetch(`http://127.0.0.1:8000/api/profile/settings/info/`, {
         const response = await fetch(`http://127.0.0.1/api/profile/settings/info/`, {
             method: "PUT",
@@ -84,6 +91,7 @@ function ProfileSettings() {
                 "Authorization": "Bearer " + String(authTokens.access)
             },
             body: JSON.stringify({
+                "email": e.target.email.value,
                 "username": e.target.username.value,
                 "password": e.target.password.value,
                 "confirm_password": e.target.confirm_password.value,
@@ -92,6 +100,7 @@ function ProfileSettings() {
         });
         const data = await response.json();
         if (response.status === 200) {
+            setProfileSettingsLoading(null);
             setNewToken(data);
             alert("Your account information has been updated. \n\nAny field(s) left empty will not be reflected.");
             setMessages(
@@ -103,6 +112,7 @@ function ProfileSettings() {
             setAlertTitle("SUCCESS");
             setOpenAlert(true);
         } else {
+            setProfileSettingsLoading(null);
             alert("There seems to be error(s) in updating your new information on your account");
             setMessages(
                 <div id="errors">
@@ -140,15 +150,16 @@ function ProfileSettings() {
     return (
         <div id="profileSettings">
             <div id="generalContainer">
-                <Grid textAlign="left">
-                    <Collapse in={openAlert}>
-                        <AlertMessage setOpenAlert={setOpenAlert} severity={severity} alertTitle={alertTitle} messages={messages}/>
-                    </Collapse>
-                </Grid>
+                {profileSettingsLoading}
+                <Collapse in={openAlert}>
+                    <AlertMessage setOpenAlert={setOpenAlert} severity={severity} alertTitle={alertTitle} messages={messages}/>
+                </Collapse>
                 <Typography variant="h4"><u><b>Update Your Info</b></u></Typography>
                 <Divider sx={{ my: 2, backgroundColor: "gray" }}/>
                 <form onSubmit={updateUserInfo}>
-                    <PersonIcon2 sx={{ mr: 2, mt: 2.2, color: "#CC4D00"}} id="icons"/><TextField sx={{ background: "white", width: 375 }} type="text" label="Enter new username" name="username" variant="filled" inputProps={{ maxLength: 150 }}/>
+                    <EmailIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00"}} id="icons"/><TextField sx={{ width: 375, background: "white" }} type="email" label="Enter new email" name="email" variant="filled" inputProps={{ maxLength: 150 }}/>
+                    <br></br>
+                    <PersonIcon2 sx={{ mr: 2, mt: 2.2, color: "#CC4D00"}} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type="text" label="Enter new username" name="username" variant="filled" inputProps={{ maxLength: 150 }}/>
                     <br></br>
                     <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Enter new password" name="password" variant="filled" InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
                     <br></br>
