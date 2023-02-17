@@ -151,9 +151,11 @@ function ProfileSettings() {
         <div id="profileSettings">
             <div id="generalContainer">
                 {profileSettingsLoading}
-                <Collapse in={openAlert}>
-                    <AlertMessage setOpenAlert={setOpenAlert} severity={severity} alertTitle={alertTitle} messages={messages}/>
-                </Collapse>
+                <Grid textAlign="left">
+                    <Collapse in={openAlert}>
+                        <AlertMessage setOpenAlert={setOpenAlert} severity={severity} alertTitle={alertTitle} messages={messages}/>
+                    </Collapse>
+                </Grid>
                 <Typography variant="h4"><u><b>Update Your Info</b></u></Typography>
                 <Divider sx={{ my: 2, backgroundColor: "gray" }}/>
                 <form onSubmit={updateUserInfo}>

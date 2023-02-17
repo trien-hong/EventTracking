@@ -5,7 +5,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import UserAuthContext from '../contexts/UserAuthContext';
 
-function Paging({setEvents, setSearchEvents, setIsLoading, eventsPerPage, sortingOptions}) {
+function Paging({setEvents, setSearchEvents, setZip, setIsLoading, eventsPerPage, sortingOptions}) {
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const {authTokens} = useContext(UserAuthContext);
@@ -58,7 +58,14 @@ function Paging({setEvents, setSearchEvents, setIsLoading, eventsPerPage, sortin
             setEvents(data);
             setIsLoading(false);
             scrollUp();
+        }
+        if (response.status === 404) {
+            const data = await response.json();
+            setEvents(null)
+            setZip(data[0]);
+            setIsLoading(false);
         } else {
+            setEvents(null)
             setIsLoading(false);
         }
     }
@@ -84,6 +91,7 @@ function Paging({setEvents, setSearchEvents, setIsLoading, eventsPerPage, sortin
             setIsLoading(false);
             scrollUp();
         } else {
+            setTotalPages(0);
             setSearchEvents(null);
             setIsLoading(false);
         }

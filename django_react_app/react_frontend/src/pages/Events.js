@@ -1,8 +1,7 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Chip, Divider, Grid, Typography } from '@mui/material';
 import ErrorIcon from '@mui/icons-material/Error';
-import UserAuthContext from '../contexts/UserAuthContext';
 import SaveEventButton from '../components/SaveEventButton';
 import EventsDisplayOptions from '../components/EventsDisplayOptions';
 import Paging from '../components/Paging';
@@ -12,8 +11,8 @@ function Events() {
     const [isLoading, setIsLoading] = useState(true);
     const [events, setEvents] = useState(null);
     const [eventsPerPage, setEventsPerPage] = useState("12");
+    const [zip, setZip] = useState(null);
     const [sortingOptions, setSortingOptions] = useState("name,asc");
-    const {user} = useContext(UserAuthContext);
     const navigate = useNavigate();
     
     function goToEventDetails(event_id) {
@@ -49,7 +48,11 @@ function Events() {
                         <div>
                             <Grid sx={{ mt: 2 }} justifyContent="center" textAlign="center">
                                 <div id="generalContainer">
-                                    <Typography id="errors" variant="h5" align="center">Your ZIP code of "{user.zip_code}" did not have any events.<br></br>Try searching for events instead.</Typography>
+                                    {zip ? (
+                                        <Typography id="errors" variant="h5" align="center">Your ZIP code of "{zip}" did not have any events.<br></br>Try searching for events instead.</Typography>
+                                    ) : (
+                                        <Typography id="errors" variant="h5" align="center">Oh no! There's an error in getting your events.<br></br>Try searching for events instead.</Typography>
+                                    )}
                                     <Divider sx={{ mt: 2, "&::before, &::after": { borderColor: "gray" } }}><Chip style={{ fontSize: "23px" }} color="error" label="ERROR" icon={ <ErrorIcon/> }/></Divider>
                                 </div>
                             </Grid>
@@ -57,7 +60,7 @@ function Events() {
                     )}
                 </div>
             )}
-            <Paging setEvents={setEvents} setIsLoading={setIsLoading} eventsPerPage={eventsPerPage} sortingOptions={sortingOptions}/>
+            <Paging setEvents={setEvents} setIsLoading={setIsLoading} setZip={setZip} eventsPerPage={eventsPerPage} sortingOptions={sortingOptions}/>
         </div>
     );
 }
