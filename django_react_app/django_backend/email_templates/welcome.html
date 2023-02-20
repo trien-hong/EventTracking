@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
     <html lang="en">
         <head>
@@ -46,20 +48,24 @@
                         <h3>Thank you for signing up! :)</h3>
                         <hr></hr>
                     </div>
-                    <!-- i can't seem to embed images directly into html for the time being maybe i'll try again another time -->
+                    <!-- Google/GMail seems to change the url of src when the email is recieved and therefore you can't see it the image. -->
+                    <!-- Sites like 10minutemail.com, 10minemail.com, etc. seem to be working okay. Of course the server has to be running first since the images are there. -->
                     <div id="footer-container">
                         <div>
                             <img style="vertical-align:middle" src="http://drive.google.com/uc?export=view&id=1CqeNlDQb3ZF606W4mroWmOIKctH14GuT" alt="github_icon" width="40" height="40">
+                            <!-- <img style="vertical-align:middle" src="http://localhost:8000/static/email_images/github_icon.png" alt="github_icon" width="40" height="40"> -->
                             <span>&nbsp;&nbsp;<a href="https://github.com/miserrano7/EventTracking">Event Tracking GitHub Repository</a></span>
                         </div>
                         <hr></hr>
                         <div>
                             <img style="vertical-align:middle" src="http://drive.google.com/uc?export=view&id=1GB8JPCo0KxvSZiXD3NEq3uaAKcgLHVKH" alt="imgur_icon" width="40" height="40">
+                            <!-- <img style="vertical-align:middle" src="http://localhost:8000/static/email_images/imgur_icon.png" alt="imgur_icon" width="40" height="40"> -->
                             <span>&nbsp;&nbsp;<a href="https://imgur.com/a/znEcjhc">Imgur Link (images of web app)</a></span>
                         </div>
                         <hr></hr>
                         <div>
                             <img style="vertical-align:middle" src="http://drive.google.com/uc?export=view&id=1G60pa9G3HkbirQzAggUQf0UxUSsaVrIO" alt="github_icon" width="40" height="40">
+                            <!-- <img style="vertical-align:middle" src="http://localhost:8000/static/email_images/github_icon2.png" alt="github_icon2" width="40" height="40"> -->
                             <span>&nbsp;&nbsp;<a href="https://github.com/trien-hong">My GitHub</a></span>
                         </div>
                     </div>
