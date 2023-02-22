@@ -19,7 +19,7 @@ class UserEvents(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, default=None)
 
     class Meta:
-        verbose_name_plural = "Events"        
+        verbose_name_plural = "Users Events"        
 
 class UserReviews(models.Model):
     event_id = models.TextField()
@@ -28,13 +28,10 @@ class UserReviews(models.Model):
     userRating = models.TextField()
     date = models.DateTimeField(auto_now=True)
     isEdited = models.BooleanField(default=False)
-    # event = models.ForeignKey(UserEvents, on_delete=models.CASCADE, default=None)
-    # i believe it may be better to add Event as a foreignkey
-    # instead of having to keep event_id & title i'll do this later
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, default=None)
 
     class Meta:
-        verbose_name_plural = "Reviews"
+        verbose_name_plural = "Users Reviews"
 
 class UserReplies(models.Model):
     reply = models.TextField()
@@ -44,4 +41,4 @@ class UserReplies(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, default=None)
 
     class Meta:
-        verbose_name_plural = "Replies"
+        verbose_name_plural = "Users Replies"

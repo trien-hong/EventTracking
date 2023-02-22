@@ -17,7 +17,7 @@ class ConfigUserRepliesAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'reply', 'isEdited']
 
 class ConfigUserAdmin(UserAdmin):
-    list_display = ['username', 'id', 'email', 'is_staff']
+    list_display = ['username', 'id', 'email', 'is_staff', 'date_joined']
 
 
 admin.site.register(UserEvents, ConfigUserEventsAdmin)
