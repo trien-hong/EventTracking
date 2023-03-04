@@ -79,19 +79,19 @@ def profileSettingsPicture(request):
         
     if request.method == "PUT":
         file = request.FILES
-        validate = serializers.CheckFileValidateSerializer(data=file)
-        if validate.is_valid():
-            ext = validate.validated_data["file"].name.split(".")[-1]
-            validate.validated_data["file"].name = str(request.user) + "_profile_picture_id_" + str(uuid.uuid4())[:8] + "." + ext
+        serializer = serializers.CheckFileValidateSerializer(data=file)
+        if serializer.is_valid():
+            ext = serializer.validated_data["file"].name.split(".")[-1]
+            serializer.validated_data["file"].name = str(request.user) + "_profile_picture_id_" + str(uuid.uuid4())[:8] + "." + ext
             user = User.objects.get(username=request.user)
             user.profile_picture.delete()
-            user.profile_picture = validate.validated_data["file"]
+            user.profile_picture = serializer.validated_data["file"]
             user.save()
             return Response(status=status.HTTP_200_OK)
         else:
             # status code 415 (UNSUPPORTED_MEDIA_TYPE) and or 413 (REQUEST_ENTITY_TOO_LARGE) would work
             # my problem is that it is one of the two OR both. i'll choose 400 for now.
-            return Response(validate.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == "DELETE":
         user = User.objects.get(username=request.user)
@@ -112,24 +112,24 @@ def profileSettingsInfo(request):
     # that refresh token may still be used to generate a new access token
     user = User.objects.get(id=request.user.id)
     data = json.loads(request.body)
-    validate = serializers.UpdateUserInfoValidateSerializer(data=data)
+    serializer = serializers.UpdateUserInfoValidateSerializer(data=data)
     old_email = ""
-    if validate.is_valid():
-        if(validate.validated_data["email"] != ""):
+    if serializer.is_valid():
+        if(serializer.validated_data["email"] != ""):
             old_email = user.email
-            new_email = validate.validated_data["email"]
+            new_email = serializer.validated_data["email"]
             user.email = new_email
             user.save()
-        if(validate.validated_data["username"] != ""):
-            user.username = validate.validated_data["username"]
+        if(serializer.validated_data["username"] != ""):
+            user.username = serializer.validated_data["username"]
             user.save()
-        if(validate.validated_data["password"] != "" and validate.validated_data["confirm_password"] != ""):
-            user.set_password(validate.validated_data["confirm_password"])
+        if(serializer.validated_data["password"] != "" and serializer.validated_data["confirm_password"] != ""):
+            user.set_password(serializer.validated_data["confirm_password"])
             user.save()
-        if(validate.validated_data["zip_code"] != ""):
-            user.zip_code = validate.validated_data["zip_code"]
+        if(serializer.validated_data["zip_code"] != ""):
+            user.zip_code = serializer.validated_data["zip_code"]
             user.save()
-        new_token = get_new_token(user, validate.validated_data["username"])
+        new_token = get_new_token(user, serializer.validated_data["username"])
         if old_email == "":
             send_mail(
                 "Account Information Change",
@@ -158,7 +158,7 @@ def profileSettingsInfo(request):
             fail_silently=False,
             html_message = render_to_string("../email_templates/account_info_change.html", {"username": user.username, "failed": True})
         )
-        return Response(validate.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(["PUT"])
 def resetPassword(request):
@@ -168,13 +168,12 @@ def resetPassword(request):
     # i am well aware of the flaw that the previous refresh token is still active (until it expires)
     # that refresh token may still be used to generate a new access token
     data = json.loads(request.body)
-    validate = serializers.ResetPasswordValidateSerializer(data=data)
-    if validate.is_valid():
-        # obviously you shouldn't be able to update a password just because you know a username
+    serializer = serializers.ResetPasswordValidateSerializer(data=data)
+    if serializer.is_valid():
+        # obviously you shouldn't be able to reset a password just because you know a username
         # there should be some secondary method of verifiction (such as email i'll find a way to do this later)
-        # or use email as the verification since that's generally not public or harder to guess/find out
         user = User.objects.get(username=data["username"])
-        user.set_password(validate.validated_data["confirm_password"])
+        user.set_password(serializer.validated_data["confirm_password"])
         user.save()
         send_mail(
             "Account Information Change",
@@ -196,6 +195,6 @@ def resetPassword(request):
                 fail_silently=False,
                 html_message = render_to_string("../email_templates/account_info_change.html", {"username": user.username, "failed": True})
             )
-            return Response(validate.errors, status=status.HTTP_404_NOT_FOUND)
+            return Response(serializer.serializer, status=status.HTTP_404_NOT_FOUND)
         except:
-            return Response(validate.errors, status=status.HTTP_404_NOT_FOUND)
+            return Response(serializer.serializer, status=status.HTTP_404_NOT_FOUND)

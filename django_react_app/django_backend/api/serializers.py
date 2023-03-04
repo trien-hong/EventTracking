@@ -2,13 +2,12 @@ from PIL import Image
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from rest_framework.serializers import HyperlinkedModelSerializer
-from . models import UserEvents
-from . models import UserReviews
-from . models import UserReplies
+from .models import UserEvents
+from .models import UserReviews
+from .models import UserReplies
 from django.core.validators import validate_email
 from django.contrib.auth import get_user_model
 User = get_user_model()
-
 
 class SignupValidateSerializer(serializers.Serializer):
     email = serializers.CharField(required=True)
