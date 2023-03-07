@@ -15,8 +15,8 @@ There are 3 total variables you'll need to add in this .env file. We can just us
 
 ## django_backend folder .env
 There are 10 total variables you'll need to add in this .env file. We can just use the default database of PostgreSQL for now.
-* `EMAIL_HOST_USER="Enter your gmail/google email"`
-* `EMAIL_HOST_PASSWORD="Enter your APP PASSWORD NOT EMAIL PASSWORD"`
+* `EMAIL_HOST_USER="ENTER YOUR GOOGLE/GMAIL EMAIL"`
+* `EMAIL_HOST_PASSWORD="ENTER YOUR APP PASSWORD NOT EMAIL PASSWORD"`
 * `TICKETMASTER_API_KEY="ENTER YOUR TICKETMASTER API KEY HERE"`
 * `OPENWEATHERMAP_API_KEY="ENTER YOUR OPENWEATHERMAP API KEY HERE"`
 * `SECRET_KEY="ENTER YOUR SECRET KEY HERE (you can make this up)"`
@@ -26,7 +26,7 @@ There are 10 total variables you'll need to add in this .env file. We can just u
 * `DB_HOST="database"`
 * `DB_PORT="5432"`
 
-Note that the `EMAIL_HOST_PASSWORD` is NOT the password you login with. You'll need to generate an app password within "manage your google account" security settings. You will also have to activate two factor authentication on your google account otherwise it will not work.<br>I am using gmail's simple mail transfer protocol (SMTP). You can change it up if you would like.
+Note that the `EMAIL_HOST_PASSWORD` is NOT the password you login to your Google/Gmail account with. You'll need to generate an app password within "manage your google account" security settings. You will also have to activate two factor authentication on your google account otherwise it will not work.<br>I am using gmail's simple mail transfer protocol (SMTP). You can change it up if you would like.
 
 ## react_backend folder .env
 There is only 1 variable you'll need to add in this .env file.
@@ -61,10 +61,9 @@ Google Maps API: [developers.google.com/maps](https://developers.google.com/maps
         <li>Django REST Framework | <a href="https://www.django-rest-framework.org/">https://www.django-rest-framework.org/</a></li>
         <li>Simple JWT | <a href="https://django-rest-framework-simplejwt.readthedocs.io/en/latest/">https://django-rest-framework-simplejwt.readthedocs.io/en/latest/</a></li>
         <li>JWT Decode | <a href="https://www.npmjs.com/package/jwt-decode">https://www.npmjs.com/package/jwt-decode/</a></li>
-        <li>PIL | <a href="https://pillow.readthedocs.io/en/stable/">https://pillow.readthedocs.io/en/stable/</a></li>
+        <li>Python Imaging Library (PIL/Pillow) | <a href="https://pillow.readthedocs.io/en/stable/">https://pillow.readthedocs.io/en/stable/</a></li>
     </ul>
 </details>
-<br>
 
 # NOTE:
 I commented out two specific lines in EventDetails.js to prevent the map from loading. This is because while you do get $200 worth of free credits every month (before they start charing), it can add up. That's 4878 dynamic maps (at 0.007 cents per load) plus 9756 places search (at 0.017 per search) for a total of $199.998 for free. <br>
@@ -78,7 +77,7 @@ Possible solution is to add the refresh token to a blacklist if user's informati
     <summary>Click to view images</summary>
     <a href="https://imgur.com/a/znEcjhc" target="_blank">Imgur link with a short description for each image</a>
     <br><br>
-    <img src="https://i.imgur.com/6tW4YFY.png">
+    <img src="https://i.imgur.com/LEaCvSl.png">
     <img src="https://i.imgur.com/0YjOYWV.png">
     <img src="https://i.imgur.com/5e1txIa.png">
     <img src="https://i.imgur.com/1Odrrox.png">

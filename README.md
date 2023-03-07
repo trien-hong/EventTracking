@@ -3,14 +3,14 @@ There are currently 3 different versions of this web app. One using Django REST 
 
 For the most updated version it will be Django REST framework with ReactJS (single-page application). Django (with templates) and Flask (with templates) version is quite outdated. I will no longer update the Django/Flask version anymore.
 
-The Django REST framework with ReactJS version contains some new features along with much needed updated code (compared to Flask/Django). Both Django versions can be run locally using docker-compose. You will need to obtain API keys and set up a/multiple .env file(s).
+The Django REST framework with ReactJS version contains some new features along with much needed updated code (compared to Django/Flask). Both Django versions can be run locally using docker-compose. You will need to obtain API keys and set up a/multiple .env file(s).
 
 Each version has its own README.md file with more information.
 
 # Event Tracking Web App
-Users can sign up using their email, username, password (which are hashed and not plaintext), and a zip code. These four information will then be saved into a PostgreSQL database. Upon a successful signup, a simple welcome email will be sent out to the email address provided. Upon a failed/successful user's account info change, a simple notification email will be sent out. Currently using gmail's simple mail transfer protocol (SMTP). You can change it up if you would like.
+Users can sign up using their email, username, password (which are hashed and not plaintext), and a zip code. These four information will then be saved into a PostgreSQL database. Upon a successful signup, a simple welcome email will be sent out to the email address provided. Upon a failed/successful user's account info change, a simple email notification will be sent out. I am currently using gmail's simple mail transfer protocol (SMTP). You can change it up if you would like.
 
-When the user tries to log in, it'll query the database for matching credentials. If matching, the user is now logged in. In the Django REST framework with ReactJS version, I've implemented JWT (JSON Web Tokens). After logging in the JWT is saved into their browser's localStorage. After the access token is expired, a refresh token will regenerate a new access token. JWT is useful for authentication along with containing useful information in its payload.
+When the user tries to log in, it'll query the database for matching credentials. If matching, the user is now logged in. In the Django REST framework with ReactJS version, I've implemented JWT (JSON Web Tokens). After logging in the JWT is saved into their browser's localStorage. After the access token is expired, a refresh token will regenerate a new access token. JWT is useful for authentication on the back-end along with containing useful information in its payload for the front-end.
 
 On the homepage, we make an API call to Ticketmaster using the current logged-in user's zip code. Ticketmaster will then send back a JSON containing events based on that zip code.
 
@@ -25,7 +25,7 @@ There is also a profile component in which the user can add the specific event i
     <summary>Click to view images</summary>
     <a href="https://imgur.com/a/znEcjhc" target="_blank">Imgur link with a short description for each image</a>
     <br><br>
-    <img src="https://i.imgur.com/6tW4YFY.png">
+    <img src="https://i.imgur.com/LEaCvSl.png">
     <img src="https://i.imgur.com/0YjOYWV.png">
     <img src="https://i.imgur.com/5e1txIa.png">
     <img src="https://i.imgur.com/1Odrrox.png">
