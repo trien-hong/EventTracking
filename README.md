@@ -8,17 +8,17 @@ The Django REST framework with ReactJS version contains some new features along 
 Each version has its own README.md file with more information.
 
 # Event Tracking Web App
-Users can sign up using their email, username, password (which are hashed and not plaintext), and a zip code. These four information will then be saved into a PostgreSQL database. Upon a successful signup, a simple welcome email will be sent out to the email address provided. Upon a failed/successful user's account info change, a simple email notification will be sent out. I am currently using gmail's simple mail transfer protocol (SMTP). You can change it up if you would like.
+Users can sign up using their email, username, password (which are hashed and not plaintext), and a zip code. These four information will then be saved into a PostgreSQL database. Upon a successful signup, a simple welcome email will be sent out to the email address provided. Upon a failed/successful user's account info change (username, password, and/or zip code), a simple email notification will be sent out. I am currently using gmail's simple mail transfer protocol (SMTP). You can change it up if you would like.
 
-When the user tries to log in, it'll query the database for matching credentials. If matching, the user is now logged in. In the Django REST framework with ReactJS version, I've implemented JWT (JSON Web Tokens). After logging in the JWT is saved into their browser's localStorage. After the access token is expired, a refresh token will regenerate a new access token. JWT is useful for authentication on the back-end along with containing useful information in its payload for the front-end.
+When the user tries to log in, it'll query the database for matching credentials. If matching, the user is now logged in. In the Django REST framework with ReactJS version, I've implemented JWT (JSON Web Tokens). After logging in the JWT is saved into their browser's localStorage. When the access token is expired, a refresh token is used to generate a new access token. JWT is useful for authentication along with containing useful information in its payload for the front-end.
 
-On the homepage, we make an API call to Ticketmaster using the current logged-in user's zip code. Ticketmaster will then send back a JSON containing events based on that zip code.
+On the homepage, we make an API call to Ticketmaster using the current logged-in user's zip code. Ticketmaster will then send back a JSON containing events based on that zip code. Each event displayed may be saved so that you have refer back to it at a later date within your profile.
 
 If no events exist, the user may also search for events using keywords such as "baseball", "concerts", "comedy", etc. Users can also search with zip codes such as "90028" or "10001".
 
-Each event that is displayed is also clickable to see even more details of that specific event. Weather for the location and a general map with parking and ATMs icons are also displayed. Third party APIs includes OpenWeatherMap API and Google's Maps JavaScript API. Within event details page, user can also add a review (rating & comment). Since reviews are public, users will be able to see other user's review as well.
+Each event that is displayed is also clickable to see even more details of that specific event. Weather for the location along with a general purpose map with icons for nearby parking and ATMs are displayed. Third party APIs includes OpenWeatherMap API and Google's Maps JavaScript API. Within event details page, user can also add a review (rating & comment) for that specific event. Since reviews are public, users will be able to see other user's review as well. Users may also reply to different users review.
 
-There is also a profile component in which the user can add the specific event into a personal list. They may also delete the event from their list.
+There is also a profile component built in containing several different things. The first is a way to change your account information (username, password, & zip code). For customization purposes, a user may also add/delete a profile picture to/from their account. The second is a way to view all the events that you have saved. The third is a way to view all the reviews that you have left.
 
 # Images (from Django w/ ReactJS)
 <details>
