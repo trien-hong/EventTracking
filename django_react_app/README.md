@@ -1,5 +1,5 @@
 # Django w/ ReactJS & PostgreSQL
-This version is using Django (specfially as an API using Django's REST framework) with ReactJS and PostgreSQL as the database. Nginx is serving both React and Django. All API request is going through Nginx and Gunicorn. <br>
+This version is using Django (specifically as an API using Django's REST framework) with ReactJS and PostgreSQL as the database. Nginx is serving both React and Django. All API request is going through Nginx and Gunicorn. <br>
 This is a single page applcation (SPA). A page refresh never occurs. Everything is rerender on a single page depending on the user's action.
 
 # Setting Up
@@ -45,25 +45,19 @@ Now that your three .env files are set up. Ensure you're in the django_react_app
 Within your browser, go to `localhost` and you should see a login page. If the first option does not work try `127.0.0.1`. It may take some time for things to load.
 
 # 3rd Party APIs
-Ticketmaster API: [developer.ticketmaster.com](https://developer.ticketmaster.com) <br>
-OpenWeatherMap API: [openweathermap.org/api](https://openweathermap.org/api) <br>
-Google Maps API: [developers.google.com/maps](https://developers.google.com/maps)
+* Ticketmaster API: [developer.ticketmaster.com](https://developer.ticketmaster.com) <br>
+* OpenWeatherMap API: [openweathermap.org/api](https://openweathermap.org/api) <br>
+* Google Maps API: [developers.google.com/maps](https://developers.google.com/maps)
 
 # 3rd Party Tools
-<details>
-    <summary>Click to view</summary>
-    <br>
-    <ul>
-        <li>ReactJS | <a href="https://reactjs.org/">https://reactjs.org/</a></li>
-        <li>React Router DOM | <a href="https://www.npmjs.com/package/react-router-dom/">https://www.npmjs.com/package/react-router-dom/</a></li>
-        <li>Material UI (MUI) | <a href="https://mui.com/">https://mui.com/</a></li>
-        <li>Django | <a href="https://www.djangoproject.com/">https://www.djangoproject.com/</a></li>
-        <li>Django REST Framework | <a href="https://www.django-rest-framework.org/">https://www.django-rest-framework.org/</a></li>
-        <li>Simple JWT | <a href="https://django-rest-framework-simplejwt.readthedocs.io/en/latest/">https://django-rest-framework-simplejwt.readthedocs.io/en/latest/</a></li>
-        <li>JWT Decode | <a href="https://www.npmjs.com/package/jwt-decode">https://www.npmjs.com/package/jwt-decode/</a></li>
-        <li>Python Imaging Library (PIL/Pillow) | <a href="https://pillow.readthedocs.io/en/stable/">https://pillow.readthedocs.io/en/stable/</a></li>
-    </ul>
-</details>
+* ReactJS | [https://reactjs.org/](https://reactjs.org/) <br>
+* React Router DOM | [https://www.npmjs.com/package/react-router-dom/](https://www.npmjs.com/package/react-router-dom/) <br>
+* Material UI (MUI) | [https://mui.com/](https://mui.com/) <br>
+* Django | [https://www.djangoproject.com/](https://www.djangoproject.com/) <br>
+* Django REST Framework | [https://www.django-rest-framework.org/](https://www.django-rest-framework.org/) <br>
+* Simple JWT | [https://django-rest-framework-simplejwt.readthedocs.io/en/latest/](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/) <br>
+* JWT Decode | [https://www.npmjs.com/package/jwt-decode](https://www.npmjs.com/package/jwt-decode/) <br>
+* Python Imaging Library (PIL/Pillow) | [https://pillow.readthedocs.io/en/stable/](https://pillow.readthedocs.io/en/stable/) <br>
 
 # NOTE:
 I commented out two specific lines in EventDetails.js to prevent the map from loading. This is because while you do get $200 worth of free credits every month (before they start charing), it can add up. That's 4878 dynamic maps (at 0.007 cents per load) plus 9756 places search (at 0.017 per search) for a total of $199.998 for free. <br>
