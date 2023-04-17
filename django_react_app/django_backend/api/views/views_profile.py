@@ -195,6 +195,6 @@ def resetPassword(request):
                 fail_silently=False,
                 html_message = render_to_string("../email_templates/account_info_change.html", {"username": user.username, "failed": True})
             )
-            return Response(serializer.serializer, status=status.HTTP_404_NOT_FOUND)
+            return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
         except:
-            return Response(serializer.serializer, status=status.HTTP_404_NOT_FOUND)
+            return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
