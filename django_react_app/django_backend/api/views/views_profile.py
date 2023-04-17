@@ -110,6 +110,7 @@ def profileSettingsInfo(request):
     """
     # i am well aware of the flaw that the previous refresh token is still active (until it expires)
     # that refresh token may still be used to generate a new access token
+    # thereby gaining access to what should otherwise be restricted endpoints
     user = User.objects.get(id=request.user.id)
     data = json.loads(request.body)
     serializer = serializers.UpdateUserInfoValidateSerializer(data=data)
@@ -166,7 +167,8 @@ def resetPassword(request):
     Endpoint: /api/reset/password/
     """
     # i am well aware of the flaw that the previous refresh token is still active (until it expires)
-    # that refresh token may still be used to generate a new access token
+    # the refresh token may still be used to generate a new access token
+    # thereby gaining access to what should otherwise be restricted endpoints
     data = json.loads(request.body)
     serializer = serializers.ResetPasswordValidateSerializer(data=data)
     if serializer.is_valid():
