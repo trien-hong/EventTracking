@@ -27,10 +27,10 @@ function EventsDisplayOptions({eventsPerPage, setEventsPerPage, sortingOptions, 
                     <FormControl sx={{ minWidth: 200, backgroundColor: "white" }} variant="filled" size="small">
                         <InputLabel>Sorting Options</InputLabel>
                         <Select sx={{ background: "white" }} value={sortingOptions} onChange={changeSortingOptions}>
-                            <MenuItem value={"name,asc"}>Name Ascending Order (A-Z)</MenuItem>
-                            <MenuItem value={"name,desc"}>Name Descending Order (Z-A)</MenuItem>
-                            <MenuItem value={"date,asc"}>Date Ascending Order (L-H)</MenuItem>
-                            <MenuItem value={"date,desc"}>Date Descending Order (H-L)</MenuItem>
+                            <MenuItem value={"name,asc"}>Name Ascending Order | (A - Z)</MenuItem>
+                            <MenuItem value={"name,desc"}>Name Descending Order | (Z - A)</MenuItem>
+                            <MenuItem value={"date,asc"}>Date Ascending Order | (L - H)</MenuItem>
+                            <MenuItem value={"date,desc"}>Date Descending Order | (H - L)</MenuItem>
                             <MenuItem value={"random"}>Random</MenuItem>
                         </Select>
                     </FormControl>

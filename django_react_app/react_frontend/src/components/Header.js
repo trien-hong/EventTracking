@@ -43,9 +43,9 @@ function Header() {
                 ) : (
                     <>
                         <Grid container justifyContent="center">
-                            <Button sx={{ mr: 1 }} variant="contained" component={Link} to="/signup">SIGNUP</Button>
-                            <Button sx={{ ml: 1 }} variant="contained" component={Link} to="/reset/password/">RESET PASSWORD</Button>
-                            <Button sx={{ ml: 1 }} variant="contained" component={Link} to="/login">LOGIN</Button>
+                            <Button variant="contained" component={Link} to="/signup">SIGNUP</Button>
+                            <Button sx={{ mx: 2 }} variant="contained" component={Link} to="/reset/password/">RESET PASSWORD</Button>
+                            <Button variant="contained" component={Link} to="/login">LOGIN</Button>
                         </Grid>
                     </>
                 )}

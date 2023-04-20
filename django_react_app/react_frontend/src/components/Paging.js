@@ -58,8 +58,7 @@ function Paging({setEvents, setSearchEvents, setZip, setIsLoading, eventsPerPage
             setEvents(data);
             setIsLoading(false);
             scrollUp();
-        }
-        if (response.status === 404) {
+        } else if (response.status === 404) {
             const data = await response.json();
             setEvents(null)
             setZip(data[0]);

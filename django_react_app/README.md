@@ -5,18 +5,18 @@ This is a single page applcation (SPA). A page refresh never occurs. Everything 
 # Setting Up
 Ensure you are in the django_react_app folder/version. There are three .env files you will need to add.
 
-One in the django_react_app folder (where docker-compose.yml is located), one in django_backend folder (where Dockerfile is located), and one in react_frontend (where Dockerfile is located). A combined total of 14 environment variables are needed.
+One in the django_react_app folder (where docker-compose.yml is located), one in django_backend folder (where Dockerfile is located), and one in react_frontend (where another Dockerfile is located). A combined total of 14 environment variables are needed.
 
-## django_react_app folder .env
+## django_react_app folder .env file
 There are 3 total variables you'll need to add in this .env file. We can just use the default settings for now.
 * `POSTGRES_DB="postgres"`
 * `POSTGRES_USER="postgres"`
 * `POSTGRES_PASSWORD="postgres"`
 
-## django_backend folder .env
+## django_backend folder .env file
 There are 10 total variables you'll need to add in this .env file. We can just use the default database of PostgreSQL for now.
 * `EMAIL_HOST_USER="ENTER YOUR GOOGLE/GMAIL EMAIL"`
-* `EMAIL_HOST_PASSWORD="ENTER YOUR APP PASSWORD NOT EMAIL PASSWORD"`
+* `EMAIL_HOST_PASSWORD="ENTER YOUR APP PASSWORD NOT YOUR GOOGLE/GMAIL PASSWORD"`
 * `TICKETMASTER_API_KEY="ENTER YOUR TICKETMASTER API KEY HERE"`
 * `OPENWEATHERMAP_API_KEY="ENTER YOUR OPENWEATHERMAP API KEY HERE"`
 * `SECRET_KEY="ENTER YOUR SECRET KEY HERE (you can make this up)"`
@@ -26,9 +26,9 @@ There are 10 total variables you'll need to add in this .env file. We can just u
 * `DB_HOST="database"`
 * `DB_PORT="5432"`
 
-Note that the `EMAIL_HOST_PASSWORD` is NOT the password you login to your Google/Gmail account with. You'll need to generate an app password within "manage your google account" security settings. You will also have to activate two factor authentication on your google account otherwise it will not work.<br>I am using gmail's simple mail transfer protocol (SMTP). You can change it up if you would like.
+Note that the `EMAIL_HOST_PASSWORD` is NOT the password you use to login to your Google/Gmail account with. You'll need to generate an app password within "manage your google account" security settings. You will also have to activate two factor authentication on your google account otherwise it will not work.<br>I am currently using gmail's simple mail transfer protocol (SMTP). You can change it up if you would like.
 
-## react_backend folder .env
+## react_backend folder .env file
 There is only 1 variable you'll need to add in this .env file.
 * `REACT_APP_GOOGLEMAP_API_KEY="ENTER YOUR GOOGLE MAP API KEY HERE"`
 
@@ -40,7 +40,7 @@ Ensure you have docker and docker compose. You can find more info here. <br>
 [docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/)
 
 # Running
-Now that your three .env files are set up. Ensure you're in the django_react_app version/folder before starting. You can run the app with docker-compose. In your terminal type in `docker-compose build` and then `docker-compose up`. Both these commands may take some time.
+Now that your three .env files are set up. Ensure you're in the django_react_app version/folder (where docker-compose.yml is located) before starting. You can run the app with docker-compose. In your terminal type in `docker-compose build` and then `docker-compose up`. Both these commands may take some time.
 
 Within your browser, go to `localhost` and you should see a login page. If the first option does not work try `127.0.0.1`. It may take some time for things to load.
 
@@ -59,11 +59,11 @@ Within your browser, go to `localhost` and you should see a login page. If the f
 * JWT Decode | [https://www.npmjs.com/package/jwt-decode](https://www.npmjs.com/package/jwt-decode/) <br>
 * Python Imaging Library (PIL/Pillow) | [https://pillow.readthedocs.io/en/stable/](https://pillow.readthedocs.io/en/stable/) <br>
 
-# NOTE:
-I commented out two specific lines in EventDetails.js to prevent the map from loading. This is because while you do get $200 worth of free credits every month (before they start charing), it can add up. That's 4878 dynamic maps (at 0.007 cents per load) plus 9756 places search (at 0.017 per search) for a total of $199.998 for free. <br>
+# NOTE
+I commented out two specific lines in EventDetails.js to prevent the map from loading. This is because while you do get $200 worth of free credits every month (before Google starts charging), it can add up. That's 4878 dynamic maps (at 0.007 cents per load) plus 9756 places search (at 0.017 per search) for a total of $199.998 for free. <br>
 If you would like to see the maps, simply uncomment the two lines in EventDetails.js and the map should start loading. <br>
 
-For updating user's information I am well aware of the flaw that the previous refresh token is still active (until it expires). The acess token should expire shortly. However, that refresh token may still be used to generate a new access token. Thereby gaining access to what should otherwise be restricted materials.<br>
+For updating user's information I am well aware of the flaw that the previous refresh token is still active (until it expires). The acess token should expire shortly. However, that refresh token may still be used to generate a new access token. Thereby gaining access to what should otherwise be restricted endpoints.<br>
 Possible solution is to add the refresh token to a blacklist if user's information has been updated. If a malicious actor tries to gain acess with that blacklisted token, it should prevent them from gaining access.
 
 # Images (from Django w/ ReactJS)
@@ -74,8 +74,8 @@ Possible solution is to add the refresh token to a blacklist if user's informati
     <img src="https://i.imgur.com/LEaCvSl.png">
     <img src="https://i.imgur.com/0YjOYWV.png">
     <img src="https://i.imgur.com/5e1txIa.png">
-    <img src="https://i.imgur.com/1Odrrox.png">
     <img src="https://i.imgur.com/7EuSEN1.png">
+    <img src="https://i.imgur.com/FmMaEqj.png">
     <img src="https://i.imgur.com/mrRFW9b.png">
     <img src="https://i.imgur.com/NphgiNl.png">
     <img src="https://i.imgur.com/bKujqDG.png">

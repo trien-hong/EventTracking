@@ -10,7 +10,7 @@ Each version has its own README.md file with more information.
 # Event Tracking Web App
 Users can sign up using their email, username, password (which are hashed and not plaintext), and a zip code. These four information will then be saved into a PostgreSQL database. Upon a successful signup, a simple welcome email will be sent out to the email address provided. Upon a failed/successful user's account info change (username, password, and/or zip code), a simple email notification will be sent out. I am currently using gmail's simple mail transfer protocol (SMTP). You can change it up if you would like.
 
-When the user tries to log in, it'll query the database for matching credentials. If matching, the user is now logged in. In the Django REST framework with ReactJS version, I've implemented JWT (JSON Web Tokens). After logging in the JWT is saved into their browser's localStorage. When the access token is expired, a refresh token is used to generate a new access token. JWT is useful for authentication along with containing useful information in its payload for the front-end.
+When the user tries to log in, it'll query the database for matching credentials. If matching, the user is now logged in. In the Django REST framework with ReactJS version, I've implemented JWT (JSON Web Tokens). After logging in the JWT is saved into their browser's localStorage. The JWT consist of an access token and a refresh token. When the access token expires, a refresh token is used to generate a new access token. JWT is useful for authentication along with containing useful information in its payload for the front-end.
 
 On the homepage, we make an API call to Ticketmaster using the current logged-in user's zip code. Ticketmaster will then send back a JSON containing events based on that zip code. Each event displayed may be saved so that you have refer back to it at a later date within your profile.
 
@@ -28,8 +28,8 @@ There is also a profile component built in containing several different things. 
     <img src="https://i.imgur.com/LEaCvSl.png">
     <img src="https://i.imgur.com/0YjOYWV.png">
     <img src="https://i.imgur.com/5e1txIa.png">
-    <img src="https://i.imgur.com/1Odrrox.png">
     <img src="https://i.imgur.com/7EuSEN1.png">
+    <img src="https://i.imgur.com/FmMaEqj.png">
     <img src="https://i.imgur.com/mrRFW9b.png">
     <img src="https://i.imgur.com/NphgiNl.png">
     <img src="https://i.imgur.com/bKujqDG.png">
