@@ -1,5 +1,7 @@
 # Update
-There are currently 3 different versions of this web app. One using Django REST framework with ReactJS (single-page application), one using Django (with templates), and one using Flask (with templates). All versions use PostgreSQL as the database.
+There are currently 3 different versions of this web app. One using Django REST framework with ReactJS (single-page application), one using Django (with templates), and one using Flask (with templates). All versions use PostgreSQL for the database.
+
+This is based on a client-server architecture. The client is sending request (GET, POST, PUT, DELETE, etc.) to the server. The server is then returning back JSON data and/or status codes. The front-end will process the data from the back-end in some meaningful way for the end-user.
 
 For the most updated version it will be Django REST framework with ReactJS (single-page application). Django (with templates) and Flask (with templates) version is quite outdated. I will no longer update the Django/Flask version anymore.
 
@@ -8,7 +10,9 @@ The Django REST framework with ReactJS version contains some new features along 
 Each version has its own README.md file with more information.
 
 # Event Tracking Web App
-Users can sign up using their email, username, password (which are hashed and not plaintext), and a zip code. These four information will then be saved into a PostgreSQL database. Upon a successful signup, a simple welcome email will be sent out to the email address provided. Upon a failed/successful user's account info change (username, password, and/or zip code), a simple email notification will be sent out. I am currently using gmail's simple mail transfer protocol (SMTP). You can change it up if you would like.
+Users can sign up using their email, username, password (which are hashed and not plaintext), and a zip code. These four information will then be saved into a PostgreSQL database.
+
+Upon a successful signup, a simple welcome email will be sent out to the email address provided. Upon a failed/successful user's account info change (username, password, and/or zip code), a simple email notification will be sent out. I am currently using gmail's simple mail transfer protocol (SMTP). You can change it up if you would like.
 
 When the user tries to log in, it'll query the database for matching credentials. If matching, the user is now logged in. In the Django REST framework with ReactJS version, I've implemented JWT (JSON Web Tokens). After logging in the JWT is saved into their browser's localStorage. The JWT consist of an access token and a refresh token. When the access token expires, a refresh token is used to generate a new access token. JWT is useful for authentication along with containing useful information in its payload for the front-end.
 
