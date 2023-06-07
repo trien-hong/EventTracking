@@ -17,7 +17,7 @@ services:
     depends_on:
       - database
   database:
-    image: postgres:latest
+    image: postgres:15.3
     volumes:
       - ./database:/var/lib/postgresql/data
     env_file: # One in django_react_app folder
@@ -30,7 +30,7 @@ services:
     env_file: # One in react_frontend folder
       - react_frontend/.env
   nginx:
-    image: nginx:latest
+    image: nginx:1.25.0
     ports:
       - 80:8080
     volumes:
