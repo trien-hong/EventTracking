@@ -71,10 +71,10 @@ Possible solution is to add the refresh token to a blacklist if user's informati
     <summary>Click to view images</summary>
     <a href="https://imgur.com/a/znEcjhc" target="_blank">Imgur link with a short description for each image</a>
     <br><br>
-    <img src="https://i.imgur.com/LEaCvSl.png">
+    <img src="https://i.imgur.com/9FHXMl4.png">
     <img src="https://i.imgur.com/0YjOYWV.png">
     <img src="https://i.imgur.com/5e1txIa.png">
-    <img src="https://i.imgur.com/7EuSEN1.png">
+    <img src="https://i.imgur.com/x7oXz2u.png">
     <img src="https://i.imgur.com/FmMaEqj.png">
     <img src="https://i.imgur.com/mrRFW9b.png">
     <img src="https://i.imgur.com/NphgiNl.png">

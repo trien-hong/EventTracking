@@ -1,15 +1,19 @@
 # Update
 There are currently 3 different versions of this web app. One using Django REST framework with ReactJS (single-page application), one using Django (with templates), and one using Flask (with templates). All versions use PostgreSQL for the database.
 
-This is based on a client-server architecture. The client is sending request (GET, POST, PUT, DELETE, etc.) to the server. The server is then returning back JSON data and/or status codes. The front-end will process the data from the back-end in some meaningful way for the end-user.
-
-For the most updated version it will be Django REST framework with ReactJS (single-page application). Django (with templates) and Flask (with templates) version is quite outdated. I will no longer update the Django/Flask version anymore.
+For the most updated version it will be Django REST Framework with ReactJS (single-page application). Django (with templates) and Flask (with templates) version is quite outdated. I will no longer update the Django/Flask version anymore.
 
 The Django REST framework with ReactJS version contains some new features along with much needed updated code (compared to Django/Flask). Both Django versions can be run locally using docker-compose. You will need to obtain API keys and set up a/multiple .env file(s).
 
 Each version has its own README.md file with more information.
 
+# Other Versions
+Django with Templates | [https://github.com/trien-hong/event-tracking-django](https://github.com/trien-hong/event-tracking-django)<br>
+Flask with Templates | [https://github.com/miserrano7/EventTracking](https://github.com/miserrano7/EventTracking)<br>
+
 # Event Tracking Web App
+This is based on a client-server architecture. The client is sending request (GET, POST, PUT, DELETE, etc.) to the server. The server is then returning back JSON data and/or status codes. The front-end will process the data from the back-end in some meaningful way for the end-user.
+
 Users can sign up using their email, username, password (which are hashed and not plaintext), and a zip code. These four information will then be saved into a PostgreSQL database.
 
 Upon a successful signup, a simple welcome email will be sent out to the email address provided. Upon a failed/successful user's account info change (username, password, and/or zip code), a simple email notification will be sent out. I am currently using gmail's simple mail transfer protocol (SMTP). You can change it up if you would like.
@@ -29,10 +33,10 @@ There is also a profile component built in containing several different things. 
     <summary>Click to view images</summary>
     <a href="https://imgur.com/a/znEcjhc" target="_blank">Imgur link with a short description for each image</a>
     <br><br>
-    <img src="https://i.imgur.com/LEaCvSl.png">
+    <img src="https://i.imgur.com/9FHXMl4.png">
     <img src="https://i.imgur.com/0YjOYWV.png">
     <img src="https://i.imgur.com/5e1txIa.png">
-    <img src="https://i.imgur.com/7EuSEN1.png">
+    <img src="https://i.imgur.com/x7oXz2u.png">
     <img src="https://i.imgur.com/FmMaEqj.png">
     <img src="https://i.imgur.com/mrRFW9b.png">
     <img src="https://i.imgur.com/NphgiNl.png">
