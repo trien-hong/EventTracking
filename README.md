@@ -28,6 +28,8 @@ Each event that is displayed is also clickable to see even more details of that 
 
 There is also a profile component built in containing several different things. The first is a way to change your account information (username, password, & zip code). For customization purposes, a user may also add/delete a profile picture to/from their account. The second is a way to view all the events that you have saved. The third is a way to view all the reviews that you have left.
 
+I have also added Cypress for simple end-to-end/E2E testing. I will add more test cases as time goes on.
+
 # Django w/ ReactJS & PostgreSQL
 This version is using Django (specifically as an API using Django's REST framework) with ReactJS and PostgreSQL as the database. Nginx is serving both React and Django. All API request is going through Nginx and Gunicorn. <br>
 This is a single page applcation (SPA). A page refresh never occurs. Everything is rerender on a single page depending on the user's action.
@@ -87,7 +89,10 @@ Within your browser, go to `localhost` and you should see a login page. If the f
 * Django REST Framework | [https://www.django-rest-framework.org/](https://www.django-rest-framework.org/) <br>
 * Simple JWT | [https://django-rest-framework-simplejwt.readthedocs.io/en/latest/](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/) <br>
 * JWT Decode | [https://www.npmjs.com/package/jwt-decode](https://www.npmjs.com/package/jwt-decode/) <br>
+* Dotenv | [https://www.npmjs.com/package/dotenv](https://www.npmjs.com/package/dotenv) <br>
+* Python dotenv | [https://pypi.org/project/python-dotenv/](https://pypi.org/project/python-dotenv/) <br>
 * Python Imaging Library (PIL/Pillow) | [https://pillow.readthedocs.io/en/stable/](https://pillow.readthedocs.io/en/stable/) <br>
+* Cypress | [https://www.cypress.io/](https://www.cypress.io/)
 
 # NOTE
 I commented out two specific lines in EventDetails.js to prevent the map from loading. This is because while you do get $200 worth of free credits every month (before Google starts charging), it can add up. That's 4878 dynamic maps (at 0.007 cents per load) plus 9756 places search (at 0.017 per search) for a total of $199.998 for free. <br>
