@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import UserAuthContext from './UserAuthContext';
 
@@ -9,6 +9,7 @@ function UserAuthContextProvider({children}) {
     const [user, setUser] = useState(() => localStorage.getItem("authTokens") ? jwt_decode(localStorage.getItem("authTokens")) : null);
     const [authTokens, setAuthTokens] = useState(() => localStorage.getItem("authTokens") ? JSON.parse(localStorage.getItem("authTokens")) : null);
     const [message, setMessage] = useState(null);
+    const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -75,7 +76,9 @@ function UserAuthContextProvider({children}) {
             setAuthTokens(data);
             localStorage.setItem("authTokens", JSON.stringify(data));
         } else {
-            logout();
+            if (location.pathname !== "/login/" && location.pathname !== "/signup/" && location.pathname !== "/reset/password/" && location.pathname !== "/login" && location.pathname !== "/signup" && location.pathname !== "/reset/password") {
+                logout();
+            }
         }
 
         if(isLoading) {

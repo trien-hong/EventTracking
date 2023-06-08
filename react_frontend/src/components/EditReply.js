@@ -58,8 +58,6 @@ function EditReply({reply, replies, setReplies}) {
         setEditedReply(e.target.value);
     }
 
-
-
     return (
         <div>
             <Tooltip title="Edit Reply">

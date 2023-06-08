@@ -113,7 +113,7 @@ function ResetPassword() {
                     <Divider sx={{ backgroundColor: "gray" }}/>
                     <Typography sx={{ my: 1 }} variant="h6">Don't have an account? <Typography variant="h6" component={Link} to="/signup/"><b>Signup here</b></Typography></Typography>
                     <Divider sx={{ backgroundColor: "gray" }}/>
-                    <Typography sx={{ mt: 1 }} variant="h6">Already have an account? <Typography variant="h6" component={Link} to="/login"><b>Login here</b></Typography></Typography>
+                    <Typography sx={{ mt: 1 }} variant="h6">Already have an account? <Typography variant="h6" component={Link} to="/login/"><b>Login here</b></Typography></Typography>
                 </Grid>
             </div>
         </Grid>

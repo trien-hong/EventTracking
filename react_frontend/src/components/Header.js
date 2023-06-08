@@ -21,7 +21,7 @@ function Header() {
                 {user ? (
                     <>
                         <Grid container justifyContent="flex-start">
-                            <Button variant="contained" component={Link} to="/events">EVENTS</Button>
+                            <Button variant="contained" component={Link} to="/events/">EVENTS</Button>
                         </Grid>
                         <Grid sx={{ ml: 6 }} container justifyContent="center">
                             <form onSubmit={search}>
@@ -29,7 +29,7 @@ function Header() {
                             </form>
                         </Grid>
                         <Grid container justifyContent="flex-end">
-                            <Button sx={{ mr: 1 }} variant="contained" component={Link} to="/profile">PROFILE</Button>
+                            <Button sx={{ mr: 1 }} variant="contained" component={Link} to="/profile/">PROFILE</Button>
                             <Button variant="contained" onClick={() => { logout(); }}>LOGOUT</Button>
                         </Grid>
                         <div>
@@ -43,9 +43,9 @@ function Header() {
                 ) : (
                     <>
                         <Grid container justifyContent="center">
-                            <Button variant="contained" component={Link} to="/signup">SIGNUP</Button>
+                            <Button variant="contained" component={Link} to="/signup/">SIGNUP</Button>
                             <Button sx={{ mx: 2 }} variant="contained" component={Link} to="/reset/password/">RESET PASSWORD</Button>
-                            <Button variant="contained" component={Link} to="/login">LOGIN</Button>
+                            <Button variant="contained" component={Link} to="/login/">LOGIN</Button>
                         </Grid>
                     </>
                 )}
