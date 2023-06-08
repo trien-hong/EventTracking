@@ -9,6 +9,7 @@ services:
       sh -c "python3 manage.py collectstatic --noinput &&
             python3 manage.py makemigrations &&
             python3 manage.py migrate &&
+            python3 manage.py initadmin &&
             gunicorn django_backend.wsgi --bind 0.0.0.0:8000"
     ports:
       - "8000:8000"
@@ -20,7 +21,7 @@ services:
     image: postgres:15.3
     volumes:
       - ./database:/var/lib/postgresql/data
-    env_file: # One in django_react_app folder
+    env_file: # One in EventTracking folder
       - .env
   react_frontend:
     build:
