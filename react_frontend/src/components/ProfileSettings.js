@@ -147,7 +147,7 @@ function ProfileSettings() {
             },
             body: JSON.stringify({
                 "id": user.id,
-                "password": e.target.password.value
+                "password": e.target.password_delete_account.value
             })
         });
         if (response.status === 200) {
@@ -216,7 +216,7 @@ function ProfileSettings() {
                 </form>
                 <Divider sx={{ mb: 2, backgroundColor: "gray" }}/>
                 <form onSubmit={deleteAccount}>
-                    <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Enter password" name="password" variant="filled" InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
+                    <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Enter password" name="password_delete_account" variant="filled" InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
                     <br></br>
                     <Button sx={{ my: 2 }} type="submit" variant="contained"><AssignmentIndIcon sx={{ mr: 1 }}/>DELETE ACCOUNT</Button>
                 </form>
