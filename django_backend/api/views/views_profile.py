@@ -161,6 +161,24 @@ def profileSettingsInfo(request):
         )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(["DELETE"])
+@permission_classes([IsAuthenticated])
+def profileDeleteAccount(request):
+    """
+    Endpoint: /api/profile/delete/account/
+    """
+    data = json.loads(request.body)
+    if (request.user.id == data["id"]):
+        serializer = serializers.DeleteAccountValidateSerializer(data=data)
+        if serializer.is_valid():
+            user = User.objects.get(id=request.user.id)
+            user.delete()
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(["PUT"])
 def resetPassword(request):
     """

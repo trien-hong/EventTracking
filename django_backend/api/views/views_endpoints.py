@@ -99,7 +99,7 @@ def getRoutes(request):
             'Method': ['GET', 'PUT', 'DELETE'],
             'Restricted': True,
             'Description': {
-                'GET': 'Returns a location of the user\'s profile picture',
+                'GET': 'Returns a location/path of the user\'s profile picture',
                 'PUT': 'Updates the user\'s profile picture',
                 'DELETE': 'Deletes the user\'s profile picture'
             }
@@ -109,11 +109,19 @@ def getRoutes(request):
             'Method': ['PUT'],
             'Restricted': True,
             'Description': {
-                'PUT': 'Updates a user\'s information (username, password, &/or zip_code)'
+                'PUT': 'Updates a user\'s information (email, username, password, &/or zip_code)'
             }
         },
         {
-            'Endpoint': '/api/forgot/password/',
+            'Endpoint': '/api/profile/delete/account/',
+            'Method': ['DELETE'],
+            'Restricted': True,
+            'Description': {
+                'DELETE' 'Delete the user\'s account and everything associated with it reviews, replies, profile picture, etc.'
+            }
+        },
+        {
+            'Endpoint': '/api/reset/password/',
             'Method': ['PUT'],
             'Restricted': False,
             'Description': {

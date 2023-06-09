@@ -102,7 +102,7 @@ function Profile() {
                 <Button sx={{ my: 3, mx: 1.5 }} color={eventsButtonColor} variant="contained" onClick={() => { displayProfileEvents(); }}><AssignmentIcon sx={{ mr: 1 }}/>Profile Events</Button>
                 <Button sx={{ my: 3 }} color={reviewsButtonColor} variant="contained" onClick={() => { displayProfileReviews(); }}><ReviewsIcon sx={{ mr: 1 }}/>Profile Reviews</Button>
                 {display}
-                <AppBar position="static" sx={{ position: "fixed", bottom: 0, color: "black", background: "lightgray" }}>
+                <AppBar position="fixed" color="primary" sx={{ top: "auto", bottom: 0, color: "black", background: "lightgray" }}>
                     <Toolbar style={{ pt: 3, minHeight: 40 }}>
                         <Box sx={{ margin: "auto", display: "flex", alignItems: "center" }}>
                             <Tooltip title="Scroll to Top">

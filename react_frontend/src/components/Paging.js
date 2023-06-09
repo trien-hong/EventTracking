@@ -110,7 +110,7 @@ function Paging({setEvents, setSearchEvents, setZip, setIsLoading, eventsPerPage
 
     return (
         <div>
-            <AppBar position="static" sx={{ position: "fixed", bottom: 0, color: "black", background: "lightgray" }}>
+            <AppBar position="fixed" color="primary" sx={{ top: "auto", bottom: 0, color: "black", background: "lightgray" }}>
                 <Toolbar style={{ pt: 3, minHeight: 40 }}>
                     <Box sx={{ margin: "auto", display:"flex", alignItems:"center" }}>
                     <Pagination count={totalPages + 1} page={currentPage} onChange={changePage} color="primary" />

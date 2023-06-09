@@ -1,4 +1,5 @@
 from PIL import Image
+from django.contrib.auth.hashers import check_password
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from rest_framework.serializers import HyperlinkedModelSerializer
@@ -115,6 +116,22 @@ class CheckFileValidateSerializer(serializers.Serializer):
         if errors:
             raise serializers.ValidationError(errors)
 
+        return data
+
+class DeleteAccountValidateSerializer(serializers.Serializer):
+    id = serializers.CharField(required=True)
+    password = serializers.CharField(required=True)
+
+    def validate(self, data):
+        errors = []
+
+        # validate if password matches the hashed form
+        if not User.objects.get(id=data["id"]).check_password(data["password"]):
+            errors.append({"password": "Password does not match what's on the account."})
+
+        if errors:
+            raise serializers.ValidationError(errors)
+        
         return data
     
 class ResetPasswordValidateSerializer(serializers.Serializer):

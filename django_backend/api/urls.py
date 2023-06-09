@@ -22,6 +22,7 @@ urlpatterns = [
     path("api/profile/reviews/", views.profileReview, name="profileReview"),
     path("api/profile/settings/picture/", views.profileSettingsPicture, name="profileSettingsPicture"),
     path("api/profile/settings/info/", views.profileSettingsInfo, name="profileSettingsInfo"),
+    path("api/profile/delete/account/", views.profileDeleteAccount, name="profileDeleteAccount"),
     path("api/reset/password/", views.resetPassword, name="resetPassword"),
     path("api/token/", MyTokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh")

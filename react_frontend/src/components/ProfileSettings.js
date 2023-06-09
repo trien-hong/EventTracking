@@ -20,7 +20,7 @@ function ProfileSettings() {
     const [alertTitle, setAlertTitle] = useState(null);
     const [profilePicture, setProfilePicture] = useState(null);
     const [messages, setMessages] = useState(null);
-    const {user, authTokens, setNewToken} = useContext(UserAuthContext);
+    const {user, logout, authTokens, setNewToken} = useContext(UserAuthContext);
     const {getProfilePicture} = useContext(ProfilePictureContext);
     const [textfieldType, setTextfieldType] = useState("password");
     const [tooltipText, setTooltipText] = useState("Show Password");
@@ -135,6 +135,49 @@ function ProfileSettings() {
         }
     }
 
+    async function deleteAccount(e) {
+        e.preventDefault();
+        setProfileSettingsLoading(<LinearProgress sx={{ mb: 1.5 }}/>);
+        // const response = await fetch(`http://127.0.0.1:8000/api/profile/delete/account/`, {
+        const response = await fetch(`http://127.0.0.1/api/profile/delete/account/`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + String(authTokens.access)
+            },
+            body: JSON.stringify({
+                "id": user.id,
+                "password": e.target.password.value
+            })
+        });
+        if (response.status === 200) {
+            logout();
+            alert("Account has been deleted. You will go back to the login page.");
+        } else {
+            const data = await response.json();
+            setProfileSettingsLoading(null);
+            alert("There seems to be error(s) in updating your new information on your account");
+            setMessages(
+                <div id="errors">
+                    {data["non_field_errors"].map((errors, i) => (
+                        <div key={i}>
+                            {Object.entries(errors).map(([key, val]) => {
+                                return (
+                                    <div key={key}>
+                                        <li>{val}</li>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ))}
+                </div>
+            );
+            setSeverity("error");
+            setAlertTitle("ERROR(S)");
+            setOpenAlert(true);
+        }
+    }
+
     function showPassword() {
         if (textfieldType === "password") {
             setIcon(<VisibilityOffIcon/>);
@@ -170,6 +213,12 @@ function ProfileSettings() {
                     <TravelExploreIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type="text" name="zip_code" label="Enter new ZIP Code" variant="filled" inputProps={{ minLength:5, maxLength: 5 }}/>
                     <br></br>
                     <Button sx={{ my: 2 }} type="submit" variant="contained"><AssignmentIndIcon sx={{ mr: 1 }}/>UPDATE</Button>
+                </form>
+                <Divider sx={{ mb: 2, backgroundColor: "gray" }}/>
+                <form onSubmit={deleteAccount}>
+                    <PasswordIcon sx={{ mr: 2, mt: 2.2, color: "#CC4D00" }} id="icons"/><TextField sx={{ mt: 0.5, width: 375, background: "white" }} type={textfieldType} label="Enter password" name="password" variant="filled" InputProps={{endAdornment: (<InputAdornment position="end"><Tooltip title={tooltipText}><IconButton onClick={() => { showPassword(); }}>{icon}</IconButton></Tooltip></InputAdornment>)}}/>
+                    <br></br>
+                    <Button sx={{ my: 2 }} type="submit" variant="contained"><AssignmentIndIcon sx={{ mr: 1 }}/>DELETE ACCOUNT</Button>
                 </form>
                 <Divider sx={{ mb: 2, backgroundColor: "gray" }}/>
                 <form onSubmit={uploadProfilePicture}>
