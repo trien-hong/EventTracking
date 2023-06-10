@@ -172,6 +172,14 @@ def profileDeleteAccount(request):
         serializer = serializers.DeleteAccountValidateSerializer(data=data)
         if serializer.is_valid():
             user = User.objects.get(id=request.user.id)
+            send_mail(
+                "Account Deletion",
+                "Your account with Event Tracking has been deleted.",
+                None,
+                [user.email],
+                fail_silently=False,
+                html_message = render_to_string("../email_templates/account_deletion.html", {"username": user.username})
+            )
             user.delete()
             return Response(status=status.HTTP_200_OK)
         else:
@@ -191,7 +199,7 @@ def resetPassword(request):
     serializer = serializers.ResetPasswordValidateSerializer(data=data)
     if serializer.is_valid():
         # obviously you shouldn't be able to reset a password just because you know a username
-        # there should be some secondary method of verifiction (such as email i'll find a way to do this later)
+        # there should be some secondary method of verifiction (i'll find a way to do this later)
         user = User.objects.get(username=data["username"])
         user.set_password(serializer.validated_data["confirm_password"])
         user.save()

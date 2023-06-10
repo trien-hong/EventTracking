@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <style>
+                h2 {
+                    padding-top: 0px;
+                    margin: 0px;
+                }
+
+                #background {
+                    width: 100%;
+                    height: 100%;
+                    padding: 25px;
+                    background-color: #CACACA;
+                }
+
+                #container {
+                    font-family: sans-serif;
+                    padding: 25px;
+                    background-color: #E9E9E9;
+                    max-width: 500px;
+                    border-style: solid;
+                    border-width: 2px;
+                }
+
+                #body-container {
+                    text-align: left;
+                }
+            </style>
+        </head>
+    <body>
+        <div id="background">
+            <center>
+                <div id="container">
+                    <div id="header-container">
+                        <h2>Account Deletion Notification</h2>
+                    </div>
+                    <div id="body-container">
+                        <hr></hr>
+                        <h3>Hello, <u>{{ username }}</u>!</h3>
+                        <h3>You requested that you wanted your account to be deleted.</h3>
+                        <h3>If you're reading this email, it is it let you know that we have processed the request.</h3>
+                        <h3>Your account is now deleted. All information (username, email, events, reviews, replies, etc.) tied to the account has been deleted.</h3>
+                        <h3>If you ever want to use the web app again, you're more than welcome to signup again.</h3>
+                        <h3><a href="http://localhost/signup/">http:/localhost/signup/</a></h3>
+                        <h3>Thanking you for using the web app!</h3>
+                        <hr></hr>
+                    </div>
+                    <!-- For GMail.com you can't seem to see the image -->
+                    <!-- Sites like 10minutemail.com, 10minemail.com, etc. seem to be working okay. Your browser might cache the image. -->
+                    <div id="footer-container">
+                        <div>
+                            <img style="vertical-align:middle" src="http://drive.google.com/uc?export=view&id=1CqeNlDQb3ZF606W4mroWmOIKctH14GuT" alt="github_icon" width="40" height="40">
+                            <!-- <img style="vertical-align:middle" src="http://localhost:8000/static/email_images/github_icon.png" alt="github_icon" width="40" height="40"> -->
+                            <span>&nbsp;&nbsp;<a href="https://github.com/trien-hong/EventTracking">Event Tracking GitHub Repository</a></span>
+                        </div>
+                        <hr></hr>
+                        <div>
+                            <img style="vertical-align:middle" src="http://drive.google.com/uc?export=view&id=1GB8JPCo0KxvSZiXD3NEq3uaAKcgLHVKH" alt="imgur_icon" width="40" height="40">
+                            <!-- <img style="vertical-align:middle" src="http://localhost:8000/static/email_images/imgur_icon.png" alt="imgur_icon" width="40" height="40"> -->
+                            <span>&nbsp;&nbsp;<a href="https://imgur.com/a/znEcjhc">Imgur Link (images of web app)</a></span>
+                        </div>
+                        <hr></hr>
+                        <div>
+                            <img style="vertical-align:middle" src="http://drive.google.com/uc?export=view&id=1G60pa9G3HkbirQzAggUQf0UxUSsaVrIO" alt="github_icon" width="40" height="40">
+                            <!-- <img style="vertical-align:middle" src="http://localhost:8000/static/email_images/github_icon2.png" alt="github_icon2" width="40" height="40"> -->
+                            <span>&nbsp;&nbsp;<a href="https://github.com/trien-hong">My GitHub</a></span>
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
+    </body>
+</html>
