@@ -6,7 +6,7 @@ function AlertMessage({setOpenAlert, severity, alertTitle, messages}) {
         <div>
             <Alert severity={severity} action={<Tooltip title="Close"><IconButton color="inherit" size="small" onClick={() => { setOpenAlert(false); }}><CloseIcon fontSize="inherit"/></IconButton></Tooltip>}sx={{ mb: 2 }}>
                 <AlertTitle><u><b>{alertTitle}</b></u></AlertTitle>
-                <Typography variant="body1">
+                <Typography variant="subtitle1">
                     {messages}
                 </Typography>
             </Alert>
