@@ -29,11 +29,11 @@ describe('Go to login page', () => {
 
   describe('Check login page form', () => {
     it('type in the required field(s), verify field(s) content, & login', () => {
-      cy.get('[name=username]').type(Cypress.env("username"))
-      cy.get('[name=password]').type(Cypress.env("password"))
+      cy.get('[name=username]').type(Cypress.env("USERNAME"))
+      cy.get('[name=password]').type(Cypress.env("PASSWORD"))
 
-      cy.get('[name=username]').should('have.value', Cypress.env("username"))
-      cy.get('[name=password]').should('have.value', Cypress.env("password"))
+      cy.get('[name=username]').should('have.value', Cypress.env("USERNAME"))
+      cy.get('[name=password]').should('have.value', Cypress.env("PASSWORD"))
 
       cy.get('[id=generalContainer]').get('form').submit().click()
     })

@@ -29,13 +29,13 @@ describe('Go to reset password page', () => {
   
   describe('Check reset password page form', () => {
     it('should change the password of the user', () => {
-      cy.get('[name=username]').type(Cypress.env("username"))
-      cy.get('[name=password]').type(Cypress.env("reset_password"))
-      cy.get('[name=confirm_password]').type(Cypress.env("reset_password"))
+      cy.get('[name=username]').type(Cypress.env("USERNAME"))
+      cy.get('[name=password]').type(Cypress.env("RESET_PASSWORD"))
+      cy.get('[name=confirm_password]').type(Cypress.env("RESET_PASSWORD"))
 
-      cy.get('[name=username]').should('have.value', Cypress.env("username"))
-      cy.get('[name=password]').should('have.value', Cypress.env("reset_password"))
-      cy.get('[name=confirm_password]').should('have.value', Cypress.env("reset_password"))
+      cy.get('[name=username]').should('have.value', Cypress.env("USERNAME"))
+      cy.get('[name=password]').should('have.value', Cypress.env("RESET_PASSWORD"))
+      cy.get('[name=confirm_password]').should('have.value', Cypress.env("RESET_PASSWORD"))
 
       cy.get('[id=generalContainer]').get('form').submit().click()
     })
@@ -43,13 +43,13 @@ describe('Go to reset password page', () => {
   
   describe('Change back password of test user', () => {
     it('should reset password of the user back to the original', () => {
-      cy.get('[name=username]').type(Cypress.env("username"))
-      cy.get('[name=password]').type(Cypress.env("password"))
-      cy.get('[name=confirm_password]').type(Cypress.env("confirm_password"))
+      cy.get('[name=username]').type(Cypress.env("USERNAME"))
+      cy.get('[name=password]').type(Cypress.env("PASSWORD"))
+      cy.get('[name=confirm_password]').type(Cypress.env("CONFIRM_PASSWORD"))
 
-      cy.get('[name=username]').should('have.value', Cypress.env("username"))
-      cy.get('[name=password]').should('have.value', Cypress.env("password"))
-      cy.get('[name=confirm_password]').should('have.value', Cypress.env("confirm_password"))
+      cy.get('[name=username]').should('have.value', Cypress.env("USERNAME"))
+      cy.get('[name=password]').should('have.value', Cypress.env("PASSWORD"))
+      cy.get('[name=confirm_password]').should('have.value', Cypress.env("CONFIRM_PASSWORD"))
       
       cy.get('[id=generalContainer]').get('form').submit().click()
     })

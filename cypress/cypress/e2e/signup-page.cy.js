@@ -29,17 +29,17 @@ describe('Go to signup page', () => {
 
   describe('Check signup page form', () => {
     it('type in the required field(s), verify field(s) content, & signup', () => {
-      cy.get('[name=email]').type(Cypress.env("email"))
-      cy.get('[name=username]').type(Cypress.env("username"))
-      cy.get('[name=password]').type(Cypress.env("password"))
-      cy.get('[name=confirm_password]').type(Cypress.env("confirm_password"))
-      cy.get('[name=zip_code]').type(Cypress.env("zip_code"))
+      cy.get('[name=email]').type(Cypress.env("EMAIL"))
+      cy.get('[name=username]').type(Cypress.env("USERNAME"))
+      cy.get('[name=password]').type(Cypress.env("PASSWORD"))
+      cy.get('[name=confirm_password]').type(Cypress.env("CONFIRM_PASSWORD"))
+      cy.get('[name=zip_code]').type(Cypress.env("ZIP_CODE"))
 
-      cy.get('[name=email]').should('have.value', Cypress.env("email"))
-      cy.get('[name=username]').should('have.value', Cypress.env("username"))
-      cy.get('[name=password]').should('have.value', Cypress.env("password"))
-      cy.get('[name=confirm_password]').should('have.value', Cypress.env("confirm_password"))
-      cy.get('[name=zip_code]').should('have.value', Cypress.env("zip_code"))
+      cy.get('[name=email]').should('have.value', Cypress.env("EMAIL"))
+      cy.get('[name=username]').should('have.value', Cypress.env("USERNAME"))
+      cy.get('[name=password]').should('have.value', Cypress.env("PASSWORD"))
+      cy.get('[name=confirm_password]').should('have.value', Cypress.env("CONFIRM_PASSWORD"))
+      cy.get('[name=zip_code]').should('have.value', Cypress.env("ZIP_CODE"))
 
       cy.get('[id=generalContainer]').get('form').submit().click()
     })
