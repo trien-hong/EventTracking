@@ -12,7 +12,7 @@ load_dotenv(find_dotenv())
 class Command(BaseCommand):
     def handle(self, *args, **options):
         if not Superusers:
-            admin = User.objects.create_superuser(email=os.getenv("superuser_test_email"), username=os.getenv("superuser_test_username"), password=os.getenv("superuser_test_password"))
+            admin = User.objects.create_superuser(email=os.getenv("SUPERUSER_TEST_EMAIL"), username=os.getenv("SUPERUSER_TEST_PASSWORD"), password=os.getenv("superuser_test_password"))
             admin.is_active = True
             admin.is_admin = True
             admin.save()
