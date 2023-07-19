@@ -8,7 +8,7 @@
 * Choose your web browser of choice. I'm using Chrome v114.
     * You will need to install a web broswer on your OS.
     * I believe Electron is there by default.
-* You should see 4 different test (signup-page.cy.js, login-page.cy.js, delete-test-account.cy.js, & delete-test-account.cy.js).
+* You should see 4 different test (signup-page.cy.js, login-page.cy.js, reset-password-page.cy.js, & delete-test-account.cy.js).
 * Click on any of those and Cypress will handle the rest.
     * All test are automated by Cypress so you shouldn't need to do anything.
 * Note that before you run any test, you'll need to have the Event Tracking web app up and running.
