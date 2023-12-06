@@ -68,7 +68,7 @@ There are 13 total variables you'll need to add in this .env file. We can just u
 
 Note that the `EMAIL_HOST_PASSWORD` is NOT the password you use to login to your Google/Gmail account with. You'll need to generate an app password within "manage your google account" security settings. You will also have to activate two factor authentication on your google account otherwise it will not work.<br>I am currently using gmail's simple mail transfer protocol (SMTP). You can change it up if you would like.
 
-## react_backend folder .env file
+## react_frontend folder .env file
 There is only 1 variable you'll need to add in this .env file.
 * `REACT_APP_GOOGLEMAP_API_KEY="ENTER YOUR GOOGLE MAP API KEY HERE"`
 
